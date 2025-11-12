@@ -1,5 +1,5 @@
 from src.utils import global_logger, traceable
-from .prompt import react_system_prompt
+from prompt import react_system_prompt
 
 @traceable
 def init_messages(user_input: str) -> list[dict[str, str]]:

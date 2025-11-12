@@ -13,3 +13,37 @@
           d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:194 wrapper
           d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:291 <module>
 [2025-11-12 14:34:40,986]  【调用成功】 栈路径： __main__.None.test_function | 耗时： 19.373ms | 返回值： true
+[2025-11-12 22:09:44,657]  【调用开始】 栈路径： __main__.None.user_query | 开始时间： 2025-11-12 22:09:44.656747 | 位置参数： ('你好',) | 关键字参数： {}
+[2025-11-12 22:09:44,842]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:194 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\deep_research.py:61 <module>
+[2025-11-12 22:09:44,844]  【调用开始】 栈路径： memory.None.init_messages | 开始时间： 2025-11-12 22:09:44.844886 | 位置参数： ('你好',) | 关键字参数： {}
+[2025-11-12 22:09:44,847]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:194 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\deep_research.py:14 user_query
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:209 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\deep_research.py:61 <module>
+[2025-11-12 22:09:44,849]  【调用成功】 栈路径： memory.None.init_messages | 耗时： 3.337ms | 返回值： [
+  {
+    "content": "你是一个资深的深度研究专家，擅长通过调用各种工具来获取信息并进行分析。你的任务是根据用户的问题，决定是否需要调用工具来获取更多信息，或者直接给出答案。\n\n你的主循环是维护一颗分析计划树：\n1. 罗列值得计算和探索的方向，形成分析计划树的节点。\n2. 根据分析计划树的节点，决定是否需要调用工具来获取信息。\n3. 在必要时，调用工具并处理返回的信息，以便提供准确的答案。\n4. 根据获取的信息，更新分析计划树，继续进行分析，直到得出最终结论。\n\n如果遇到工具调用错误：\n1. 记录错误信息，分析错误原因。\n2. 尝试调整重试，或者调整分析计划树，重新规划路径。\n3. 记录重试次数，避免无限循环。\n4. 如果多次重试仍然失败，考虑放弃该路径，转向其他分析方向。\n\n在每一步决策时，考虑以下因素：\n- 工具调用的必要性：是否有足够的信息来回答用户的问题，或者需要调用工具来获取更多信息。\n- 用户输入的清晰度：用户的问题是否明确，是否需要进一步澄清。\n- 可能的偏见：在分析过程中，是否存在潜在的偏见影响决策。\n- 其他相关因素：是否有其他可能影响决策的外部因素。\n\n请根据上述指导原则，处理用户的输入并给出相应的回答。\n",
+    "role": "system"
+  },
+  {
+    "content": "你好",
+    "role": "user"
+  }
+]
+[2025-11-12 22:09:44,852]  【调用开始】 栈路径： llm.None.first_response | 开始时间： 2025-11-12 22:09:44.852404 | 位置参数： ([{'content': '你是一个资深的深度研究专家，擅长通过调用各种工具来获取信息并进行分析。你的任务是根据用户的问题，决定是否需要调用工具来获取更多信息，或者直接给出答案。\n\n你的主循环是维护一颗分析计划树：\n1. 罗列值得计算和探索的方向，形成分析计划树的节点。\n2. 根据分析计划树的节点，决定是否需要调用工具来获取信息。\n3. 在必要时，调用工具并处理返回的信息，以便提供准确的答案。\n4. 根据获取的信息，更新分析计划树，继续进行分析，直到得出最终结论。\n\n如果遇到工具调用错误：\n1. 记录错误信息，分析错误原因。\n2. 尝试调整重试，或者调整分析计划树，重新规划路径。\n3. 记录重试次数，避免无限循环。\n4. 如果多次重试仍然失败，考虑放弃该路径，转向其他分析方向。\n\n在每一步决策时，考虑以下因素：\n- 工具调用的必要性：是否有足够的信息来回答用户的问题，或者需要调用工具来获取更多信息。\n- 用户输入的清晰度：用户的问题是否明确，是否需要进一步澄清。\n- 可能的偏见：在分析过程中，是否存在潜在的偏见影响决策。\n- 其他相关因素：是否有其他可能影响决策的外部因素。\n\n请根据上述指导原则，处理用户的输入并给出相应的回答。\n', 'role': 'system'}, {'content': '你好', 'role': 'user'}],) | 关键字参数： {}
+[2025-11-12 22:09:44,858]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:194 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\deep_research.py:19 user_query
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:209 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\deep_research.py:61 <module>
+[2025-11-12 22:09:44,860]  【调用开始】 栈路径： llm.None.generate_chat_completion | 开始时间： 2025-11-12 22:09:44.860383 | 位置参数： ([{'content': '你是一个资深的深度研究专家，擅长通过调用各种工具来获取信息并进行分析。你的任务是根据用户的问题，决定是否需要调用工具来获取更多信息，或者直接给出答案。\n\n你的主循环是维护一颗分析计划树：\n1. 罗列值得计算和探索的方向，形成分析计划树的节点。\n2. 根据分析计划树的节点，决定是否需要调用工具来获取信息。\n3. 在必要时，调用工具并处理返回的信息，以便提供准确的答案。\n4. 根据获取的信息，更新分析计划树，继续进行分析，直到得出最终结论。\n\n如果遇到工具调用错误：\n1. 记录错误信息，分析错误原因。\n2. 尝试调整重试，或者调整分析计划树，重新规划路径。\n3. 记录重试次数，避免无限循环。\n4. 如果多次重试仍然失败，考虑放弃该路径，转向其他分析方向。\n\n在每一步决策时，考虑以下因素：\n- 工具调用的必要性：是否有足够的信息来回答用户的问题，或者需要调用工具来获取更多信息。\n- 用户输入的清晰度：用户的问题是否明确，是否需要进一步澄清。\n- 可能的偏见：在分析过程中，是否存在潜在的偏见影响决策。\n- 其他相关因素：是否有其他可能影响决策的外部因素。\n\n请根据上述指导原则，处理用户的输入并给出相应的回答。\n', 'role': 'system'}, {'content': '你好', 'role': 'user'}],) | 关键字参数： {}
+[2025-11-12 22:09:44,863]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:194 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\llm.py:29 first_response
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:209 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\deep_research.py:19 user_query
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:209 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\deep_research.py:61 <module>

@@ -4,11 +4,6 @@ import llm
 import action
 import memory
 
-@traceable
-def first_response(messages):
-    first_response = llm.generate_chat_completion(messages)
-    assistant_output = llm.get_assistant_output(first_response)
-    return assistant_output
 
 @traceable
 def user_query(user_input):
@@ -21,7 +16,7 @@ def user_query(user_input):
     
     # 模型的第一轮调用
     loop_cnt = 1
-    first_response = first_response(messages)
+    first_response = llm.get_assistant(messages)
     global_logger.info(f"\n第{loop_cnt}轮大模型输出信息：{first_response}\n")
     
     if assistant_output.content is None:
@@ -60,3 +55,7 @@ def user_query(user_input):
         loop_cnt += 1
         global_logger.info(f"第{loop_cnt}轮大模型输出信息： {assistant_output}\n")
     global_logger.info(f"最终答案： {assistant_output.content}")
+
+# 测试
+if __name__ == "__main__":
+    user_query("你好")
