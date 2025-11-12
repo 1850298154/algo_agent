@@ -269,24 +269,27 @@ def log_function(
 #     default_return_value=None  # 算法异常时返回None
 # )(func)
 
-utils_logger_decorator = lambda func: log_function(
-    logger_name="utils",
-    log_file="logs/utils.log",
+global_logger_file = "logs/global.log"
+traceable_function_decorator = lambda func: log_function(
+    logger_name="traceable_function_decorator",
+    log_file=global_logger_file,
     exclude_args=["password", "token", "secret"],
     level=logging.DEBUG
 )(func)
 
+global_logger = setup_logger("utils", "logs/utils.log", logging.DEBUG)
 
 # test
 if __name__ == "__main__":
-    @utils_logger_decorator
+    @traceable_function_decorator
     def test_function(a: int, b: str, c: Dict[str, Any]) -> Dict[str, Any]:
         """测试函数，故意抛出异常"""
         # return {"result": a + int(b) + c["key"]}
         return True
 
     # 正常调用
-    print(test_function(1, "2", {"key": 3}))
+    ret = test_function(1, "2", {"key": 3})
+    global_logger.debug(f"结果是{ret}")
 
     # # 异常调用
     # print(test_function(1, "2", {"key": "not_an_int"}))

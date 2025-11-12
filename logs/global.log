@@ -1,0 +1,15 @@
+[2025-11-12 14:28:55,801]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-12 14:28:55.801380 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-12 14:28:55,829]  【调用栈】 
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:194 wrapper
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:291 <module>
+[2025-11-12 14:28:55,830]  【调用成功】 栈路径： __main__.None.test_function | 耗时： 28.456ms | 返回值： true
+[2025-11-12 14:33:44,488]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-12 14:33:44.488527 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-12 14:33:44,506]  【调用栈】 
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:194 wrapper
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:291 <module>
+[2025-11-12 14:33:44,507]  【调用成功】 栈路径： __main__.None.test_function | 耗时： 19.476ms | 返回值： true
+[2025-11-12 14:34:40,967]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-12 14:34:40.967494 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-12 14:34:40,986]  【调用栈】 
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:194 wrapper
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:291 <module>
+[2025-11-12 14:34:40,986]  【调用成功】 栈路径： __main__.None.test_function | 耗时： 19.373ms | 返回值： true
