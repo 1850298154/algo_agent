@@ -11,15 +11,15 @@ from typing_extensions import get_origin, get_args  # 处理泛型（如 List、
 # ------------------------------
 # 全局logger配置（不变）
 # ------------------------------
-def setup_logger(logger_name: str, log_file: Optional[str] = None, level: int = logging.INFO) -> logging.Logger:
-    # ========== 关键修改：自动创建日志目录 ==========
+def setup_logger(logger_name: str, log_file: Optional[str] = None, level: int = logging.DEBUG) -> logging.Logger:
+    # ========== 关键修改： 自动创建日志目录 ==========
     log_dir = os.path.dirname(log_file)
     if log_dir and not os.path.exists(log_dir):
         try:
             os.makedirs(log_dir, exist_ok=True)  # exist_ok=True 避免目录已存在时报错
-            print(f"日志目录不存在，已自动创建：{log_dir}")
+            print(f"日志目录不存在，已自动创建： {log_dir}")
         except Exception as e:
-            print(f"创建日志目录失败：{e}")
+            print(f"创建日志目录失败： {e}")
             raise  # 抛出异常，避免后续创建文件失败
     if logger_name in logging.root.manager.loggerDict:
         return logging.getLogger(logger_name)
@@ -28,10 +28,16 @@ def setup_logger(logger_name: str, log_file: Optional[str] = None, level: int = 
     logger.setLevel(level)
     logger.propagate = False
 
+    # fmt = (
+    #     "[%(asctime)s] [%(process)d:%(thread)d] [%(name)s] [%(levelname)s] "
+    #     "[%(module)s.%(funcName)s:%(lineno)d] %(message)s"
+    # ) # 没有 class
+    fmt = "[%(asctime)s] [%(process)d:%(thread)d] [%(name)s] [%(levelname)s] [%(filename)s:%(lineno)d] %(message)s"
+    fmt = "[%(asctime)s] [%(levelname)s] [%(filename)s:%(lineno)d] %(message)s"
+    fmt = "[%(asctime)s]  %(message)s"
     formatter = logging.Formatter(
-        fmt="[%(asctime)s] [%(process)d:%(thread)d] [%(name)s] [%(levelname)s] "
-            "[%(module)s.%(class)s.%(funcName)s:%(lineno)d] %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S.%f"
+        fmt=fmt,
+        # datefmt="%Y-%m-%d %H:%M:%S.%f"
     )
 
     console_handler = logging.StreamHandler()
@@ -52,7 +58,7 @@ def setup_logger(logger_name: str, log_file: Optional[str] = None, level: int = 
     return logger
 
 # ------------------------------
-# 工具函数：格式化复杂参数/返回值（不变）
+# 工具函数： 格式化复杂参数/返回值（不变）
 # ------------------------------
 def format_value(value: Any) -> str:
     try:
@@ -68,12 +74,12 @@ def format_value(value: Any) -> str:
             return str_val[:500] + "..." if len(str_val) > 500 else str_val
 
 # ------------------------------
-# 新增工具函数：根据返回值类型获取默认值
+# 新增工具函数： 根据返回值类型获取默认值
 # ------------------------------
 def get_default_return_value(func: Callable) -> Any:
     """
     根据函数返回值注解，生成对应的默认值（兜底用）
-    支持：基础类型、泛型（List/Dict/Tuple）、自定义类、None
+    支持： 基础类型、泛型（List/Dict/Tuple）、自定义类、None
     """
     try:
         # 获取返回值注解（处理无注解、字符串注解）
@@ -81,7 +87,7 @@ def get_default_return_value(func: Callable) -> Any:
         return_type = type_hints.get("return", None)
 
         if return_type is None or return_type is type(None):
-            # 无返回值注解或返回None：返回None
+            # 无返回值注解或返回None： 返回None
             return None
 
         # 处理基础类型
@@ -119,14 +125,14 @@ def get_default_return_value(func: Callable) -> Any:
             try:
                 return return_type()  # 尝试无参实例化
             except (TypeError, Exception):
-                # 无参实例化失败：返回None
+                # 无参实例化失败： 返回None
                 return None
 
-        # 其他未覆盖类型：返回None
+        # 其他未覆盖类型： 返回None
         return None
     except Exception as e:
-        # 解析类型注解失败：返回None
-        logging.warning(f"获取默认返回值失败：{str(e)}")
+        # 解析类型注解失败： 返回None
+        logging.warning(f"获取默认返回值失败： {str(e)}")
         return None
 
 # ------------------------------
@@ -135,22 +141,23 @@ def get_default_return_value(func: Callable) -> Any:
 def log_function(
     logger_name: str,
     log_file: Optional[str] = None,
-    level: int = logging.INFO,
+    level: int = logging.DEBUG,
     exclude_args: Optional[list] = None,
-    record_stack: bool = False,
+    record_stack: bool = True,
     default_return_value: Any = None  # 手动指定默认返回值（优先级高于自动推导）
 ) -> Callable:
     logger = setup_logger(logger_name, log_file, level)
     exclude_args = exclude_args or []
 
     def decorator(func: Callable) -> Callable:
-        @wraps(func) # @wraps 的作用：保留原函数元数据
+        @wraps(func) # @wraps 的作用： 保留原函数元数据
         def wrapper(*args, **kwargs) -> Any:
             # 1. 获取核心上下文信息
             func_name = func.__name__
             module_name = inspect.getmodule(func).__name__
             class_name = "None"
             lineno = inspect.getsourcelines(func)[1]
+            file_path = inspect.getfile(func)  # 新增：获取文件路径
 
             if args:
                 first_arg = args[0]
@@ -160,31 +167,42 @@ def log_function(
                     class_name = first_arg.__name__
 
             stack_full_path = f"{module_name}.{class_name}.{func_name}"
+            file_info = f"{os.path.basename(file_path)}:{lineno}"  # 新增：文件名:行号
             start_time = time.perf_counter()
             start_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
 
             # 2. 格式化参数
-            args_dict = {}
-            if args:
-                if class_name != "None":
-                    args_dict["self/cls"] = f"{class_name}实例"
-                    args_dict.update({f"arg_{i+1}": format_value(arg) for i, arg in enumerate(args[1:])})
-                else:
-                    args_dict.update({f"arg_{i+1}": format_value(arg) for i, arg in enumerate(args)})
-
-            kwargs_filtered = {k: format_value(v) for k, v in kwargs.items() if k not in exclude_args}
+            # args_dict = {}
+            # if args:
+            #     if class_name != "None":
+            #         args_dict["self/cls"] = f"{class_name}实例"
+            #         args_dict.update({f"arg_{i+1}": format_value(arg) for i, arg in enumerate(args[1:])})
+            #     else:
+            #         args_dict.update({f"arg_{i+1}": format_value(arg) for i, arg in enumerate(args)})
+            args_dict = args
+            # kwargs_filtered = {k: format_value(v) for k, v in kwargs.items() if k not in exclude_args}
+            kwargs_filtered = kwargs
 
             # 3. 记录调用开始
             logger.log(
                 level,
-                f"【调用开始】栈路径：{stack_full_path} | 开始时间：{start_datetime} "
-                f"| 位置参数：{args_dict} | 关键字参数：{kwargs_filtered}"
+                f"【调用开始】 栈路径： {stack_full_path} | 开始时间： {start_datetime} "
+                f"| 位置参数： {args_dict} | 关键字参数： {kwargs_filtered}"
             )
 
             if record_stack:
-                stack_info = inspect.stack()[2:]
-                stack_str = "\n".join([f"  调用者：{frame.filename}:{frame.lineno} {frame.function}" for frame in stack_info[:3]])
-                logger.debug(f"【调用栈】\n{stack_str}")
+                stack_info = inspect.stack()
+                # stack_info = inspect.stack()[2:]
+                def is_in_project(file_path):
+                    project_root = os.path.abspath(os.getcwd())  # 获取项目根目录的绝对路径
+                    abs_path = os.path.abspath(file_path)
+                    # Windows下忽略大小写，路径分隔符统一
+                    return os.path.normcase(abs_path).startswith(os.path.normcase(project_root))
+                
+                stack_str = "\n".join([f"          {frame.filename}:{frame.lineno} {frame.function}" 
+                                        for frame in stack_info 
+                                        if is_in_project(frame.filename)])
+                logger.debug(f"【调用栈】 \n{stack_str}")
 
             try:
                 # 4. 执行原函数
@@ -195,13 +213,13 @@ def log_function(
                 formatted_result = format_value(result)
                 logger.log(
                     level,
-                    f"【调用成功】栈路径：{stack_full_path} | 耗时：{elapsed_time:.3f}ms "
-                    f"| 返回值：{formatted_result}"
+                    f"【调用成功】 栈路径： {stack_full_path} | 耗时： {elapsed_time:.3f}ms "
+                    f"| 返回值： {formatted_result}"
                 )
                 return result
 
             except Exception as e:
-                # 6. 异常处理：记录日志 + 返回兜底默认值
+                # 6. 异常处理： 记录日志 + 返回兜底默认值
                 elapsed_time = (time.perf_counter() - start_time) * 1000
                 exception_type = type(e).__name__
                 exception_msg = str(e)
@@ -209,16 +227,16 @@ def log_function(
 
                 # 记录异常（保留完整堆栈）
                 logger.error(
-                    f"【调用失败】栈路径：{stack_full_path} | 耗时：{elapsed_time:.3f}ms "
-                    f"| 异常位置：{module_name}.{class_name}.{func_name}:{exc_lineno} "
-                    f"| 异常类型：{exception_type} | 异常信息：{exception_msg}",
+                    f"【调用失败】 栈路径： {stack_full_path} | 耗时： {elapsed_time:.3f}ms "
+                    f"| 异常位置： {module_name}.{class_name}.{func_name}:{exc_lineno} "
+                    f"| 异常类型： {exception_type} | 异常信息： {exception_msg}",
                     exc_info=True
                 )
 
                 # 确定兜底返回值（手动指定优先，否则自动推导）
                 fallback_value = default_return_value if default_return_value is not None else get_default_return_value(func)
                 logger.warning(
-                    f"【异常兜底】栈路径：{stack_full_path} | 返回默认值：{format_value(fallback_value)}"
+                    f"【异常兜底】 栈路径： {stack_full_path} | 返回默认值： {format_value(fallback_value)}"
                 )
 
                 return fallback_value  # 兜底返回，不抛出异常
@@ -230,41 +248,42 @@ def log_function(
 # ------------------------------
 # 预定义模块logger（支持手动指定默认值）
 # ------------------------------
-agent_logger = lambda func: log_function(
-    logger_name="codechain.agent",
-    log_file="logs/agent.log",
-    level=logging.INFO
-)(func)
+# agent_logger = lambda func: log_function(
+#     logger_name="agent",
+#     log_file="logs/agent.log",
+#     level=logging.DEBUG
+# )(func)
 
-# 召回模块：手动指定默认返回值为[]（避免无结果时返回None）
-retrieval_logger = lambda func: log_function(
-    logger_name="codechain.retrieval",
-    log_file="logs/retrieval.log",
-    level=logging.INFO,
-    record_stack=True,
-    default_return_value=[]  # 异常时返回空列表
-)(func)
+# # 召回模块： 手动指定默认返回值为[]（避免无结果时返回None）
+# retrieval_logger = lambda func: log_function(
+#     logger_name="retrieval",
+#     log_file="logs/retrieval.log",
+#     level=logging.DEBUG,
+#     record_stack=True,
+#     default_return_value=[]  # 异常时返回空列表
+# )(func)
 
-algorithm_logger = lambda func: log_function(
-    logger_name="codechain.algorithm",
-    level=logging.INFO,
-    default_return_value=None  # 算法异常时返回None
-)(func)
+# algorithm_logger = lambda func: log_function(
+#     logger_name="algorithm",
+#     level=logging.DEBUG,
+#     default_return_value=None  # 算法异常时返回None
+# )(func)
 
-utils_logger = lambda func: log_function(
-    logger_name="codechain.utils",
+utils_logger_decorator = lambda func: log_function(
+    logger_name="utils",
     log_file="logs/utils.log",
     exclude_args=["password", "token", "secret"],
-    level=logging.INFO
+    level=logging.DEBUG
 )(func)
 
 
 # test
 if __name__ == "__main__":
-    @utils_logger
+    @utils_logger_decorator
     def test_function(a: int, b: str, c: Dict[str, Any]) -> Dict[str, Any]:
         """测试函数，故意抛出异常"""
-        return {"result": a + int(b) + c["key"]}
+        # return {"result": a + int(b) + c["key"]}
+        return True
 
     # 正常调用
     print(test_function(1, "2", {"key": 3}))
