@@ -270,7 +270,7 @@ def log_function(
 # )(func)
 
 global_logger_file = "logs/global.log"
-traceable_function_decorator = lambda func: log_function(
+traceable = lambda func: log_function(
     logger_name="traceable_function_decorator",
     log_file=global_logger_file,
     exclude_args=["password", "token", "secret"],
@@ -281,7 +281,7 @@ global_logger = setup_logger("utils", "logs/utils.log", logging.DEBUG)
 
 # test
 if __name__ == "__main__":
-    @traceable_function_decorator
+    @traceable
     def test_function(a: int, b: str, c: Dict[str, Any]) -> Dict[str, Any]:
         """测试函数，故意抛出异常"""
         # return {"result": a + int(b) + c["key"]}
