@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 import inspect
 import json
@@ -11,6 +12,15 @@ from typing_extensions import get_origin, get_args  # 处理泛型（如 List、
 # 全局logger配置（不变）
 # ------------------------------
 def setup_logger(logger_name: str, log_file: Optional[str] = None, level: int = logging.INFO) -> logging.Logger:
+    # ========== 关键修改：自动创建日志目录 ==========
+    log_dir = os.path.dirname(log_file)
+    if log_dir and not os.path.exists(log_dir):
+        try:
+            os.makedirs(log_dir, exist_ok=True)  # exist_ok=True 避免目录已存在时报错
+            print(f"日志目录不存在，已自动创建：{log_dir}")
+        except Exception as e:
+            print(f"创建日志目录失败：{e}")
+            raise  # 抛出异常，避免后续创建文件失败
     if logger_name in logging.root.manager.loggerDict:
         return logging.getLogger(logger_name)
 
@@ -134,7 +144,7 @@ def log_function(
     exclude_args = exclude_args or []
 
     def decorator(func: Callable) -> Callable:
-        @wraps(func)
+        @wraps(func) # @wraps 的作用：保留原函数元数据
         def wrapper(*args, **kwargs) -> Any:
             # 1. 获取核心上下文信息
             func_name = func.__name__
@@ -230,7 +240,7 @@ agent_logger = lambda func: log_function(
 retrieval_logger = lambda func: log_function(
     logger_name="codechain.retrieval",
     log_file="logs/retrieval.log",
-    level=logging.DEBUG,
+    level=logging.INFO,
     record_stack=True,
     default_return_value=[]  # 异常时返回空列表
 )(func)
@@ -247,3 +257,17 @@ utils_logger = lambda func: log_function(
     exclude_args=["password", "token", "secret"],
     level=logging.INFO
 )(func)
+
+
+# test
+if __name__ == "__main__":
+    @utils_logger
+    def test_function(a: int, b: str, c: Dict[str, Any]) -> Dict[str, Any]:
+        """测试函数，故意抛出异常"""
+        return {"result": a + int(b) + c["key"]}
+
+    # 正常调用
+    print(test_function(1, "2", {"key": 3}))
+
+    # # 异常调用
+    # print(test_function(1, "2", {"key": "not_an_int"}))
