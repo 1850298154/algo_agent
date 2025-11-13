@@ -1,5 +1,6 @@
+from decorator import countcalls
 import openai
-from openai.types.chat.chat_completion import Choice
+from openai.types.chat.chat_completion import ChatCompletionMessage
 from openai.types.chat.chat_completion import ChatCompletion
 from src.utils import global_logger, traceable
 
@@ -21,8 +22,24 @@ def generate_chat_completion(messages: list[dict], tools=None) -> ChatCompletion
     return completion
 
 @traceable
-def get_assistant(messages: list[dict]) -> Choice:
+def extract_assistant_output_from_chat(messages: list[dict]) -> ChatCompletionMessage:
     completion: ChatCompletion = generate_chat_completion(messages)
-    assistant_output: Choice = completion.choices[0].message
+    assistant_output: ChatCompletionMessage = completion.choices[0].message
     # assistant_output.finish_reason == "stop" or "length"
     return assistant_output
+
+@traceable
+@countcalls
+def generate_assistant_output_append(messages: list[dict]) -> ChatCompletionMessage:
+    global_logger.info("-" * 60)
+    assistant_output: ChatCompletionMessage = extract_assistant_output_from_chat(messages)
+    global_logger.info(f"\n第{generate_assistant_output_append.call_count}轮大模型输出信息：{assistant_output}\n")
+    
+    if assistant_output.content is None:
+        assistant_output.content = ""
+    messages.append(assistant_output)
+    return assistant_output
+
+@traceable
+def has_tool_call(assistant_output: ChatCompletionMessage) -> bool:
+    return assistant_output.tool_calls != None
