@@ -6,7 +6,6 @@ import source_printer    # 导入源码打印机
 
 def build_exec_namespace(injected_modules: Dict[str, ModuleType]) -> Dict:
     """构建 exec 的全局命名空间（合并模块和默认全局变量）"""
-    # 复制当前进程的全局变量，再注入收集到的模块
     exec_globals = globals().copy()
     exec_globals.update(injected_modules)
     return exec_globals
@@ -32,23 +31,20 @@ def execute_code(
 def run_exec_with_modules(
     code: str,
     include_builtin: bool = True,
+    include_stdlib: bool = True,  # 新增：是否包含标准库
     include_third_party: bool = True,
+    include_all_installed: bool = True,
     include_custom: Optional[List[str]] = None,
     print_mod_names: Optional[List[str]] = None
 ) -> None:
-    """
-    整合流程：收集模块 → 打印源码 → 执行代码（入口函数）
-    :param code: 待执行的代码字符串
-    :param include_builtin: 是否包含内置模块
-    :param include_third_party: 是否包含第三方模块
-    :param include_custom: 自定义模块列表
-    :param print_mod_names: 需要打印源码的模块名列表
-    """
+    """整合流程：收集模块 → 打印源码 → 执行代码（新增 include_stdlib 参数）"""
     # 1. 收集所有需要注入的模块
     print("📥 开始收集模块...")
     injected_modules = module_collector.get_all_injected_modules(
         include_builtin=include_builtin,
+        include_stdlib=include_stdlib,  # 传递标准库参数
         include_third_party=include_third_party,
+        include_all_installed=include_all_installed,
         include_custom=include_custom
     )
     print(f"✅ 模块收集完成，共 {len(injected_modules)} 个模块")

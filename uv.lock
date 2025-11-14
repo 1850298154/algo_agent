@@ -125,6 +125,7 @@ dependencies = [
     { name = "networkx" },
     { name = "numpy" },
     { name = "openai" },
+    { name = "requests" },
     { name = "scikit-learn" },
 ]
 
@@ -137,6 +138,7 @@ requires-dist = [
     { name = "networkx", specifier = ">=3.5" },
     { name = "numpy", specifier = ">=2.3.4" },
     { name = "openai", specifier = ">=2.7.2" },
+    { name = "requests", specifier = ">=2.32.5" },
     { name = "scikit-learn", specifier = ">=1.7.2" },
 ]
 
