@@ -1,7 +1,8 @@
 {
-    "python.terminal.executeInFileDir": false,
-    "python.terminal.cwd": "${workspaceFolder}",
     "terminal.integrated.env.windows": {
-        "PYTHONPATH": "${workspaceFolder}"
-    }
+      "PYTHONPATH": "${workspaceFolder};${env:PYTHONPATH}"
+    },
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}:${env:PYTHONPATH}"
+    }   
 }

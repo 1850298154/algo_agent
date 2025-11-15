@@ -1,6 +1,8 @@
 import os
 # 打印路径
 print("当前路径:", os.getcwd())
+#  Python 搜索路径
+print("Python 搜索路径:", os.sys.path)
 from src.runtime.python_executor import run
 
 my_globals = {"a": 123, "b": [1, 2, 3]}
