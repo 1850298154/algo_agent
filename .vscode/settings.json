@@ -1,0 +1,7 @@
+{
+    "python.terminal.executeInFileDir": false,
+    "python.terminal.cwd": "${workspaceFolder}",
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}"
+    }
+}
