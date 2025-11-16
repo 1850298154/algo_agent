@@ -1,7 +1,7 @@
 from typing import Dict, Optional, List
 from types import ModuleType
-import module_collector  # 导入模块收集器
-import source_printer    # 导入源码打印机
+from src.runtime import module_collector  # 导入模块收集器
+from src.runtime import source_printer    # 导入源码打印机
 
 
 def build_exec_namespace(injected_modules: Dict[str, ModuleType]) -> Dict:

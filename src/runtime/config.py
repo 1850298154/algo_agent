@@ -1,18 +1,4 @@
-# 自定义包名列表（需确保包在 sys.path 中）
-CUSTOM_PACKAGES = ["my_package"]  # 替换为你的自定义包名
-
-# 需要打印源码的模块名列表（新增标准库模块 os、json）
-PRINT_SOURCES = [
-    "sys",          # 内置模块（C 实现）
-    "os",           # 标准库模块（Python 实现）
-    "json",         # 标准库模块（Python 实现）
-    "requests",     # 第三方包
-    "my_package"    # 自定义包
-]
-
-# 待执行的代码字符串（补充标准库/第三方包的函数示例）
-CODE_TO_EXEC = """
-print("===== 执行代码开始 =====")
+CODE_TO_EXEC = """print("===== 执行代码开始 =====")
 # 导入所需模块
 import json
 import os
@@ -78,3 +64,16 @@ from my_package import hello, add  # 假设新增了 add 函数
 hello()
 print("✅ 【自定义模块】10 + 20 =", add(10, 20))
 """
+
+# 自定义包名列表（需确保包在 sys.path 中）
+CUSTOM_PACKAGES = ["my_package"]  # 替换为你的自定义包名
+
+# 需要打印源码的模块名列表（新增标准库模块 os、json）
+PRINT_SOURCES = [
+    "sys",          # 内置模块（C 实现）
+    "os",           # 标准库模块（Python 实现）
+    "json",         # 标准库模块（Python 实现）
+    "requests",     # 第三方包
+    "my_package"    # 自定义包
+]
+

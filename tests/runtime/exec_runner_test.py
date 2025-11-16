@@ -1,5 +1,5 @@
-import config  # 导入配置项
-import exec_runner  # 导入执行器
+from src.runtime import config  # 导入配置项
+from src.runtime import exec_runner  # 导入执行器
 
 
 def main():
