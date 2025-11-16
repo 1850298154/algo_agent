@@ -64,6 +64,42 @@ def test_exception():
     res=run("print(c)",my_globals,my_locals)  # 输出: NameError("name 'c' is not defined")
     print(res)
 
+
+def selftest():
+    import traceback
+    codes = [
+        """
+def add(a, b):
+    return a + b
+
+# 错误：传入 3 个参数（函数仅接收 2 个）
+result = add(1, 2, 3)
+print(result)
+        """,
+        """
+# 相对导入（假设当前逻辑是“作为主模块运行”）
+from .utils import func  # 常见于模块内的导入语法
+        """,        
+"from __future__ import print_function",    
+    ]
+
+    for code in codes:
+        try:
+            my_globals = {}
+            my_locals = {}
+            # 执行代码（可选传入 globals/locals 隔离命名空间）
+            exec(code, my_globals, my_locals)
+        except Exception as e:
+            # 获取完整报错信息（字符串格式）
+            full_error = traceback.format_exc()
+            print("完整报错信息：")
+            print("-" * 50)
+            print(full_error)
+            print("-" * 50)
+            # 也可以直接打印（无需手动格式化）
+            # traceback.print_exc()
+            
 if __name__ == "__main__":
     # test_python_executor()
-    test_exception()
+    # test_exception()
+    selftest()
