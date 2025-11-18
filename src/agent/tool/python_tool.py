@@ -23,5 +23,5 @@ class ExecutePythonCodeTool(base_tool.BaseTool):
     )
 
     def run(self) -> str:
-        execution_context: Optional[Dict[str, Any]] = workspace.create_workspace()
+        execution_context: Optional[Dict[str, Any]] = workspace.initialize_workspace()
         return python_executor.run(self.python_code_snippet, execution_context)
