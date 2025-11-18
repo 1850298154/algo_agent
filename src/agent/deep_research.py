@@ -5,6 +5,9 @@ from src.utils import global_logger, traceable
 import llm
 import action
 import memory
+import tool
+import tool.schema
+import tool.python_tool
 
 
 @traceable
@@ -13,9 +16,12 @@ def user_query(user_input):
     global_logger.info(f"{user_hint} ： {user_input}\n\n")
 
     messages = memory.init_messages(user_input)
+    tools_schema_list = tool.schema.get_tools_schema([
+        tool.python_tool.ExecutePythonCodeTool
+        ])
     
     # 模型的第一轮调用
-    assistant_output: ChatCompletionMessage = llm.generate_assistant_output_append(messages)
+    assistant_output: ChatCompletionMessage = llm.generate_assistant_output_append(messages, tools_schema_list)
     if not llm.has_tool_call(assistant_output):
         global_logger.info(f"无需调用工具，我可以直接回复：{assistant_output.content}")
         return
@@ -27,11 +33,12 @@ def user_query(user_input):
             "content": "",
             "role": "tool",
             "tool_call_id": assistant_output.tool_calls[0].id,
+            # 其他非必须
             "tool_call_name": assistant_output.tool_calls[0].function.name,
             "tool_call_arguments": assistant_output.tool_calls[0].function.arguments,
         }
 
-        action.call_tools_safely(tool_info, assistant_output)
+        action.call_tools_safely(tool_info)
 
         tool_output = tool_info["content"]
         global_logger.info(f"工具输出信息： {tool_output}\n")
@@ -42,10 +49,9 @@ def user_query(user_input):
         if assistant_output.content is None:
             assistant_output.content = ""
         messages.append(assistant_output)
-        loop_cnt += 1
-        global_logger.info(f"第{loop_cnt}轮大模型输出信息： {assistant_output}\n")
+        global_logger.info(f"第{len(messages) // 2}轮大模型输出信息： {assistant_output}\n")
     global_logger.info(f"最终答案： {assistant_output.content}")
 
 # 测试
 if __name__ == "__main__":
-    user_query("你好")
+    user_query("你好，帮我执行 print('Hello, World!') 这段代码，并告诉我结果是什么？")

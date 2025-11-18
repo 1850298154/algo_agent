@@ -1,5 +1,6 @@
 import logging
 import os
+import pprint
 import time
 import inspect
 import json
@@ -61,8 +62,15 @@ def setup_logger(logger_name: str, log_file: Optional[str] = None, level: int = 
 # 工具函数： 格式化复杂参数/返回值（不变）
 # ------------------------------
 def format_value(value: Any) -> str:
+    @wraps(pprint.pformat)
+    def pf(*args, **kwargs):
+        """Format a Python object into a pretty-printed representation."""
+        output_format_str = pprint.pformat(*args, **kwargs)
+        print(output_format_str+'\n')
+        return output_format_str
     try:
-        return json.dumps(value, ensure_ascii=False, indent=2)
+        return pf(value)
+        # return json.dumps(value, ensure_ascii=False, indent=2)
     except (TypeError, ValueError):
         if hasattr(value, "__dict__"):
             obj_dict = {k: v for i, (k, v) in enumerate(value.__dict__.items()) if i < 10}

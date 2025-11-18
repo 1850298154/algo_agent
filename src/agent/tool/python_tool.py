@@ -2,8 +2,9 @@ from pydantic import BaseModel, Field, ValidationError
 from typing import Dict, Type, Any, Optional, Literal, List
 import inspect
 
-import base_tool
-from src.runtime.python_executor import python_repl_instance
+from src.agent.tool import base_tool
+from src.runtime import python_executor
+from src.runtime import workspace
 class ExecutePythonCodeTool(base_tool.BaseTool):
     """
     description:
@@ -22,4 +23,5 @@ class ExecutePythonCodeTool(base_tool.BaseTool):
     )
 
     def run(self) -> str:
-        return 
+        execution_context: Optional[Dict[str, Any]] = workspace.create_workspace()
+        return python_executor.run(self.python_code_snippet, execution_context)

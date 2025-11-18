@@ -1,4 +1,3 @@
-from decorator import countcalls
 import openai
 from openai.types.chat.chat_completion import ChatCompletionMessage
 from openai.types.chat.chat_completion import ChatCompletion
@@ -12,28 +11,27 @@ client = openai.OpenAI(
 )
 
 @traceable
-def generate_chat_completion(messages: list[dict], tools=None) -> ChatCompletion:
+def generate_chat_completion(messages: list[dict], tools_schema_list=None) -> ChatCompletion:
     completion: ChatCompletion = client.chat.completions.create(
         model="qwen-plus",  # 模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
         # https://help.aliyun.com/zh/model-studio/models
         messages=messages,
-        tools=tools,
+        tools=tools_schema_list,
     )
     return completion
 
 @traceable
-def extract_assistant_output_from_chat(messages: list[dict]) -> ChatCompletionMessage:
-    completion: ChatCompletion = generate_chat_completion(messages)
+def extract_assistant_output_from_chat(messages: list[dict], tools_schema_list=None) -> ChatCompletionMessage:
+    completion: ChatCompletion = generate_chat_completion(messages, tools_schema_list)
     assistant_output: ChatCompletionMessage = completion.choices[0].message
     # assistant_output.finish_reason == "stop" or "length"
     return assistant_output
 
 @traceable
-@countcalls
-def generate_assistant_output_append(messages: list[dict]) -> ChatCompletionMessage:
+def generate_assistant_output_append(messages: list[dict], tools_schema_list=None) -> ChatCompletionMessage:
     global_logger.info("-" * 60)
-    assistant_output: ChatCompletionMessage = extract_assistant_output_from_chat(messages)
-    global_logger.info(f"\n第{generate_assistant_output_append.call_count}轮大模型输出信息：{assistant_output}\n")
+    assistant_output: ChatCompletionMessage = extract_assistant_output_from_chat(messages, tools_schema_list)
+    global_logger.info(f"\n第{len(messages)}轮大模型输出信息：{assistant_output}\n")
     
     if assistant_output.content is None:
         assistant_output.content = ""
@@ -42,4 +40,4 @@ def generate_assistant_output_append(messages: list[dict]) -> ChatCompletionMess
 
 @traceable
 def has_tool_call(assistant_output: ChatCompletionMessage) -> bool:
-    return assistant_output.tool_calls != None
+    return assistant_output.tool_calls is not None
