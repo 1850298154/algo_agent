@@ -2,7 +2,10 @@ import multiprocessing
 import re
 import sys
 from io import StringIO
+import traceback
 from typing import Any, Dict, Optional
+
+from src.runtime import source_code 
 
 def sanitize_input(query: str) -> str:
     """Sanitize input to the python REPL.
@@ -34,8 +37,10 @@ def worker(
         sys.stdout = old_stdout
         queue.put(mystdout.getvalue())
     except Exception as e:
+        # 获取完整报错信息（字符串格式）
+        code_and_traceback = source_code.get_code_and_traceback(command)
         sys.stdout = old_stdout
-        queue.put(repr(e))
+        queue.put(code_and_traceback)
 
 def run(
         command: str, 

@@ -1,4 +1,7 @@
 
+import traceback
+
+
 def add_line_numbers(
     code_str,
     start=1,
@@ -35,3 +38,21 @@ def add_line_numbers(
             current_line_num += 1
     
     return "\n".join(numbered_lines)
+
+
+def get_exception_traceback() -> str:
+    # 提取第一行和从第四行开始的内容， 跳过二三行
+    full_error_str = traceback.format_exc()
+    error_lines = full_error_str.splitlines()
+    error_lines = error_lines[0:1] + error_lines[3:]
+    return "\n".join(error_lines)
+
+
+def get_code_and_traceback(command: str) -> str:
+    command = command.strip()
+    source_code_with_line_numbers = add_line_numbers(command)
+    exception_error_message = get_exception_traceback()
+    code_hint = "原始代码："
+    line_hint = "-" * 50
+    error_hint = "报错信息："
+    return f"{code_hint}\n{source_code_with_line_numbers}\n{line_hint}\n{error_hint}\n{exception_error_message}"
