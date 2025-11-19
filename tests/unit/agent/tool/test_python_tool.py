@@ -5,7 +5,8 @@ def test_execute_python_code_tool():
     result = tool.run()
     print(result)
 def test_execute_python_code_tool_with_exception():
-    code = """def myadd(a, b):
+    code = """
+def myadd(a, b):
     return a+b/0
 
 def main():

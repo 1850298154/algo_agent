@@ -49,6 +49,26 @@ def get_exception_traceback() -> str:
 
 
 def get_code_and_traceback(command: str) -> str:
+    """
+原始代码：
+ 1 | def myadd(a, b):
+ 2 |     return a+b/0
+ 3 | 
+ 4 | def main():
+ 5 |     print('global :', globals().keys())
+ 6 |     print('local :',  locals().keys())
+ 7 |     print("核心逻辑执行", myadd(1, 2))
+ 8 | print('global :', globals().keys())
+ 9 | print('local :',  locals().keys())
+10 | main()
+--------------------------------------------------
+报错信息：
+Traceback (most recent call last):
+  File "<string>", line 10, in <module>
+  File "<string>", line 7, in main
+  File "<string>", line 2, in myadd
+ZeroDivisionError: division by zero    
+    """
     command = command.strip()
     source_code_with_line_numbers = add_line_numbers(command)
     exception_error_message = get_exception_traceback()
