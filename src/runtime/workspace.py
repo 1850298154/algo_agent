@@ -4,6 +4,9 @@ This module handles the workspace functionality for the runtime environment.
 """
 
 
+instance = None
+
+
 def __create_workspace() -> dict:
     workspace = {}
     exec("", workspace)
@@ -12,8 +15,12 @@ def __create_workspace() -> dict:
 
 def initialize_workspace() -> dict:
     workspace: dict = __create_workspace()
-    workspace.update({'__name__': '__main__'})
+    instance = workspace.update({'__name__': '__main__'})
     return workspace
+
+
+def update_workspace_globals(globals_dict: dict):
+    instance.update(globals_dict)
 
 
 def get_workspace_globals_dict(workspace: dict, include_special_vars: bool = False):

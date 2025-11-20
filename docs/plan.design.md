@@ -551,3 +551,452 @@ todo_manager.update_task_status(
 
 如果需要将之前的代码改为规范枚举版本，可以直接替换 `TaskStatus` 的定义，并调整相关字段的类型注解和调用方式即可。
 
+# 我的意思是模型输出的是 JSON，没有问题，用 JSON 表示 todo list。但是我们这个工具是需要识别出每一次 to do list 的变动在哪里，以及并将它转成 Markdown 格式输出出来。方便来做后续的观察与总结等等分析。
+明白了！核心需求是：**底层用 JSON 存储 Todo 列表（保证模型可解析、状态可跟踪），工具自动识别 JSON 的变动（新增/完成/变更等），并同步输出 Markdown 格式（供人观察总结）** —— 既保留 JSON 的结构化优势（模型友好），又兼顾 Markdown 的可读性（人友好），同时自动标注变动，无需人工对比。
+
+这个设计才是“模型能懂、人能看”的最优解！下面是具体实现：
+
+### 核心逻辑设计
+1. **输入**：上次的 JSON 计划（基准版） + 本次的 JSON 计划（更新版）；
+2. **工具核心能力**：
+   - 自动对比两个 JSON，识别变动类型（新增/完成/状态变更/内容修改/删除）；
+   - 给变动项打标签（如「🔴新增」「🟢完成」）；
+   - 自动将最新 JSON 转成层级化 Markdown Todo 树；
+   - 输出「Markdown 可视化结果 + 变动总结」。
+3. **输出**：一份带变动标注的 Markdown 计划书（含完整 Todo 树 + 变动清单）。
+
+### 最终工具实现（严格遵循基类，JSON 转 Markdown + 变动识别）
+```python
+import inspect
+import inflection
+from pydantic import BaseModel, Field
+from typing import List, Dict, Optional, Literal
+from deepdiff import DeepDiff  # 用于对比JSON变动（需安装：pip install deepdiff）
+
+# ---------------------- 复用数据模型（保持JSON结构统一） ----------------------
+class Task(BaseModel):
+    """单个任务的结构化定义（模型用JSON存储时遵循此结构）"""
+    task_id: str = Field(..., description="任务唯一ID（如 T001）")
+    task_name: str = Field(..., description="任务名称")
+    description: str = Field(..., description="任务详细描述")
+    status: Literal["pending", "processing", "completed", "failed", "paused"] = Field(default="pending", description="任务状态")
+    output: str = Field(default="", description="执行结果")
+    next_dependency: str = Field(default="", description="下一个依赖任务ID")
+    research_directions: Optional[List[str]] = Field(default=None, description="深度研究方向")
+    parent_task_id: Optional[str] = Field(default=None, description="父任务ID（用于层级结构，顶级任务为None）")
+
+class ContextReference(BaseModel):
+    type: str = Field(..., description="资源类型")
+    url: Optional[str] = Field(default=None, description="资源链接")
+    note: str = Field(..., description="资源说明")
+
+class AgentPlan(BaseModel):
+    """完整的JSON计划结构（模型存储和修改的基准格式）"""
+    agent_plan_id: str = Field(..., description="计划ID")
+    core_goal: str = Field(..., description="核心目标")
+    current_status: Dict = Field(..., description="当前状态：stage/progress/last_executed_task/pending_issue")
+    task_plan: List[Task] = Field(..., description="任务列表（含层级关系）")
+    next_action: Dict = Field(..., description="下一步动作")
+    context_references: Optional[List[ContextReference]] = Field(default=None, description="参考资源")
+
+# ---------------------- 核心工具：JSON变动识别 + Markdown转换 ----------------------
+class TodoJsonToMarkdownTool(BaseTool):
+    """
+    AI Agent Todo 管理工具：输入上次和本次的JSON计划，自动识别变动并转成Markdown Todo树。
+    核心功能：
+    1. 对比两次JSON计划，识别变动（新增/完成/状态变更/内容修改/删除/层级调整）；
+    2. 给Markdown中的变动任务打标签，直观展示差异；
+    3. 生成层级化Markdown Todo树（按parent_task_id构建父子关系）；
+    4. 输出变动总结，方便后续观察分析。
+    """
+    # 入参：上次的JSON计划（基准）、本次的JSON计划（更新后）
+    last_json_plan: AgentPlan = Field(..., description="上一次的完整JSON计划（BaseModel实例，作为变动对比基准）")
+    current_json_plan: AgentPlan = Field(..., description="本次更新后的完整JSON计划（BaseModel实例，需包含所有任务）")
+
+    @classmethod
+    def tool_name(cls) -> str:
+        return "todo_json_to_markdown"
+
+    @classmethod
+    def tool_description(cls) -> str:
+        return "输入两次JSON格式的Todo计划，自动识别变动（新增/完成/修改等），并转换为带变动标注的层级化Markdown Todo树，供人观察总结"
+
+    def run(self) -> str:
+        """核心执行逻辑：对比JSON→识别变动→构建层级→生成Markdown"""
+        # 1. 转换为字典，方便对比和处理
+        last_plan_dict = self.last_json_plan.model_dump()
+        current_plan_dict = self.current_json_plan.model_dump()
+
+        # 2. 识别所有变动（用DeepDiff对比，输出结构化变动信息）
+        changes = self._detect_changes(last_plan_dict, current_plan_dict)
+
+        # 3. 构建层级化任务树（按parent_task_id关联父子任务）
+        task_tree = self._build_task_tree(current_plan_dict["task_plan"])
+
+        # 4. 生成带变动标注的Markdown
+        markdown_content = self._generate_markdown(task_tree, changes)
+
+        # 5. 生成变动总结
+        change_summary = self._generate_change_summary(changes)
+
+        # 6. 拼接最终输出
+        final_output = f"""# {current_plan_dict['agent_plan_id']} 分析计划书（Markdown可视化）
+## 核心目标：{current_plan_dict['core_goal']}
+## 当前状态：{current_plan_dict['current_status']['stage']}（进度：{current_plan_dict['current_status']['progress']}%）
+## 下一步动作：{current_plan_dict['next_action']['action_name']}（优先级：{current_plan_dict['next_action']['priority']}）
+
+---
+
+{markdown_content}
+
+---
+
+## 本次变动总结
+{change_summary}
+
+---
+⚠️ 说明：
+- 标签含义：🔴新增 | 🟢完成 | 🔵状态变更 | 🟡内容修改 | 🔴删除 | 🟣层级调整
+- 任务前[x]表示已完成，[ ]表示未完成
+- 参考资源：{self._format_references(current_plan_dict['context_references'])}
+"""
+        return final_output.strip()
+
+    def _detect_changes(self, last_plan: Dict, current_plan: Dict) -> Dict:
+        """辅助方法：对比两次计划，识别变动类型"""
+        # 提取两次的任务ID列表
+        last_task_ids = {task["task_id"] for task in last_plan["task_plan"]}
+        current_task_ids = {task["task_id"] for task in current_plan["task_plan"]}
+
+        # 初始化变动字典
+        changes = {
+            "added": [],  # 新增任务（current有，last无）
+            "deleted": [],  # 删除任务（last有，current无）
+            "status_changed": [],  # 状态变更（task_id存在，status不同）
+            "content_changed": [],  # 内容修改（task_id存在，status相同但其他字段变）
+            "hierarchy_changed": []  # 层级调整（parent_task_id变更）
+        }
+
+        # 1. 识别新增和删除任务
+        changes["added"] = list(current_task_ids - last_task_ids)
+        changes["deleted"] = list(last_task_ids - current_task_ids)
+
+        # 2. 对比现有任务的变动（状态/内容/层级）
+        last_task_map = {task["task_id"]: task for task in last_plan["task_plan"]}
+        current_task_map = {task["task_id"]: task for task in current_plan["task_plan"]}
+
+        for task_id in current_task_ids & last_task_ids:
+            last_task = last_task_map[task_id]
+            current_task = current_task_map[task_id]
+
+            # 识别状态变更
+            if last_task["status"] != current_task["status"]:
+                changes["status_changed"].append({
+                    "task_id": task_id,
+                    "old_status": last_task["status"],
+                    "new_status": current_task["status"]
+                })
+                # 若状态变为completed，单独标记为“完成”（优先级高于普通状态变更）
+                if current_task["status"] == "completed":
+                    changes["added"].append(f"🟢完成-{task_id}")  # 后续Markdown中特殊标注
+
+            # 识别层级调整（parent_task_id变更）
+            if last_task.get("parent_task_id") != current_task.get("parent_task_id"):
+                changes["hierarchy_changed"].append({
+                    "task_id": task_id,
+                    "old_parent": last_task.get("parent_task_id"),
+                    "new_parent": current_task.get("parent_task_id")
+                })
+
+            # 识别内容修改（排除状态和parent_task_id的变更）
+            last_task_clean = {k: v for k, v in last_task.items() if k not in ["status", "parent_task_id", "output"]}
+            current_task_clean = {k: v for k, v in current_task.items() if k not in ["status", "parent_task_id", "output"]}
+            if last_task_clean != current_task_clean:
+                changes["content_changed"].append(task_id)
+
+        return changes
+
+    def _build_task_tree(self, tasks: List[Dict]) -> List[Dict]:
+        """辅助方法：按parent_task_id构建层级化任务树"""
+        task_map = {task["task_id"]: task for task in tasks}
+        task_tree = []
+
+        # 先找顶级任务（parent_task_id为None或空）
+        for task_id, task in task_map.items():
+            if not task.get("parent_task_id"):
+                # 递归找子任务
+                task["children"] = self._find_children(task_id, task_map)
+                task_tree.append(task)
+
+        return task_tree
+
+    def _find_children(self, parent_id: str, task_map: Dict) -> List[Dict]:
+        """辅助方法：递归查找子任务"""
+        children = []
+        for task_id, task in task_map.items():
+            if task.get("parent_task_id") == parent_id:
+                task["children"] = self._find_children(task_id, task_map)
+                children.append(task)
+        return children
+
+    def _generate_markdown(self, task_tree: List[Dict], changes: Dict) -> str:
+        """辅助方法：生成带变动标注的Markdown Todo树"""
+        markdown_lines = []
+        # 递归生成层级（用缩进表示层级，顶级无缩进，子任务加2空格）
+        def recursive_render(tasks: List[Dict], indent: int = 0):
+            for task in tasks:
+                task_id = task["task_id"]
+                status = task["status"]
+                task_name = task["task_name"]
+                description = task["description"]
+
+                # 1. 确定完成状态（[x] / [ ]）
+                check_box = "[x]" if status == "completed" else "[ ]"
+
+                # 2. 确定变动标签
+                tag = ""
+                if any(f"🟢完成-{task_id}" in item for item in changes["added"]):
+                    tag = "🟢完成 "
+                elif task_id in changes["added"]:
+                    tag = "🔴新增 "
+                elif any(item["task_id"] == task_id for item in changes["status_changed"]):
+                    tag = "🔵状态变更 "
+                elif task_id in changes["content_changed"]:
+                    tag = "🟡内容修改 "
+                elif any(item["task_id"] == task_id for item in changes["hierarchy_changed"]):
+                    tag = "🟣层级调整 "
+
+                # 3. 拼接任务行（缩进+复选框+标签+任务信息）
+                indent_space = "  " * indent
+                task_line = f"{indent_space}- {check_box} {tag}{task_name}（{task_id}）"
+                markdown_lines.append(task_line)
+
+                # 4. 添加任务描述（缩进+斜体）
+                if description:
+                    desc_line = f"{indent_space}  *描述：{description}*"
+                    markdown_lines.append(desc_line)
+
+                # 5. 递归渲染子任务
+                if task["children"]:
+                    recursive_render(task["children"], indent + 1)
+
+        recursive_render(task_tree)
+        return "\n".join(markdown_lines)
+
+    def _generate_change_summary(self, changes: Dict) -> str:
+        """辅助方法：生成简洁的变动总结"""
+        summary_lines = []
+
+        if changes["added"]:
+            # 过滤掉“完成”标记的新增项，单独统计
+            completed_tasks = [item.replace("🟢完成-", "") for item in changes["added"] if item.startswith("🟢完成-")]
+            pure_added = [item for item in changes["added"] if not item.startswith("🟢完成-")]
+            if pure_added:
+                summary_lines.append(f"- 新增任务：{', '.join(pure_added)}（共{len(pure_added)}个）")
+            if completed_tasks:
+                summary_lines.append(f"- 完成任务：{', '.join(completed_tasks)}（共{len(completed_tasks)}个）")
+
+        if changes["deleted"]:
+            summary_lines.append(f"- 删除任务：{', '.join(changes['deleted'])}（共{len(changes['deleted'])}个）")
+
+        if changes["status_changed"]:
+            status_str = "; ".join([f"{item['task_id']}（{item['old_status']}→{item['new_status']}）" for item in changes["status_changed"]])
+            summary_lines.append(f"- 状态变更：{status_str}（共{len(changes['status_changed'])}个）")
+
+        if changes["content_changed"]:
+            summary_lines.append(f"- 内容修改：{', '.join(changes['content_changed'])}（共{len(changes['content_changed'])}个）")
+
+        if changes["hierarchy_changed"]:
+            hierarchy_str = "; ".join([f"{item['task_id']}（父任务：{item['old_parent'] or '无'}→{item['new_parent'] or '无'}）" for item in changes["hierarchy_changed"]])
+            summary_lines.append(f"- 层级调整：{hierarchy_str}（共{len(changes['hierarchy_changed'])}个）")
+
+        if not any(summary_lines):
+            return "✅ 无任何变动，计划保持一致"
+
+        return "\n".join(summary_lines)
+
+    def _format_references(self, references: Optional[List[Dict]]) -> str:
+        """辅助方法：格式化参考资源"""
+        if not references:
+            return "无"
+        ref_lines = [f"- {ref['type']}：{ref['note']}（链接：{ref['url'] or '无'}）" for ref in references]
+        return "\n".join(ref_lines)
+
+# ---------------------- 工具使用示例 ----------------------
+if __name__ == "__main__":
+    # 1. 构造上次的JSON计划（基准版）
+    last_plan = AgentPlan(
+        agent_plan_id="deep_research_202406",
+        core_goal="完成XX主题深度研究，输出结构化分析报告",
+        current_status={
+            "stage": "执行阶段",
+            "progress": 0,
+            "last_executed_task": "",
+            "pending_issue": ""
+        },
+        task_plan=[
+            Task(
+                task_id="T001",
+                task_name="收集XX主题文献",
+                description="收集近5年高被引论文+行业报告",
+                status="pending",
+                parent_task_id=None
+            ),
+            Task(
+                task_id="T002",
+                task_name="筛选核心文献",
+                description="保留与主题强相关的文献",
+                status="pending",
+                parent_task_id="T001"
+            )
+        ],
+        next_action={
+            "action_name": "执行T001：收集XX主题文献",
+            "priority": "high",
+            "required_input": "无",
+            "expected_output": "20+篇核心文献"
+        },
+        context_references=[
+            ContextReference(
+                type="文献库",
+                url="https://scholar.google.com",
+                note="关键词：XX技术、2020-2024"
+            )
+        ]
+    )
+
+    # 2. 构造本次的JSON计划（更新版）
+    current_plan = AgentPlan(
+        agent_plan_id="deep_research_202406",
+        core_goal="完成XX主题深度研究，输出结构化分析报告",
+        current_status={
+            "stage": "执行阶段",
+            "progress": 40,
+            "last_executed_task": "T001",
+            "pending_issue": "无"
+        },
+        task_plan=[
+            Task(
+                task_id="T001",
+                task_name="收集XX主题文献",
+                description="收集近5年高被引论文+行业报告（补充中文核心期刊）",  # 内容修改
+                status="completed",  # 状态变更为完成
+                output="已收集23篇核心文献",
+                parent_task_id=None
+            ),
+            Task(
+                task_id="T002",
+                task_name="筛选核心文献",
+                description="保留与主题强相关的文献",
+                status="completed",  # 状态变更为完成
+                output="筛选出18篇强相关文献",
+                parent_task_id="T001"
+            ),
+            Task(
+                task_id="T003",  # 新增任务
+                task_name="文献精读与信息提取",
+                description="提取核心观点、数据支撑、研究缺口",
+                status="pending",
+                parent_task_id=None
+            ),
+            Task(
+                task_id="T004",  # 新增任务（子任务）
+                task_name="标记研究缺口",
+                description="重点关注未解决的技术问题",
+                status="pending",
+                parent_task_id="T003"  # 层级关联T003
+            )
+        ],
+        next_action={
+            "action_name": "执行T003：文献精读与信息提取",
+            "priority": "high",
+            "required_input": "18篇强相关文献",
+            "expected_output": "文献核心观点汇总表"
+        },
+        context_references=[
+            ContextReference(
+                type="文献库",
+                url="https://scholar.google.com",
+                note="关键词：XX技术、2020-2024"
+            ),
+            ContextReference(
+                type="中文核心期刊",
+                url="https://cnki.net",
+                note="新增中文文献来源"
+            )
+        ]
+    )
+
+    # 3. 调用工具，生成带变动标注的Markdown
+    tool = TodoJsonToMarkdownTool(
+        last_json_plan=last_plan,
+        current_json_plan=current_plan
+    )
+    print(tool.run())
+```
+
+### 工具核心优势（完全匹配你的需求）
+1. **JSON 底层存储**：模型用 JSON 管理 Todo 列表，结构化强、无歧义，模型能精准解析和修改（符合你“JSON 表示 Todo list”的要求）；
+2. **自动识别变动**：工具通过 `DeepDiff` 对比两次 JSON，无需模型手动标注变动，自动识别“新增/完成/修改/删除/层级调整”，减少模型负担；
+3. **Markdown 可视化输出**：自动将 JSON 转成层级化 Todo 树，带勾选框和变动标签，人能直接阅读、观察进度，满足“后续观察与总结”需求；
+4. **变动总结清晰**：单独输出变动清单，无需人工对比两次计划，快速掌握核心变更；
+5. **严格遵循基类**：完全继承 `BaseTool` 接口，可直接集成到 Agent 工具链，无需额外适配。
+
+### 工具输出效果示例（Markdown）
+```markdown
+# deep_research_202406 分析计划书（Markdown可视化）
+## 核心目标：完成XX主题深度研究，输出结构化分析报告
+## 当前状态：执行阶段（进度：40%）
+## 下一步动作：执行T003：文献精读与信息提取（优先级：high）
+
+---
+
+- [x] 🟢完成 收集XX主题文献（T001）
+  *描述：收集近5年高被引论文+行业报告（补充中文核心期刊）*
+  - [x] 🟢完成 筛选核心文献（T002）
+    *描述：保留与主题强相关的文献*
+- [ ] 🔴新增 文献精读与信息提取（T003）
+  *描述：提取核心观点、数据支撑、研究缺口*
+  - [ ] 🔴新增 标记研究缺口（T004）
+    *描述：重点关注未解决的技术问题*
+
+---
+
+## 本次变动总结
+- 完成任务：T001, T002（共2个）
+- 新增任务：T003, T004（共2个）
+- 内容修改：T001（共1个）
+
+---
+⚠️ 说明：
+- 标签含义：🔴新增 | 🟢完成 | 🔵状态变更 | 🟡内容修改 | 🔴删除 | 🟣层级调整
+- 任务前[x]表示已完成，[ ]表示未完成
+- 参考资源：
+- 文献库：关键词：XX技术、2020-2024（链接：https://scholar.google.com）
+- 中文核心期刊：新增中文文献来源（链接：https://cnki.net）
+```
+
+### 模型使用流程
+1. 模型每次修改计划时，直接更新 `AgentPlan` 格式的 JSON（新增/修改任务、更新状态等）；
+2. 调用 `TodoJsonToMarkdownTool`，传入「上次的 JSON 计划」和「本次的 JSON 计划」；
+3. 工具自动输出带变动标注的 Markdown，供人观察总结，模型也可通过 JSON 保持状态跟踪。
+
+### 依赖安装
+工具使用了 `deepdiff` 库对比 JSON 变动，需提前安装：
+```bash
+pip install deepdiff pydantic
+```
+
+如果需要调整变动标签、Markdown 格式（如缩进长度、任务信息展示），或补充更多变动类型（如“截止时间变更”“优先级变更”），可以随时优化！
+
+# 符号选择
+- [⭕] 待执行 
+- [⚪] 待执行 
+- [⚫] 正在执行 
+
+- [⏳] 待执行 
+- [➡️] 正在执行 
+- [✅] 执行成功 
+- [❌] 执行失败 
+- [♻️] 重试
+- [➖] 已跳过
