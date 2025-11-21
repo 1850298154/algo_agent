@@ -45,21 +45,23 @@ class ExecutionResult(BaseModel):
         arbitrary_types_allowed=True
     )
     
-    @model_validator(mode='before')
-    @classmethod
-    def validate_globals(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        globals = values.get('globals')
-        if globals is None:
-            return {}  # 或 return None，根据业务需求调整
-        return filter_and_deepcopy_globals(globals)   
-    
     @field_validator('globals')
     @classmethod        
-    def validate_globals(cls, value: Dict[str, Any]) -> Dict[str, Any]:
+    def field_validate_globals(cls, value: Dict[str, Any]) -> Dict[str, Any]:
         # 手动判断 value 是否为 None，避免空指针
         if value is None:
             return {}  # 或 return None，根据业务需求调整
         return filter_and_deepcopy_globals(value)   
+    
+    @model_validator(mode='before')
+    @classmethod
+    def model_validate_globals(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        globals = values.get('globals')
+        if globals is None:
+            return {}  # 或 return None，根据业务需求调整
+        values['globals'] = filter_and_deepcopy_globals(globals)   
+        return values
+    
 
 if __name__ == "__main__":
     # 简单测试
@@ -80,6 +82,9 @@ if __name__ == "__main__":
     result = ExecutionResult(
         status=ExecutionStatus.SUCCESS,
         output="Execution completed successfully.",
-        globals=test_globals
+        globals=test_globals,
+        exception_type=None,
+        exception_value=None,
+        exception_traceback=None
     )
     print("ExecutionResult Model:", result.model_dump())
