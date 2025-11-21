@@ -26,56 +26,53 @@ def sanitize_input(query: str) -> str:
 # 新增：worker 函数的辅助包装，用于捕获 globals 和状态
 def worker_with_globals_capture(
     command: str,
-    _globals: Optional[Dict],
-    _locals: Optional[Dict],
+    globals: Optional[Dict],
+    locals: Optional[Dict],
     queue: multiprocessing.Queue,
 ) -> None:
     # 深拷贝原始 globals 避免污染，创建独立执行环境
     import copy
-    exec_globals = copy.deepcopy(_globals) if _globals is not None else {}
-    exec_locals = copy.deepcopy(_locals) if _locals is not None else {}
+    exec_globals = copy.deepcopy(globals) if globals is not None else {}
+    exec_locals = copy.deepcopy(locals) if locals is not None else {}
     
     old_stdout = sys.stdout
     sys.stdout = mystdout = StringIO()
-    # exec_result: Optional[ExecutionResult] = None
+    result = {
+        "status": ExecutionStatus.SUCCESS.value,
+        "output": "",
+        "globals": exec_globals,
+        "error_type": None,
+        "traceback": None
+    }
+    
     try:
         cleaned_command = sanitize_input(command)
         exec(cleaned_command, exec_globals, exec_locals)
-        exec_result = ExecutionResult(
-            status=ExecutionStatus.SUCCESS,
-            output=mystdout.getvalue(),
-            globals=exec_globals,
-            locals=exec_locals,
-            exception_type=None,
-            exception_value=None,
-            exception_traceback=None
-        )
+        result["output"] = mystdout.getvalue()
+        result["globals"] = exec_globals  # 捕获执行后的全局变量
     except Exception as e:
+        # 代码执行错误，状态设为失败
+        result["status"] = ExecutionStatus.FAILURE.value
+        result["error_type"] = type(e).__name__
         code_and_traceback = source_code.get_code_and_traceback(command)
-        exec_result = ExecutionResult(
-            status=ExecutionStatus.FAILURE,
-            output=mystdout.getvalue(),
-            globals=exec_globals,
-            locals=exec_locals,
-            exception_type=type(e).__name__,
-            exception_value=repr(e),
-            exception_traceback=source_code.get_exception_traceback()
-        )
+        result["traceback"] = code_and_traceback
+        result["output"] = str(e)  # 错误描述作为输出
+        result["globals"] = exec_globals  # 即使失败也返回当前全局变量
     finally:
         sys.stdout = old_stdout
-        queue.put(exec_result)
+        queue.put(result)
 
 def worker(
     command: str,
-    _globals: Optional[Dict],
-    _locals: Optional[Dict],
+    globals: Optional[Dict],
+    locals: Optional[Dict],
     queue: multiprocessing.Queue,
 ) -> None:
     old_stdout = sys.stdout
     sys.stdout = mystdout = StringIO()
     try:
         cleaned_command = sanitize_input(command)
-        exec(cleaned_command, _globals, _locals)
+        exec(cleaned_command, globals, locals)
         sys.stdout = old_stdout
         queue.put(mystdout.getvalue())
     except Exception as e:
@@ -87,8 +84,8 @@ def worker(
 # 新增：支持结构化返回的函数
 def run_structured(
         command: str, 
-        _globals: dict[str, Any] | None = None, 
-        _locals: Optional[Dict] = None, 
+        globals: dict[str, Any] | None = None, 
+        locals: Optional[Dict] = None, 
         timeout: Optional[int] = None
     ) -> ExecutionResult:
     """Run command with structured result (BaseModel).
@@ -101,7 +98,7 @@ def run_structured(
     if timeout is not None:
         # 使用捕获 globals 的 worker 进程
         p = multiprocessing.Process(
-            target=worker_with_globals_capture, args=(command, _globals, _locals, queue)
+            target=worker_with_globals_capture, args=(command, globals, locals, queue)
         )
         p.start()
         p.join(timeout)
@@ -112,20 +109,21 @@ def run_structured(
             return ExecutionResult(
                 status=ExecutionStatus.TIMEOUT,
                 output="Execution timed out",
-                globals=_globals or {},
-                locals=_locals or {},
+                globals=globals or {},
+                error_type="TimeoutError",
+                traceback="Execution exceeded the specified timeout"
             )
     else:
-        worker_with_globals_capture(command, _globals, _locals, queue)
+        worker_with_globals_capture(command, globals, locals, queue)
     
     # 从队列获取结果并转换为 BaseModel（自动校验枚举值）
-    exec_result = queue.get()
-    return exec_result
+    result_dict = queue.get()
+    return ExecutionResult(**result_dict)
 
 def run(
         command: str, 
-        _globals: dict[str, Any] | None = None, 
-        _locals: Optional[Dict] = None, 
+        globals: dict[str, Any] | None = None, 
+        locals: Optional[Dict] = None, 
         timeout: Optional[int] = None
     ) -> str:
 
@@ -138,7 +136,7 @@ def run(
     if timeout is not None:
         # create a Process
         p = multiprocessing.Process(
-            target=worker, args=(command, _globals, _locals, queue)
+            target=worker, args=(command, globals, locals, queue)
         )
 
         # start it
@@ -151,6 +149,6 @@ def run(
             p.terminate()
             return "Execution timed out"
     else:
-        worker(command, _globals, _locals, queue)
+        worker(command, globals, locals, queue)
     # get the result from the worker function
     return queue.get()

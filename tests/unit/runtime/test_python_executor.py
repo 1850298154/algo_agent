@@ -87,6 +87,7 @@ time.sleep(5)""",my_globals,my_locals,timeout=1)  # 输出: TimeoutError
     
     print("----- time ok test -----")
     res=run_structured("""import time
+print("Start sleeping")
 """,my_globals,my_locals,timeout=2)  # 输出: TimeoutError
     print(type(res))
     res=res.model_dump()

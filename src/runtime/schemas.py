@@ -15,7 +15,7 @@ class ExecutionResult(BaseModel):
     status: ExecutionStatus = Field(..., description="执行状态：成功/失败/超时")
     output: str = Field(..., description="标准输出或错误信息")
     globals: Dict[str, Any] = Field(..., description="执行后的全局变量")
-    locals: Dict[str, Any] = Field(..., description="执行后的局部变量")
+    locals: Dict[str, Any] = Field({}, description="执行后的局部变量")
     exception_type: Optional[str] = Field(None, description="错误类型（失败状态时）")
     exception_value: Optional[str] = Field(None, description="错误值（失败状态时）")
     exception_traceback: Optional[str] = Field(None, description="完整堆栈信息（失败状态时）")
