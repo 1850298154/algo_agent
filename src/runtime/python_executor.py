@@ -30,10 +30,12 @@ def worker_with_globals_capture(
     _locals: Optional[Dict],
     queue: multiprocessing.Queue,
 ) -> None:
-    # 深拷贝原始 globals 避免污染，创建独立执行环境
-    import copy
-    exec_globals = copy.deepcopy(_globals) if _globals is not None else {}
-    exec_locals = copy.deepcopy(_locals) if _locals is not None else {}
+    # # 深拷贝原始 globals 避免污染，创建独立执行环境
+    # import copy
+    # exec_globals = copy.deepcopy(_globals) if _globals is not None else None
+    # exec_locals = copy.deepcopy(_locals) if _locals is not None else None
+    exec_globals = _globals
+    exec_locals  = _locals
     
     old_stdout = sys.stdout
     sys.stdout = mystdout = StringIO()
@@ -45,18 +47,17 @@ def worker_with_globals_capture(
             status=ExecutionStatus.SUCCESS,
             output=mystdout.getvalue(),
             globals=exec_globals,
-            locals=exec_locals,
             exception_type=None,
             exception_value=None,
             exception_traceback=None
         )
     except Exception as e:
+        print('-----------exception---------------')
         code_and_traceback = source_code.get_code_and_traceback(command)
         exec_result = ExecutionResult(
             status=ExecutionStatus.FAILURE,
             output=mystdout.getvalue(),
             globals=exec_globals,
-            locals=exec_locals,
             exception_type=type(e).__name__,
             exception_value=repr(e),
             exception_traceback=source_code.get_exception_traceback()
@@ -113,7 +114,6 @@ def run_structured(
                 status=ExecutionStatus.TIMEOUT,
                 output="Execution timed out",
                 globals=_globals or {},
-                locals=_locals or {},
             )
     else:
         worker_with_globals_capture(command, _globals, _locals, queue)
