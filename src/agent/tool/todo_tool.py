@@ -1,11 +1,12 @@
 from typing import List, Dict, Optional, Any, Union
 from pydantic import BaseModel, Field, field_validator  # 关键修改：导入 field_validator
 import uuid
-from enum import Enum
+from enum import Enum, unique
 from src.agent.tool.base_tool import BaseTool
 
 
 # 1. 任务状态枚举（关联可视化符号与说明）
+@unique
 class TaskStatus(str, Enum):
     PENDING = "pending"  # 待执行
     PROCESSING = "processing"  # 正在执行

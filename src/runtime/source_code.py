@@ -69,7 +69,7 @@ Traceback (most recent call last):
   File "<string>", line 2, in myadd
 ZeroDivisionError: division by zero    
     """
-    command = command.strip()
+    # command = command.strip()
     source_code_with_line_numbers = add_line_numbers(command)
     exception_error_message = get_exception_traceback()
     code_hint = "原始代码："

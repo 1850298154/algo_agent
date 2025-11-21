@@ -110,6 +110,7 @@ main()
             print("编译成功，开始执行...",compiled_code)
             my_globals = {'__name__': '__main__'}  # 模拟主模块运行环境
             my_locals = my_globals # 让函数出现在 globals 中的两种方法：要么只传 globals，要么让 locals 复用 globals。
+            # my_locals = {}
             # 执行代码（可选传入 globals/locals 隔离命名空间）
             exec(compiled_code, my_globals, my_locals)
             print("当前环境的global :", my_globals.keys())  # 输出：__main__（因为脚本直接运行）
@@ -151,3 +152,42 @@ if __name__ == "__main__":
 # a= 100000
 # exec("a+=123")
 # print(a) # 100123
+
+""" 如果使用了 locals 参数，则函数无法出现在 globals 中
+======= 代码块 6 ==============================:
+编译成功，开始执行...
+  1 |
+ 2 | def myadd(a, b):
+ 3 |     return a+b/0
+ 4 |
+ 5 | def main():
+ 6 |     print('global :', globals().keys())
+ 7 |     print('local :',  locals().keys())
+ 8 |     print("核心逻辑执行", myadd(1, 2))
+ 9 | print('global :', globals().keys())
+10 | print('local :',  locals().keys())
+11 | main()
+编译成功，开始执行... <code object <module> at 0x0000017D43E37DE0, file "dynamic_code.py", line 1>
+global : dict_keys(['__name__', '__builtins__'])
+local : dict_keys(['myadd', 'main'])
+global : dict_keys(['__name__', '__builtins__'])
+local : dict_keys([])
+完整报错信息：
+--------------------------------------------------
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\add_line_exception_traceback.py", line 115, in selftest
+    exec(compiled_code, my_globals, my_locals)
+  File "dynamic_code.py", line 11, in <module>
+  File "dynamic_code.py", line 8, in main
+NameError: name 'myadd' is not defined
+
+--------------------------------------------------
+['Traceback (most recent call last):', '  File "d:\\zyt\\git_ln\\algo_agent\\tests\\playground\\add_line_exception_traceback.py", line 115, in selftest', '    exec(compiled_code, my_globals, my_locals)', '  File "dynamic_code.py", line 11, in <module>', '  File "dynamic_code.py", line 8, in main', "NameError: name 'myadd' is not defined"]
+--------------------------------------------------
+Traceback (most recent call last):
+  File "dynamic_code.py", line 11, in <module>
+  File "dynamic_code.py", line 8, in main
+NameError: name 'myadd' is not defined
+--------------------------------------------------
+
+"""
