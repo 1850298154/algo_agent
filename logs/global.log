@@ -1822,3 +1822,14 @@ NameError: name 'sys' is not defined. Did you forget to import 'sys'
           d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:90 test_structured_executor
           d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
 [2025-11-23 03:49:16,671]  【调用成功】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 546.232ms | 返回值： ExecutionResult(command='import time\nc = 10\nimport scipy\n', timeout=20000, globals={'a': 123, 'b': [1, 2, 3], 'c': 10}, status=<ExecutionStatus.SUCCESS: 'success'>, std_output='', ret_llm_content='代码执行成功，输出结果如下：\n', exception_type=None, exception_value=None, exception_traceback=None)
+[2025-11-23 03:59:34,690]  【调用开始】 栈路径： __main__.None.run_structured | 开始时间： 2025-11-23 03:59:34.689687 | 位置参数： ('\nimport time\nprint("Start sleeping...")\ntime.sleep(10)\nprint("Finished sleeping.")\n',) | 关键字参数： {'globals': {'__builtins__': <module 'builtins' (built-in)>}, 'timeout': 3}
+[2025-11-23 03:59:34,726]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py:80 <module>
+[2025-11-23 03:59:34,727]  【调用失败】 栈路径： __main__.None.run_structured | 耗时： 36.993ms | 异常位置： __main__.None.run_structured:217 | 异常类型： TypeError | 异常信息： run_structured() got an unexpected keyword argument 'globals'
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+TypeError: run_structured() got an unexpected keyword argument 'globals'
+[2025-11-23 03:59:34,728]  【异常兜底】 栈路径： __main__.None.run_structured | 返回默认值： None
