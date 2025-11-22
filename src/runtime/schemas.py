@@ -29,13 +29,13 @@ class ExecutionStatus(str, Enum):
 # 新增：结构化返回模型（状态使用枚举）
 class ExecutionResult(BaseModel):
     command: str = Field(..., description="执行的代码命令")
-    timeout: int = Field(..., description="设置的超时时间（秒）")
+    timeout: Optional[int] = Field(None, description="设置的超时时间（秒）")
     globals: Dict[str, Any] = Field(..., description="执行后的全局变量（已过滤和深拷贝）（成功状态时）")
     """执行结果结构化模型"""
     status: ExecutionStatus = Field(..., description="执行状态：成功/失败/超时")
     std_output: str = Field(..., description="标准输出或错误信息（任意状态时）")
     """如下自动生成或选填"""
-    ret_llm_content: str = Field(None, description="根据必须输入，自动生成返回作为模型输入")
+    ret_llm_content: str = Field(None, description="根据状态，自动生成返回作为模型输入")
     exception_type: Optional[str] = Field(None, description="错误类型（失败状态时）")
     exception_value: Optional[str] = Field(None, description="错误值（失败状态时）")
     exception_traceback: Optional[str] = Field(None, description="完整堆栈信息（失败状态时）")
