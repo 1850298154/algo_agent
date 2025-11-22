@@ -2,23 +2,18 @@ import multiprocessing
 from multiprocessing.connection import PipeConnection
 import threading
 import sys
-from io import StringIO
 from typing import Any, Dict, Optional
 from src.runtime.schemas import ExecutionStatus, ExecutionResult
 
-    
-    
-    
-    
-    
-    
 class PipeWriter:
     def __init__(self, conn):
         self.conn = conn
+
     def write(self, msg):
         # 只发送非空字符串
         if msg:
             self.conn.send(msg)
+
     def flush(self):
         pass
 
@@ -31,15 +26,12 @@ def worker_with_pipe(command, _globals, _locals, conn):
     finally:
         conn.close()
 
-
-
-
-
-
-
-
-
-def run_structured(command: str, _globals: dict[str, Any] | None = None, _locals: Optional[Dict] = None, timeout: Optional[int] = None) -> ExecutionResult:
+def run_structured(
+    command: str,
+    _globals: dict[str, Any] | None = None,
+    _locals: Optional[Dict] = None,
+    timeout: Optional[int] = None
+) -> ExecutionResult:
     parent_conn, child_conn = multiprocessing.Pipe()
     buffer = []
 
@@ -53,14 +45,11 @@ def run_structured(command: str, _globals: dict[str, Any] | None = None, _locals
                     except EOFError:
                         break
                 else:
-                    # 如果连接关闭则退出
                     if not conn.closed and not conn.poll():
                         continue
                     break
         except OSError as e:
-            # 句柄无效，说明连接已关闭，退出线程
             print(f"连接失效：{e}")
-            pass
         except EOFError:
             pass
 
@@ -74,7 +63,7 @@ def run_structured(command: str, _globals: dict[str, Any] | None = None, _locals
     if p.is_alive():
         p.terminate()
         status = ExecutionStatus.TIMEOUT
-        parent_conn.close()  # 关键：关闭主进程的 Pipe 连接，reader 能退出
+        parent_conn.close()
     else:
         status = ExecutionStatus.SUCCESS
 
@@ -88,13 +77,17 @@ def run_structured(command: str, _globals: dict[str, Any] | None = None, _locals
         status=status,
         std_output=std_output,
     )
+
 if __name__ == "__main__":
     _globals = {}
-    res = run_structured("""
+    res = run_structured(
+        """
 import time
 print("Start sleeping...", flush=True)
 time.sleep(10)
 print("Finished sleeping.", flush=True)
-""", _globals={}, timeout=3)
-
+""",
+        _globals={},
+        timeout=3
+    )
     print(res)
