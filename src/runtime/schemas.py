@@ -62,6 +62,7 @@ class ExecutionResult(BaseModel):
         values['globals'] = workspace.filter_and_deepcopy_globals(globals) 
         values['ret_llm_content'] = (
             ExecutionStatus.get_display_desc(values['status'])
+            + (f"设置的超时时间：{values.get('timeout', '')}秒\n" if values['status'] == ExecutionStatus.TIMEOUT else '')
             + (values.get('std_output', '')
                if values['status'] != ExecutionStatus.FAILURE
                 else source_code.get_code_and_traceback(values['command']))
