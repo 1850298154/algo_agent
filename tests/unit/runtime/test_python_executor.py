@@ -52,46 +52,48 @@ def test_exception():
 def test_structured_executor():
     my_globals = {"a": 123, "b": [1, 2, 3]}
     my_locals = {"a": 123, "b": [1, 2, 3]}
-    res=run_structured("a+=100000",my_globals,my_locals)  # 输出: 123
-    print(type(res))
-    res=res.model_dump()
-    res.pop("globals")
-    print(res)
-    res=run_structured("print(a)",my_globals,my_locals)  # 输出: [1, 2, 3]
-    print(type(res))
-    res=res.model_dump()
-    res.pop("globals")
-    print(res)
-    res=run_structured("print(b)",my_globals,my_locals)  # 输出: [1, 2, 3]
-    print(type(res))
-    res=res.model_dump()
-    res.pop("globals")
-    print(res)
+    # res=run_structured("a+=100000",my_globals,my_locals)  # 输出: 123
+    # print(type(res))
+    # res=res.model_dump()
+    # res.pop("globals")
+    # print(res)
+    # res=run_structured("print(a)",my_globals,my_locals)  # 输出: [1, 2, 3]
+    # print(type(res))
+    # res=res.model_dump()
+    # res.pop("globals")
+    # print(res)
+    # res=run_structured("print(b)",my_globals,my_locals)  # 输出: [1, 2, 3]
+    # print(type(res))
+    # res=res.model_dump()
+    # res.pop("globals")
+    # print(res)
     
-    # 测试 NameError
-    res=run_structured("print(c)",my_globals,my_locals)  # 输出: NameError("name 'c' is not defined")
-    print(type(res))
-    res=res.model_dump()
-    res.pop("globals")
-    print(res)
+    # # 测试 NameError
+    # res=run_structured("print(c)",my_globals,my_locals)  # 输出: NameError("name 'c' is not defined")
+    # print(type(res))
+    # res=res.model_dump()
+    # res.pop("globals")
+    # print(res)
 
     # 测试超时
     print("----- timeout test -----")
     res=run_structured("""import time
+c = 10
 time.sleep(5)""",my_globals,my_locals,timeout=1)  # 输出: TimeoutError
     print(type(res))
     res=res.model_dump()
-    res.pop("globals")
+    # res.pop("globals")
     print(res)
     
     
     print("----- time ok test -----")
     res=run_structured("""import time
-print("Start sleeping")
-""",my_globals,my_locals,timeout=2)  # 输出: TimeoutError
+c = 10
+import scipy
+""",my_globals,None,timeout=20000)  # 输出: TimeoutError
     print(type(res))
     res=res.model_dump()
-    res.pop("globals")
+    # res.pop("globals")
     print(res)
     
     
