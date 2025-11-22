@@ -91,3 +91,51 @@ print("Finished sleeping.", flush=True)
         timeout=3
     )
     print(res)
+    
+
+def test_structured_executor():
+    my_globals = {"a": 123, "b": [1, 2, 3]}
+    my_locals = {"a": 123, "b": [1, 2, 3]}
+    # 测试超时
+    print("----- timeout test -----")
+    res=run_structured("""import time
+c = 10
+time.sleep(5)""",my_globals,my_locals,timeout=1)  # 输出: TimeoutError
+    print(type(res))
+    res=res.model_dump()
+    # res.pop("globals")
+    print(res)
+    
+    
+    print("----- time ok test -----")
+    res=run_structured("""import time
+c = 10
+import scipy
+print("scipy imported")
+""",my_globals,None,timeout=20000)  # 输出: TimeoutError
+    print(type(res))
+    res=res.model_dump()
+    # res.pop("globals")
+    print(res)
+    
+    
+if __name__ == "__main__":
+    _globals = {}
+    res = run_structured(
+        """
+import time
+print("Start sleeping...", flush=True)
+time.sleep(10)
+print("Finished sleeping.", flush=True)
+""",
+        _globals={},
+        timeout=3
+    )
+    print(res)
+    
+        
+    # test_python_executor()
+    # test_exception()
+    test_structured_executor()
+    
+    
