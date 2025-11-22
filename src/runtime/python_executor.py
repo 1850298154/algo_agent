@@ -6,6 +6,7 @@ import traceback
 from typing import Any, Dict, Optional, Union
 from src.runtime import source_code
 from src.runtime.schemas import ExecutionStatus, ExecutionResult
+from src.utils import traceable
 
 def sanitize_input(query: str) -> str:
     """Sanitize input to the python REPL.
@@ -29,6 +30,7 @@ def worker_with_globals_capture(
     _globals: Optional[Dict],
     _locals: Optional[Dict],
     queue: multiprocessing.Queue,
+    timeout: Optional[int],
 ) -> None:
     # # 深拷贝原始 globals 避免污染，创建独立执行环境
     # import copy
@@ -41,22 +43,24 @@ def worker_with_globals_capture(
     sys.stdout = mystdout = StringIO()
     # exec_result: Optional[ExecutionResult] = None
     try:
-        cleaned_command = sanitize_input(command)
-        exec(cleaned_command, exec_globals, exec_locals)
+        exec(command, exec_globals, exec_locals)
         exec_result = ExecutionResult(
-            status=ExecutionStatus.SUCCESS,
-            output=mystdout.getvalue(),
+            command=command,
+            timeout=timeout,
             globals=exec_globals,
-            exception_type=None,
-            exception_value=None,
-            exception_traceback=None
+                        
+            status=ExecutionStatus.SUCCESS,
+            std_output=mystdout.getvalue(),
         )
     except Exception as e:
-        code_and_traceback = source_code.get_code_and_traceback(command)
         exec_result = ExecutionResult(
-            status=ExecutionStatus.FAILURE,
-            output=mystdout.getvalue(),
+            command=command,
+            timeout=timeout,
             globals=exec_globals,
+            
+            status=ExecutionStatus.FAILURE,
+            std_output=mystdout.getvalue(),
+            
             exception_type=type(e).__name__,
             exception_value=repr(e),
             exception_traceback=source_code.get_exception_traceback()
@@ -85,6 +89,7 @@ def worker(
         queue.put(code_and_traceback)
 
 # 新增：支持结构化返回的函数
+@traceable
 def run_structured(
         command: str, 
         _globals: dict[str, Any] | None = None, 
@@ -101,7 +106,7 @@ def run_structured(
     if timeout is not None:
         # 使用捕获 globals 的 worker 进程
         p = multiprocessing.Process(
-            target=worker_with_globals_capture, args=(command, _globals, _locals, queue)
+            target=worker_with_globals_capture, args=(command, _globals, _locals, queue, timeout)
         )
         p.start()
         p.join(timeout)
@@ -110,9 +115,12 @@ def run_structured(
             p.terminate()
             # 超时状态：单独作为一种枚举值
             return ExecutionResult(
-                status=ExecutionStatus.TIMEOUT,
-                output="Execution timed out",
+                command=command,
+                timeout=timeout,
                 globals=_globals or {},
+                
+                status=ExecutionStatus.TIMEOUT,
+                std_output="",
             )
     else:
         worker_with_globals_capture(command, _globals, _locals, queue)

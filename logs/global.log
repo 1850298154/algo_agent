@@ -1510,3 +1510,279 @@ UnboundLocalError: cannot access local variable 'loop_cnt' where it is not assoc
           D:\zyt\git_ln\algo_agent\src\agent\deep_research.py:57 <module>
 [2025-11-18 17:18:52,065]  【调用成功】 栈路径： llm.None.has_tool_call | 耗时： 13.035ms | 返回值： False
 [2025-11-18 17:18:53,793]  【调用成功】 栈路径： __main__.None.user_query | 耗时： 588227.157ms | 返回值： None
+[2025-11-22 20:47:13,283]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-22 20:47:13.282366 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-22 20:47:13,352]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-22 20:47:14,398]  【调用失败】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1106.362ms | 异常位置： src.runtime.python_executor.None.run_structured:250 | 异常类型： ValidationError | 异常信息： 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\python_executor.py", line 117, in run_structured
+    return ExecutionResult(
+           ^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+[2025-11-22 20:47:14,399]  【异常兜底】 栈路径： src.runtime.python_executor.None.run_structured | 返回默认值： None
+[2025-11-22 20:47:20,395]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-22 20:47:20.395964 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-22 20:47:20,451]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-22 20:47:21,502]  【调用失败】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1103.637ms | 异常位置： src.runtime.python_executor.None.run_structured:250 | 异常类型： ValidationError | 异常信息： 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\python_executor.py", line 117, in run_structured
+    return ExecutionResult(
+           ^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+[2025-11-22 20:47:21,505]  【异常兜底】 栈路径： src.runtime.python_executor.None.run_structured | 返回默认值： None
+[2025-11-22 20:51:35,067]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-22 20:51:35.067045 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-22 20:51:35,124]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-22 20:51:36,143]  【调用失败】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1073.448ms | 异常位置： src.runtime.python_executor.None.run_structured:250 | 异常类型： ValidationError | 异常信息： 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\python_executor.py", line 117, in run_structured
+    return ExecutionResult(
+           ^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+[2025-11-22 20:51:36,148]  【异常兜底】 栈路径： src.runtime.python_executor.None.run_structured | 返回默认值： None
+[2025-11-22 20:51:56,475]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-22 20:51:56.475429 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-22 20:51:56,569]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-22 20:51:57,603]  【调用失败】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1125.926ms | 异常位置： src.runtime.python_executor.None.run_structured:250 | 异常类型： ValidationError | 异常信息： 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\python_executor.py", line 117, in run_structured
+    return ExecutionResult(
+           ^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+[2025-11-22 20:51:57,610]  【异常兜底】 栈路径： src.runtime.python_executor.None.run_structured | 返回默认值： None
+[2025-11-22 20:52:52,293]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-22 20:52:52.293948 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-22 20:52:52,852]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-22 20:52:53,905]  【调用失败】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1604.590ms | 异常位置： src.runtime.python_executor.None.run_structured:250 | 异常类型： ValidationError | 异常信息： 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\python_executor.py", line 117, in run_structured
+    return ExecutionResult(
+           ^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+[2025-11-22 20:52:53,916]  【异常兜底】 栈路径： src.runtime.python_executor.None.run_structured | 返回默认值： None
+[2025-11-22 21:40:58,885]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-22 21:40:58.885328 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-22 21:40:58,921]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-22 21:40:59,970]  【调用失败】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1084.261ms | 异常位置： src.runtime.python_executor.None.run_structured:250 | 异常类型： ValidationError | 异常信息： 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\python_executor.py", line 117, in run_structured
+    return ExecutionResult(
+           ^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 3 validation errors for ExecutionResult
+command
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+timeout
+  Field required [type=missing, input_value={'status': <ExecutionStat...完成的输出：\n'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.12/v/missing
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+[2025-11-22 21:40:59,974]  【异常兜底】 栈路径： src.runtime.python_executor.None.run_structured | 返回默认值： None
+[2025-11-23 03:23:17,247]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-23 03:23:17.247392 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-23 03:23:17,285]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-23 03:23:18,338]  【调用失败】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1087.632ms | 异常位置： src.runtime.python_executor.None.run_structured:250 | 异常类型： ValidationError | 异常信息： 1 validation error for ExecutionResult
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\python_executor.py", line 117, in run_structured
+    return ExecutionResult(
+           ^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ExecutionResult
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+[2025-11-23 03:23:18,340]  【异常兜底】 栈路径： src.runtime.python_executor.None.run_structured | 返回默认值： None
+[2025-11-23 03:23:23,927]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-23 03:23:23.927433 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-23 03:23:23,976]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-23 03:23:25,030]  【调用失败】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1101.375ms | 异常位置： src.runtime.python_executor.None.run_structured:250 | 异常类型： ValidationError | 异常信息： 1 validation error for ExecutionResult
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\python_executor.py", line 117, in run_structured
+    return ExecutionResult(
+           ^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ExecutionResult
+std_output
+  Input should be a valid list [type=list_type, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/list_type
+[2025-11-23 03:23:25,032]  【异常兜底】 栈路径： src.runtime.python_executor.None.run_structured | 返回默认值： None
+[2025-11-23 03:25:02,877]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-23 03:25:02.877880 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-23 03:25:02,923]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-23 03:25:03,971]  【调用成功】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1091.716ms | 返回值： ExecutionResult(command='import time\nc = 10\ntime.sleep(5)', timeout=1, globals={'a': 123, 'b': [1, 2, 3]}, status=<ExecutionStatus.TIMEOUT: 'timeout'>, std_output='', ret_llm_content='代码执行超时，可能未完成的输出：\n', exception_type=None, exception_value=None, exception_traceback=None)
+[2025-11-23 03:25:03,975]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-23 03:25:03.975303 | 位置参数： ('import time\nc = 10\nimport scipy\n', {'a': 123, 'b': [1, 2, 3]}, None) | 关键字参数： {'timeout': 20000}
+[2025-11-23 03:25:03,977]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:90 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-23 03:25:04,705]  【调用成功】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 729.144ms | 返回值： ExecutionResult(command='import time\nc = 10\nimport scipy\n', timeout=20000, globals={'a': 123, 'b': [1, 2, 3], 'c': 10}, status=<ExecutionStatus.SUCCESS: 'success'>, std_output='', ret_llm_content='代码执行成功，输出结果如下：\n', exception_type=None, exception_value=None, exception_traceback=None)
