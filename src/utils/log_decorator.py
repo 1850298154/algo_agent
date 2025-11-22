@@ -241,13 +241,15 @@ def log_function(
                     exc_info=True
                 )
 
-                # 确定兜底返回值（手动指定优先，否则自动推导）
-                fallback_value = default_return_value if default_return_value is not None else get_default_return_value(func)
-                logger.warning(
-                    f"【异常兜底】 栈路径： {stack_full_path} | 返回默认值： {format_value(fallback_value)}"
-                )
+                # # 确定兜底返回值（手动指定优先，否则自动推导）
+                # fallback_value = default_return_value if default_return_value is not None else get_default_return_value(func)
+                # logger.warning(
+                #     f"【异常兜底】 栈路径： {stack_full_path} | 返回默认值： {format_value(fallback_value)}"
+                # )
 
-                return fallback_value  # 兜底返回，不抛出异常
+                # return fallback_value  # 兜底返回，不抛出异常
+                
+                raise  # 修改为继续抛出异常
 
         return wrapper
 
