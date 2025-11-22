@@ -1,69 +1,11 @@
 import multiprocessing
+from multiprocessing.connection import PipeConnection
 import threading
 import sys
 from io import StringIO
 from typing import Any, Dict, Optional
 from src.runtime.schemas import ExecutionStatus, ExecutionResult
 
-def worker_with_pipe(command, _globals, _locals, conn):
-    sys.stdout = mystdout = StringIO()
-    try:
-        exec(command, _globals, _locals)
-        conn.send(mystdout.getvalue())
-    except Exception as e:
-        conn.send(mystdout.getvalue() + f"\nException: {e}")
-    finally:
-        conn.close()
-
-def run_structured(command: str, _globals: dict[str, Any] | None = None, _locals: Optional[Dict] = None, timeout: Optional[int] = None) -> ExecutionResult:
-    parent_conn, child_conn = multiprocessing.Pipe()
-    buffer = []
-
-    def reader(conn, buffer):
-        try:
-            while True:
-                if conn.poll(0.1):
-                    data = conn.recv()
-                    buffer.append(data)
-                else:
-                    break
-        except EOFError:
-            pass
-
-    p = multiprocessing.Process(target=worker_with_pipe, args=(command, _globals, _locals, child_conn))
-    p.start()
-
-    t = threading.Thread(target=reader, args=(parent_conn, buffer))
-    t.start()
-
-    p.join(timeout)
-    if p.is_alive():
-        p.terminate()
-        status = ExecutionStatus.TIMEOUT
-    else:
-        status = ExecutionStatus.SUCCESS
-
-    t.join()
-    std_output = "".join(buffer)
-
-    return ExecutionResult(
-        command=command,
-        timeout=timeout,
-        globals={},
-        status=status,
-        std_output=std_output,
-    )
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -89,48 +31,6 @@ def worker_with_pipe(command, _globals, _locals, conn):
     finally:
         conn.close()
 
-def run_structured(command: str, _globals: dict[str, Any] | None = None, _locals: Optional[Dict] = None, timeout: Optional[int] = None) -> ExecutionResult:
-    parent_conn, child_conn = multiprocessing.Pipe()
-    buffer = []
-
-    def reader(conn, buffer):
-        try:
-            while True:
-                if conn.poll(0.1):
-                    data = conn.recv()
-                    buffer.append(data)
-                else:
-                    if not conn.closed and not conn.poll():
-                        continue
-                    break
-        except EOFError:
-            pass
-
-    p = multiprocessing.Process(target=worker_with_pipe, args=(command, _globals, _locals, child_conn))
-    p.start()
-
-    t = threading.Thread(target=reader, args=(parent_conn, buffer))
-    t.start()
-
-    p.join(timeout)
-    if p.is_alive():
-        p.terminate()
-        status = ExecutionStatus.TIMEOUT
-    else:
-        status = ExecutionStatus.SUCCESS
-
-    t.join()
-    std_output = "".join(buffer)
-
-    return ExecutionResult(
-        command=command,
-        timeout=timeout,
-        globals={},
-        status=status,
-        std_output=std_output,
-    )
-
-
 
 
 
@@ -143,7 +43,7 @@ def run_structured(command: str, _globals: dict[str, Any] | None = None, _locals
     parent_conn, child_conn = multiprocessing.Pipe()
     buffer = []
 
-    def reader(conn, buffer):
+    def reader(conn: PipeConnection, buffer: list):
         try:
             while True:
                 if conn.poll(0.1):
@@ -157,6 +57,10 @@ def run_structured(command: str, _globals: dict[str, Any] | None = None, _locals
                     if not conn.closed and not conn.poll():
                         continue
                     break
+        except OSError as e:
+            # 句柄无效，说明连接已关闭，退出线程
+            print(f"连接失效：{e}")
+            pass
         except EOFError:
             pass
 
