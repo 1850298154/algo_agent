@@ -52,7 +52,6 @@ def worker_with_globals_capture(
             exception_traceback=None
         )
     except Exception as e:
-        print('-----------exception---------------')
         code_and_traceback = source_code.get_code_and_traceback(command)
         exec_result = ExecutionResult(
             status=ExecutionStatus.FAILURE,
