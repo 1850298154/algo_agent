@@ -1786,3 +1786,39 @@ std_output
           d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:90 test_structured_executor
           d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
 [2025-11-23 03:25:04,705]  【调用成功】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 729.144ms | 返回值： ExecutionResult(command='import time\nc = 10\nimport scipy\n', timeout=20000, globals={'a': 123, 'b': [1, 2, 3], 'c': 10}, status=<ExecutionStatus.SUCCESS: 'success'>, std_output='', ret_llm_content='代码执行成功，输出结果如下：\n', exception_type=None, exception_value=None, exception_traceback=None)
+[2025-11-23 03:48:38,232]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-23 03:48:38.232240 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-23 03:48:38,277]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-23 03:48:39,312]  【调用失败】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1077.040ms | 异常位置： src.runtime.python_executor.None.run_structured:54 | 异常类型： NameError | 异常信息： name 'sys' is not defined
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\python_executor.py", line 117, in run_structured
+    return ExecutionResult(
+           ^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\schemas.py", line 63, in model_validate_globals
+    values['globals'] = workspace.filter_and_deepcopy_globals(globals)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\src\runtime\workspace.py", line 54, in filter_and_deepcopy_globals
+    if isinstance(value, type(sys)):  # 使用 sys 模块的类型来判断其他模块
+                              ^^^
+NameError: name 'sys' is not defined. Did you forget to import 'sys'
+[2025-11-23 03:48:39,315]  【异常兜底】 栈路径： src.runtime.python_executor.None.run_structured | 返回默认值： None
+[2025-11-23 03:49:15,031]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-23 03:49:15.031043 | 位置参数： ('import time\nc = 10\ntime.sleep(5)', {'a': 123, 'b': [1, 2, 3]}, {'a': 123, 'b': [1, 2, 3]}) | 关键字参数： {'timeout': 1}
+[2025-11-23 03:49:15,074]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:80 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-23 03:49:16,122]  【调用成功】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 1091.001ms | 返回值： ExecutionResult(command='import time\nc = 10\ntime.sleep(5)', timeout=1, globals={'a': 123, 'b': [1, 2, 3]}, status=<ExecutionStatus.TIMEOUT: 'timeout'>, std_output='', ret_llm_content='代码执行超时，可能未完成的输出：\n', exception_type=None, exception_value=None, exception_traceback=None)
+[2025-11-23 03:49:16,125]  【调用开始】 栈路径： src.runtime.python_executor.None.run_structured | 开始时间： 2025-11-23 03:49:16.125771 | 位置参数： ('import time\nc = 10\nimport scipy\n', {'a': 123, 'b': [1, 2, 3]}, None) | 关键字参数： {'timeout': 20000}
+[2025-11-23 03:49:16,127]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:90 test_structured_executor
+          d:\zyt\git_ln\algo_agent\tests\unit\runtime\test_python_executor.py:103 <module>
+[2025-11-23 03:49:16,671]  【调用成功】 栈路径： src.runtime.python_executor.None.run_structured | 耗时： 546.232ms | 返回值： ExecutionResult(command='import time\nc = 10\nimport scipy\n', timeout=20000, globals={'a': 123, 'b': [1, 2, 3], 'c': 10}, status=<ExecutionStatus.SUCCESS: 'success'>, std_output='', ret_llm_content='代码执行成功，输出结果如下：\n', exception_type=None, exception_value=None, exception_traceback=None)

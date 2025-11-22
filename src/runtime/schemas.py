@@ -4,6 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_serializer, field_valid
 from enum import Enum, unique
 import sys  # 用于判断模块类型
 from src.runtime import source_code
+from src.runtime import workspace
 
 # 新增：定义执行状态枚举（仅支持成功、失败、超时三种）
 @unique
@@ -24,24 +25,6 @@ class ExecutionStatus(str, Enum):
         # 增加默认值处理，避免 KeyError
         return desc_map.get(status_key, f"未知状态: {status_key}")
 
-def filter_and_deepcopy_globals(original_globals: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    过滤并深拷贝 globals 字典。
-    过滤规则：
-    1. 排除键为 '__builtins__' 的项。
-    2. 排除值为模块类型的项。
-    """
-    filtered_dict = {}
-    for key, value in original_globals.items():
-        # 检查键是否为 '__builtins__'
-        if key == '__builtins__':
-            continue
-        # 检查值是否为模块类型
-        if isinstance(value, type(sys)):  # 使用 sys 模块的类型来判断其他模块
-            continue
-        # 对符合条件的值进行深拷贝并添加到新字典
-        filtered_dict[key] = copy.deepcopy(value)
-    return filtered_dict
 
 # 新增：结构化返回模型（状态使用枚举）
 class ExecutionResult(BaseModel):
@@ -68,7 +51,7 @@ class ExecutionResult(BaseModel):
         # 手动判断 value 是否为 None，避免空指针
         if value is None:
             return {}  # 或 return None，根据业务需求调整
-        return filter_and_deepcopy_globals(value)   
+        return workspace.filter_and_deepcopy_globals(value)   
     
     @model_validator(mode='before')
     @classmethod
@@ -76,7 +59,7 @@ class ExecutionResult(BaseModel):
         globals = values.get('globals')
         if globals is None:
             return {}  # 或 return None，根据业务需求调整
-        values['globals'] = filter_and_deepcopy_globals(globals) 
+        values['globals'] = workspace.filter_and_deepcopy_globals(globals) 
         values['ret_llm_content'] = (
             ExecutionStatus.get_display_desc(values['status'])
             + (values.get('std_output', '')
@@ -94,7 +77,7 @@ if __name__ == "__main__":
         '__builtins__': __builtins__,
         'math': sys,
     }
-    filtered_globals = filter_and_deepcopy_globals(test_globals)
+    filtered_globals = workspace.filter_and_deepcopy_globals(test_globals)
     print("Filtered Globals:", filtered_globals)
     
     test_globals['b'].append(4)

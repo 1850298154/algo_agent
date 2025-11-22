@@ -2,6 +2,9 @@
 This module handles the workspace functionality for the runtime environment.
 
 """
+import copy
+from typing import Any, Dict, Optional, Union
+
 
 
 instance = None
@@ -33,6 +36,27 @@ def get_workspace_globals_keys(workspace: dict, include_special_vars: bool = Fal
     if include_special_vars:
         return [k for k in workspace.keys()]
     return [k for k in workspace.keys() if not k.startswith('__')]
+
+
+def filter_and_deepcopy_globals(original_globals: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    过滤并深拷贝 globals 字典。
+    过滤规则：
+    1. 排除键为 '__builtins__' 的项。
+    2. 排除值为模块类型的项。
+    """
+    filtered_dict = {}
+    for key, value in original_globals.items():
+        # 检查键是否为 '__builtins__'
+        if key == '__builtins__':
+            continue
+        # 检查值是否为模块类型
+        import sys
+        if isinstance(value, type(sys)):  # 使用 sys 模块的类型来判断其他模块
+            continue
+        # 对符合条件的值进行深拷贝并添加到新字典
+        filtered_dict[key] = copy.deepcopy(value)
+    return filtered_dict
 
 
 if __name__ == '__main__':
