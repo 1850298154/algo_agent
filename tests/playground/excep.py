@@ -94,4 +94,50 @@ except ZeroDivisionError as e:
 except Exception as e:
     traceback.print_exc()
 
+
+try:
+    divide(10, 0)
+except ZeroDivisionError as e:
+    print("处理")
+    print('str',str(e))
+    print('repr',repr(e))
+    print('type',type(e).__name__)
+    print("处理完毕")
+
+def test_try_variable():
+    try:
+        print("try 块开始执行")
+        x = 10  # 在 try 块中定义变量 x
+        print(f"try 块中，x 的值为: {x}")
+        # 模拟一个不会发生的异常
+        1 / 0
+    except ZeroDivisionError:
+        y = -2
+        print("except 块开始执行")
+        # 如果 try 块中 x 已经成功定义，这里可以访问
+        print(f"except 块中，x 的值为: {x}")
+    finally:
+        print("finally 块开始执行")
+        # 如果 try 块中 x 已经成功定义，这里可以访问
+        if 'x' in locals():
+            print(f"finally 块中，x 的值为: {x}")
+        else:
+            print("finally 块中，x 不存在")
+        if 'y' in locals():
+            print(f"finally 块中，y 的值为: {y}")
+        else:
+            print("finally 块中，y 不存在")
+    print("try 结构执行完毕")
+    # 如果 try 块中 x 已经成功定义，这里可以访问
+    if 'x' in locals():
+        print(f"外部，x 的值为: {x}")
+    else:
+        print("外部，x 不存在")
+    if 'y' in locals():
+        print(f"外部，y 的值为: {y}")
+    else:
+        print("外部，y 不存在")
+
+print("\n=== 6. try 变量作用域 ===")
+test_try_variable()
 print(" 结束 ")

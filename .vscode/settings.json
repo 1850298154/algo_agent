@@ -1,8 +1,28 @@
 {
     "terminal.integrated.env.windows": {
-      "PYTHONPATH": "${workspaceFolder};${env:PYTHONPATH}"
+        "PYTHONPATH": "${workspaceFolder};${env:PYTHONPATH}"
     },
     "terminal.integrated.env.linux": {
         "PYTHONPATH": "${workspaceFolder}:${env:PYTHONPATH}"
-    }   
+    },
+    
+    // "editor.rulers": [
+    //     16, 32, 48, 64, 80
+    // ],
+
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+
+    // "[python]": {
+    //     "editor.defaultFormatter": "ms-python.black-formatter",
+    //     "editor.formatOnSave": false,
+    // },
+    "[python]": {
+        "editor.formatOnSaveMode": "file",
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnType": false,
+        "editor.rulers": [80]
+      }
+    
 }

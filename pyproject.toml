@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "black>=25.11.0",
     "decorator>=5.2.1",
     "deepdiff>=8.6.1",
     "inflection>=0.5.1",
@@ -18,4 +19,5 @@ dependencies = [
     "pytest-cov>=7.0.0",
     "requests>=2.32.5",
     "scikit-learn>=1.7.2",
+    "yapf>=0.43.0",
 ]

@@ -49,8 +49,8 @@ def worker_with_globals_capture(
             timeout=timeout,
             globals=exec_globals,
                         
-            status=ExecutionStatus.SUCCESS,
-            std_output=mystdout.getvalue(),
+            exit_status=ExecutionStatus.SUCCESS,
+            stdout=mystdout.getvalue(),
         )
     except Exception as e:
         exec_result = ExecutionResult(
@@ -58,8 +58,8 @@ def worker_with_globals_capture(
             timeout=timeout,
             globals=exec_globals,
             
-            status=ExecutionStatus.FAILURE,
-            std_output=mystdout.getvalue(),
+            exit_status=ExecutionStatus.FAILURE,
+            stdout=mystdout.getvalue(),
             
             exception_type=type(e).__name__,
             exception_value=repr(e),
@@ -119,8 +119,8 @@ def run_structured(
                 timeout=timeout,
                 globals=_globals or {},
                 
-                status=ExecutionStatus.TIMEOUT,
-                std_output="",
+                exit_status=ExecutionStatus.TIMEOUT,
+                stdout="",
             )
     else:
         worker_with_globals_capture(command, _globals, _locals, queue)
