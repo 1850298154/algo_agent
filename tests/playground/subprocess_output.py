@@ -37,6 +37,7 @@ def _worker_with_pipe(
             pass
 
     sys.stdout = _PipeWriter(child_conn)
+    sys.stderr = sys.stdout
     try:
         exec(command, _globals, _locals)
         global_logger.info("---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult")
@@ -150,6 +151,7 @@ def run_structured_in_subprocess(
             )
     final_res.exit_code = p.exitcode  # 填充 exitcode 字段
     final_res.ret_stdout = "".join(subprocess_stdout_buffer)  # 填充 stdout 字段
+    final_res.ret_tool2llm = ExecutionStatus.get_return_llm(final_res.exit_status, final_res)  # 填充 stdout 字段
     return final_res
 
 
@@ -210,7 +212,7 @@ c = a/b
     # res.pop("globals")
     pprint.pprint(res)
 
-    print("----- test process crash -----")
+    print("----- test process crash 1 SegFault -----")
     res = run_structured_in_subprocess(
         r"""
 # 进程崩溃（如 SegFault），未发送结果即退出的例子
@@ -230,7 +232,7 @@ except Exception as e:
     # res.pop("globals")
     pprint.pprint(res)
 
-    print("----- test process crash 2 -----")
+    print("----- test process crash 2 Max Recursion Depth -----")
     res = run_structured_in_subprocess(
         r"""
 def recursive_crash(depth=0):
@@ -256,7 +258,7 @@ except RecursionError as e:
     # res.pop("globals")
     pprint.pprint(res)
 
-    print("----- test process crash 3 -----")
+    print("----- test process crash 3 OOM -----")
     res = run_structured_in_subprocess(
         r"""
 def fast_memory_oom():
@@ -291,11 +293,10 @@ if __name__ == "__main__":
 
 
 r"""
-
 (algo-agent) D:\zyt\git_ln\algo_agent>D:/zyt/git_ln/algo_agent/.venv/Scripts/python.exe d:/zyt/git_ln/algo_agent/tests/playground/subprocess_output.py
 ----- timeout test -----
-[2025-11-24 05:22:04,102]  ---------- 1. 超时情况：由父进程构建 ExecutionResult
-[2025-11-24 05:22:04,116]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+[2025-11-24 06:41:43,440]  ---------- 1. 超时情况：由父进程构建 ExecutionResult
+[2025-11-24 06:41:43,452]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
     nread, err = ov.GetOverlappedResult(True)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -304,7 +305,7 @@ BrokenPipeError: [WinError 109] 管道已结束。
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
     msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
                                                    ^^^^^^^^^^^^^^^^^^
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
@@ -314,7 +315,7 @@ Traceback (most recent call last):
     raise EOFError
 EOFError
 
-[2025-11-24 05:22:04,116]  ---------- 1. 子进程超时退出：超时 3 秒
+[2025-11-24 06:41:43,455]  ---------- 1. 子进程超时退出：超时 3 秒
 <class 'src.runtime.schemas.ExecutionResult'>
 {'arg_command': '\n'
                 'import time\n'
@@ -330,10 +331,13 @@ EOFError
  'exit_code': -15,
  'exit_status': <ExecutionStatus.TIMEOUT: 'timeout'>,
  'ret_stdout': 'Start sleeping...\n',
- 'ret_tool2llm': '代码执行超时，强制退出执行：\n执行超过3秒，未完成的代码输出为：\n'}
+ 'ret_tool2llm': '## 代码执行超时，强制退出执行，调整超时时间后重试\n'
+                 '### 终端输出：\n'
+                 'Start sleeping...\n'
+                 '### 超出限制的时间：3 秒\n'}
 ----- time ok test -----
-[2025-11-24 05:22:04,791]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
-[2025-11-24 05:22:04,792]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+[2025-11-24 06:41:43,948]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:41:43,950]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
     ov, err = _winapi.ReadFile(self._handle, bsize,
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -342,7 +346,7 @@ BrokenPipeError: [WinError 109] 管道已结束。
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
     msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
                                                    ^^^^^^^^^^^^^^^^^^
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
@@ -352,8 +356,8 @@ Traceback (most recent call last):
     raise EOFError
 EOFError
 
-[2025-11-24 05:22:04,869]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
-[2025-11-24 05:22:04,869]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:41:44,036]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:44,037]  ---------- 2.1 子进程正常退出： exec正常、exec异常
 <class 'src.runtime.schemas.ExecutionResult'>
 {'arg_command': 'import time\nc = 10\nimport scipy\nprint("scipy imported")\n',
  'arg_globals': {'a': 123, 'b': [1, 2, 3], 'c': 10},
@@ -365,10 +369,10 @@ EOFError
  'exit_code': 0,
  'exit_status': <ExecutionStatus.SUCCESS: 'success'>,
  'ret_stdout': 'scipy imported\n',
- 'ret_tool2llm': '代码执行成功，输出结果如下：\n'}
+ 'ret_tool2llm': '## 代码执行成功，输出结果完整，任务完成\n### 终端输出：\nscipy imported\n'}
 ----- time exception test -----
-[2025-11-24 05:22:05,220]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
-[2025-11-24 05:22:05,223]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+[2025-11-24 06:41:44,417]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:41:44,419]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
     ov, err = _winapi.ReadFile(self._handle, bsize,
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -377,7 +381,7 @@ BrokenPipeError: [WinError 109] 管道已结束。
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
     msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
                                                    ^^^^^^^^^^^^^^^^^^
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
@@ -387,8 +391,8 @@ Traceback (most recent call last):
     raise EOFError
 EOFError
 
-[2025-11-24 05:22:05,292]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
-[2025-11-24 05:22:05,292]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:41:44,457]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:44,457]  ---------- 2.1 子进程正常退出： exec正常、exec异常
 <class 'src.runtime.schemas.ExecutionResult'>
 {'arg_command': '\na = 123\nb = 0\nc = a/b\n',
  'arg_globals': {'a': 123, 'b': 0},
@@ -397,7 +401,7 @@ EOFError
  'exception_traceback': 'Traceback (most recent call last):\n'
                         '  File '
                         '"d:\\zyt\\git_ln\\algo_agent\\tests\\playground\\subprocess_output.py", '
-                        'line 41, in _worker_with_pipe\n'
+                        'line 42, in _worker_with_pipe\n'
                         '    exec(command, _globals, _locals)\n'
                         '  File "<string>", line 4, in <module>\n'
                         'ZeroDivisionError: division by zero\n',
@@ -406,19 +410,23 @@ EOFError
  'exit_code': 0,
  'exit_status': <ExecutionStatus.FAILURE: 'failure'>,
  'ret_stdout': '',
- 'ret_tool2llm': '代码执行失败，代码报错如下：\n'
-                 '原始代码：\n'
+ 'ret_tool2llm': '## 代码执行失败，代码抛出异常，根据报错信息进行调试\n'
+                 '### 终端输出：\n'
+                 '### 原始代码：\n'
                  '1 | \n'
                  '2 | a = 123\n'
                  '3 | b = 0\n'
                  '4 | c = a/b\n'
-                 '--------------------------------------------------\n'
-                 '报错信息：\n'
+                 '### 报错信息：\n'
                  'Traceback (most recent call last):\n'
+                 '  File '
+                 '"d:\\zyt\\git_ln\\algo_agent\\tests\\playground\\subprocess_output.py", '
+                 'line 42, in _worker_with_pipe\n'
+                 '    exec(command, _globals, _locals)\n'
                  '  File "<string>", line 4, in <module>\n'
-                 'ZeroDivisionError: division by zero'}
------ test process crash -----
-[2025-11-24 05:22:05,736]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+                 'ZeroDivisionError: division by zero\n'}
+----- test process crash 1 SegFault -----
+[2025-11-24 06:41:44,863]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
     nread, err = ov.GetOverlappedResult(True)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -427,7 +435,7 @@ BrokenPipeError: [WinError 109] 管道已结束。
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
     msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
                                                    ^^^^^^^^^^^^^^^^^^
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
@@ -437,8 +445,8 @@ Traceback (most recent call last):
     raise EOFError
 EOFError
 
-[2025-11-24 05:22:05,740]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
-[2025-11-24 05:22:05,741]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:41:44,866]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:44,866]  ---------- 2.2 子进程崩溃退出：如 SegFault
 <class 'src.runtime.schemas.ExecutionResult'>
 {'arg_command': '\n'
                 '# 进程崩溃（如 SegFault），未发送结果即退出的例子\n'
@@ -457,24 +465,10 @@ EOFError
  'exit_code': 139,
  'exit_status': <ExecutionStatus.CRASHED: 'crashed'>,
  'ret_stdout': '',
- 'ret_tool2llm': '代码执行崩溃，进程异常退出：\n'}
------ test process crash 2 -----
-[2025-11-24 05:22:06,169]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
-Process Process-5:
-Traceback (most recent call last):
-  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\process.py", line 314, in _bootstrap
-    self.run()
-  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\process.py", line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 63, in _worker_with_pipe
-    child_conn.send((_PipeType.RESULT, res))
-  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 206, in send
-    self._send_bytes(_ForkingPickler.dumps(obj))
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\reduction.py", line 51, in dumps
-    cls(buf, protocol).dump(obj)
-_pickle.PicklingError: Can't pickle <function recursive_crash at 0x000001A67C1EA7A0>: attribute lookup recursive_crash on __main__ failed
-[2025-11-24 05:22:06,202]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+ 'ret_tool2llm': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n### 终端输出：\n### 退出状态码：139\n'}
+----- test process crash 2 Max Recursion Depth -----
+[2025-11-24 06:41:45,206]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:41:45,239]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
     nread, err = ov.GetOverlappedResult(True)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -483,7 +477,7 @@ BrokenPipeError: [WinError 109] 管道已结束。
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
     msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
                                                    ^^^^^^^^^^^^^^^^^^
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
@@ -493,8 +487,8 @@ Traceback (most recent call last):
     raise EOFError
 EOFError
 
-[2025-11-24 05:22:06,260]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
-[2025-11-24 05:22:06,260]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:41:45,264]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:45,265]  ---------- 2.2 子进程崩溃退出：如 SegFault
 <class 'src.runtime.schemas.ExecutionResult'>
 {'arg_command': '\n'
                 'def recursive_crash(depth=0):\n'
@@ -529,25 +523,77 @@ EOFError
                '当前递归深度：800\n'
                '当前递归深度：900\n'
                '\n'
-               '崩溃原因：maximum recursion depth exceeded\n',
- 'ret_tool2llm': '代码执行崩溃，进程异常退出：\n'}
------ test process crash 3 -----
-[2025-11-24 05:22:06,650]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
-Process Process-6:
-Traceback (most recent call last):
-  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\process.py", line 314, in _bootstrap
-    self.run()
-  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\process.py", line 108, in run
-    self._target(*self._args, **self._kwargs)
-  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 63, in _worker_with_pipe
-    child_conn.send((_PipeType.RESULT, res))
-  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 206, in send
-    self._send_bytes(_ForkingPickler.dumps(obj))
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\reduction.py", line 51, in dumps
-    cls(buf, protocol).dump(obj)
-_pickle.PicklingError: Can't pickle <function fast_memory_oom at 0x0000026C387CA7A0>: attribute lookup fast_memory_oom on __main__ failed
-[2025-11-24 05:22:06,678]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+               '崩溃原因：maximum recursion depth exceeded\n'
+               'Process Process-5:\n'
+               'Traceback (most recent call last):\n'
+               '  File '
+               '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+               'line 314, in _bootstrap\n'
+               '    self.run()\n'
+               '  File '
+               '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+               'line 108, in run\n'
+               '    self._target(*self._args, **self._kwargs)\n'
+               '  File '
+               '"d:\\zyt\\git_ln\\algo_agent\\tests\\playground\\subprocess_output.py", '
+               'line 64, in _worker_with_pipe\n'
+               '    child_conn.send((_PipeType.RESULT, res))\n'
+               '  File '
+               '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\connection.py", '
+               'line 206, in send\n'
+               '    self._send_bytes(_ForkingPickler.dumps(obj))\n'
+               '                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+               '  File '
+               '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\reduction.py", '
+               'line 51, in dumps\n'
+               '    cls(buf, protocol).dump(obj)\n'
+               "_pickle.PicklingError: Can't pickle <function recursive_crash "
+               'at 0x000001CC0DE6A700>: attribute lookup recursive_crash on '
+               '__main__ failed\n',
+ 'ret_tool2llm': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+                 '### 终端输出：\n'
+                 '当前递归深度：0\n'
+                 '当前递归深度：100\n'
+                 '当前递归深度：200\n'
+                 '当前递归深度：300\n'
+                 '当前递归深度：400\n'
+                 '当前递归深度：500\n'
+                 '当前递归深度：600\n'
+                 '当前递归深度：700\n'
+                 '当前递归深度：800\n'
+                 '当前递归深度：900\n'
+                 '\n'
+                 '崩溃原因：maximum recursion depth exceeded\n'
+                 'Process Process-5:\n'
+                 'Traceback (most recent call last):\n'
+                 '  File '
+                 '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+                 'line 314, in _bootstrap\n'
+                 '    self.run()\n'
+                 '  File '
+                 '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+                 'line 108, in run\n'
+                 '    self._target(*self._args, **self._kwargs)\n'
+                 '  File '
+                 '"d:\\zyt\\git_ln\\algo_agent\\tests\\playground\\subprocess_output.py", '
+                 'line 64, in _worker_with_pipe\n'
+                 '    child_conn.send((_PipeType.RESULT, res))\n'
+                 '  File '
+                 '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\connection.py", '
+                 'line 206, in send\n'
+                 '    self._send_bytes(_ForkingPickler.dumps(obj))\n'
+                 '                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+                 '  File '
+                 '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\reduction.py", '
+                 'line 51, in dumps\n'
+                 '    cls(buf, protocol).dump(obj)\n'
+                 "_pickle.PicklingError: Can't pickle <function "
+                 'recursive_crash at 0x000001CC0DE6A700>: attribute lookup '
+                 'recursive_crash on __main__ failed\n'
+                 '### 退出状态码：1\n'}
+----- test process crash 3 OOM -----
+[2025-11-24 06:41:45,628]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:41:45,649]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
     nread, err = ov.GetOverlappedResult(True)
                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -556,7 +602,7 @@ BrokenPipeError: [WinError 109] 管道已结束。
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
     msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
                                                    ^^^^^^^^^^^^^^^^^^
   File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
@@ -566,8 +612,8 @@ Traceback (most recent call last):
     raise EOFError
 EOFError
 
-[2025-11-24 05:22:06,736]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
-[2025-11-24 05:22:06,736]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:41:45,703]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:45,704]  ---------- 2.2 子进程崩溃退出：如 SegFault
 <class 'src.runtime.schemas.ExecutionResult'>
 {'arg_command': '\n'
                 'def fast_memory_oom():\n'
@@ -594,8 +640,65 @@ EOFError
  'exception_value': None,
  'exit_code': 1,
  'exit_status': <ExecutionStatus.CRASHED: 'crashed'>,
- 'ret_stdout': '\n崩溃原因：\n',
- 'ret_tool2llm': '代码执行崩溃，进程异常退出：\n'}
+ 'ret_stdout': '\n'
+               '崩溃原因：\n'
+               'Process Process-6:\n'
+               'Traceback (most recent call last):\n'
+               '  File '
+               '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+               'line 314, in _bootstrap\n'
+               '    self.run()\n'
+               '  File '
+               '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+               'line 108, in run\n'
+               '    self._target(*self._args, **self._kwargs)\n'
+               '  File '
+               '"d:\\zyt\\git_ln\\algo_agent\\tests\\playground\\subprocess_output.py", '
+               'line 64, in _worker_with_pipe\n'
+               '    child_conn.send((_PipeType.RESULT, res))\n'
+               '  File '
+               '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\connection.py", '
+               'line 206, in send\n'
+               '    self._send_bytes(_ForkingPickler.dumps(obj))\n'
+               '                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+               '  File '
+               '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\reduction.py", '
+               'line 51, in dumps\n'
+               '    cls(buf, protocol).dump(obj)\n'
+               "_pickle.PicklingError: Can't pickle <function fast_memory_oom "
+               'at 0x0000028699E3A700>: attribute lookup fast_memory_oom on '
+               '__main__ failed\n',
+ 'ret_tool2llm': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+                 '### 终端输出：\n'
+                 '\n'
+                 '崩溃原因：\n'
+                 'Process Process-6:\n'
+                 'Traceback (most recent call last):\n'
+                 '  File '
+                 '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+                 'line 314, in _bootstrap\n'
+                 '    self.run()\n'
+                 '  File '
+                 '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+                 'line 108, in run\n'
+                 '    self._target(*self._args, **self._kwargs)\n'
+                 '  File '
+                 '"d:\\zyt\\git_ln\\algo_agent\\tests\\playground\\subprocess_output.py", '
+                 'line 64, in _worker_with_pipe\n'
+                 '    child_conn.send((_PipeType.RESULT, res))\n'
+                 '  File '
+                 '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\connection.py", '
+                 'line 206, in send\n'
+                 '    self._send_bytes(_ForkingPickler.dumps(obj))\n'
+                 '                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+                 '  File '
+                 '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\reduction.py", '
+                 'line 51, in dumps\n'
+                 '    cls(buf, protocol).dump(obj)\n'
+                 "_pickle.PicklingError: Can't pickle <function "
+                 'fast_memory_oom at 0x0000028699E3A700>: attribute lookup '
+                 'fast_memory_oom on __main__ failed\n'
+                 '### 退出状态码：1\n'}
 ----- test finish -----
 
 (algo-agent) D:\zyt\git_ln\algo_agent>

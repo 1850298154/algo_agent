@@ -1491,3 +1491,692 @@ EOFError
 
 [2025-11-24 05:22:06,736]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
 [2025-11-24 05:22:06,736]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 05:57:26,069]  ---------- 1. 超时情况：由父进程构建 ExecutionResult
+[2025-11-24 05:57:26,080]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 05:57:26,082]  ---------- 1. 子进程超时退出：超时 3 秒
+[2025-11-24 05:57:26,579]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 05:57:26,580]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 05:57:26,653]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 05:57:26,653]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 05:57:27,008]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 05:57:27,010]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 05:57:27,127]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 05:57:27,127]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 05:57:27,691]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 05:57:27,694]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 05:57:27,694]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 05:57:28,068]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 05:57:28,105]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 05:57:28,186]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 05:57:28,187]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 05:57:28,586]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 05:57:28,615]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 05:57:28,673]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 05:57:28,674]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:23:56,509]  ---------- 1. 超时情况：由父进程构建 ExecutionResult
+[2025-11-24 06:23:56,520]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:23:56,522]  ---------- 1. 子进程超时退出：超时 3 秒
+[2025-11-24 06:23:56,973]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:23:56,975]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:23:57,056]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:23:57,057]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:23:57,392]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:23:57,395]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:23:57,479]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:23:57,479]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:23:57,879]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:23:57,882]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:23:57,883]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:23:58,198]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:23:58,234]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:23:58,256]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:23:58,257]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:23:58,626]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:23:58,644]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:23:58,709]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:23:58,709]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:27:23,600]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:27:23,604]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:27:29,113]  ---------- 1. 超时情况：由父进程构建 ExecutionResult
+[2025-11-24 06:27:29,118]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:27:29,120]  ---------- 1. 子进程超时退出：超时 3 秒
+[2025-11-24 06:27:29,579]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:27:29,580]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:27:29,664]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:27:29,666]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:27:30,039]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:27:30,042]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:27:30,098]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:27:30,099]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:27:30,465]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:27:30,470]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:27:30,471]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:27:30,837]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:27:30,868]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:27:30,919]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:27:30,921]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:27:31,246]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:27:31,268]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 88, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:27:31,305]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:27:31,306]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:38:02,477]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:38:08,571]  ---------- 1. 超时情况：由父进程构建 ExecutionResult
+[2025-11-24 06:38:08,578]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:38:08,580]  ---------- 1. 子进程超时退出：超时 3 秒
+[2025-11-24 06:38:09,019]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:38:09,021]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:38:09,077]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:38:09,078]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:38:09,446]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:38:09,449]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:38:09,522]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:38:09,522]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:38:09,917]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:38:09,921]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:38:09,921]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:38:10,289]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:38:10,329]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:38:10,384]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:38:10,384]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:38:10,742]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:38:10,767]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:38:10,793]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:38:10,793]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:41:43,440]  ---------- 1. 超时情况：由父进程构建 ExecutionResult
+[2025-11-24 06:41:43,452]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:41:43,455]  ---------- 1. 子进程超时退出：超时 3 秒
+[2025-11-24 06:41:43,948]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:41:43,950]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:41:44,036]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:44,037]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:41:44,417]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:41:44,419]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 317, in _recv_bytes
+    ov, err = _winapi.ReadFile(self._handle, bsize,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:41:44,457]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:44,457]  ---------- 2.1 子进程正常退出： exec正常、exec异常
+[2025-11-24 06:41:44,863]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:41:44,866]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:44,866]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:41:45,206]  ---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult
+[2025-11-24 06:41:45,239]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:41:45,264]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:45,265]  ---------- 2.2 子进程崩溃退出：如 SegFault
+[2025-11-24 06:41:45,628]  ---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult
+[2025-11-24 06:41:45,649]  Pipe reader error: type=EOFError, value=, kv=EOFError(), traceback=Traceback (most recent call last):
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 328, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [WinError 109] 管道已结束。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "d:\zyt\git_ln\algo_agent\tests\playground\subprocess_output.py", line 89, in _reader
+    msg: tuple[_PipeType, str | ExecutionResult] = parent_conn.recv()
+                                                   ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zooos\AppData\Roaming\uv\python\cpython-3.12.11-windows-x86_64-none\Lib\multiprocessing\connection.py", line 337, in _recv_bytes
+    raise EOFError
+EOFError
+
+[2025-11-24 06:41:45,703]  ---------- 2. 正常或异常退出：从子进程获取 ExecutionResult
+[2025-11-24 06:41:45,704]  ---------- 2.2 子进程崩溃退出：如 SegFault

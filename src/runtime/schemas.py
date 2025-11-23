@@ -16,12 +16,33 @@ class ExecutionStatus(str, Enum):
     
     
     @classmethod
-    def get_display_desc(cls, status) -> str:
+    def get_return_llm(cls, status: "ExecutionStatus", result: "ExecutionResult") -> str:
+        """根据执行状态，生成返回给模型的描述信息
+            不可以有任何log或print，因为子进程重写了stdout/stderr
+        """
         _desc_map = {
-            cls.SUCCESS: "代码执行成功，输出结果如下：\n",
-            cls.FAILURE: "代码执行失败，代码报错如下：\n",
-            cls.TIMEOUT: "代码执行超时，强制退出执行：\n",
-            cls.CRASHED: "代码执行崩溃，进程异常退出：\n",
+            cls.SUCCESS: "## 代码执行成功，输出结果完整，任务完成\n"
+                        f"### 终端输出：\n"
+                        f"{result.ret_stdout}"
+                        ,
+            cls.FAILURE: "## 代码执行失败，代码抛出异常，根据报错信息进行调试\n"
+                        f"### 终端输出：\n"
+                        f"{result.ret_stdout}"
+                        f"### 原始代码：\n"
+                        f"{source_code.add_line_numbers(result.arg_command)}\n"
+                        f"### 报错信息：\n"
+                        f"{result.exception_traceback}"
+                        ,
+            cls.TIMEOUT: "## 代码执行超时，强制退出执行，调整超时时间后重试\n"
+                        f"### 终端输出：\n"
+                        f"{result.ret_stdout}"
+                        f"### 超出限制的时间：{result.arg_timeout} 秒\n"
+                        ,
+            cls.CRASHED: "## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n"
+                        f"### 终端输出：\n"
+                        f"{result.ret_stdout}"
+                        f"### 退出状态码：{result.exit_code}\n"
+                        ,
         }
         return _desc_map.get(status, f"未知状态:  {status}")
 
@@ -60,28 +81,6 @@ class ExecutionResult(BaseModel):
         if value is None:
             return {}  # 或 return None，根据业务需求调整
         return workspace.filter_and_deepcopy_globals(value)   
-
-    @model_validator(mode='before')
-    @classmethod
-    def model_validate_globals(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        globals = values.get('arg_globals')
-        if globals is None:
-            return {}  # 或 return None，根据业务需求调整
-        values['arg_globals'] = workspace.filter_and_deepcopy_globals(globals) 
-        values["ret_tool2llm"] = (
-            ExecutionStatus.get_display_desc(values["exit_status"])
-            + (
-                f"执行超过{values.get('arg_timeout', '')}秒，未完成的代码输出为：\n"
-                if values["exit_status"] == ExecutionStatus.TIMEOUT
-                else ""
-            )
-            + (
-                values.get("ret_stdout", "")
-                if values["exit_status"] != ExecutionStatus.FAILURE
-                else source_code.get_code_and_traceback(values["arg_command"])
-            )
-        )
-        return values
 
 
 if __name__ == "__main__":
