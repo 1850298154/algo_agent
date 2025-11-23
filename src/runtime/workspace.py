@@ -7,7 +7,8 @@ from typing import Any, Dict, Optional, Union
 
 
 
-instance = None
+arg_globals_list: list[dict] = []
+out_globals_list: list[dict] = []
 
 
 def __create_workspace() -> dict:
@@ -20,10 +21,6 @@ def initialize_workspace() -> dict:
     workspace: dict = __create_workspace()
     instance = workspace.update({'__name__': '__main__'})
     return workspace
-
-
-def update_workspace_globals(globals_dict: dict):
-    instance.update(globals_dict)
 
 
 def get_workspace_globals_dict(workspace: dict, include_special_vars: bool = False):
@@ -57,6 +54,25 @@ def filter_and_deepcopy_globals(original_globals: Dict[str, Any]) -> Dict[str, A
         # 对符合条件的值进行深拷贝并添加到新字典
         filtered_dict[key] = copy.deepcopy(value)
     return filtered_dict
+
+
+def get_arg_globals() -> dict:
+    global arg_globals_list
+    if not arg_globals_list:
+        arg_globals = initialize_workspace()
+        filter_arg_globals = filter_and_deepcopy_globals(arg_globals)
+        arg_globals_list.append(filter_arg_globals)
+    else:
+        arg_globals = out_globals_list[-1]
+        filter_arg_globals = filter_and_deepcopy_globals(arg_globals)
+        arg_globals_list.append(filter_arg_globals)
+    return filter_arg_globals
+
+
+def append_out_globals(out_globals: dict):
+    global out_globals_list
+    filter_out_globals = filter_and_deepcopy_globals(out_globals)
+    out_globals_list.append(filter_out_globals)
 
 
 if __name__ == '__main__':

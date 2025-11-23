@@ -3,7 +3,7 @@ from typing import Dict, Type, Any, Optional, Literal, List
 import inspect
 
 from src.agent.tool import base_tool
-from src.runtime import python_executor
+from src.runtime import subprocess_python_executor
 from src.runtime import workspace
 class ExecutePythonCodeTool(base_tool.BaseTool):
     """
@@ -21,7 +21,17 @@ class ExecutePythonCodeTool(base_tool.BaseTool):
         ),
         examples=["print('Hello, World!')"]
     )
+    timeout: int = Field(
+        30, 
+        description="The maximum time in seconds allowed for the code to execute. If the code runs longer than this, it will be terminated and an error message will be returned."
+    )
 
     def run(self) -> str:
-        execution_context: Optional[Dict[str, Any]] = workspace.initialize_workspace()
-        return python_executor.run(self.python_code_snippet, execution_context)
+        execution_context: Optional[Dict[str, Any]] = workspace.get_arg_globals()
+        exec_result: subprocess_python_executor.ExecutionResult =  subprocess_python_executor.run_structured_in_subprocess(
+            command=self.python_code_snippet, 
+            _globals=execution_context,
+            timeout=self.timeout
+        )
+        workspace.append_out_globals(exec_result.arg_globals)
+        return exec_result.ret_tool2llm
