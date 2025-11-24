@@ -45,11 +45,12 @@ class TaskStatus(str, Enum):
 # 2. 递归计划树节点模型（核心任务单元）
 class RecursivePlanTreeNode(BaseModel):
     """递归计划树节点（层级嵌套的任务单元）"""
-    task_id: str = Field(default_factory=lambda: str(uuid.uuid4()), description="任务唯一ID（自动生成，全局唯一）")
-    task_name: str = Field(..., description="任务名称（简洁描述核心动作）")
+    task_id: str = Field(default_factory=lambda: f"TASK-{str(uuid.uuid4())}", description="任务唯一ID（自动生成，全局唯一）")
+    task_name: str = Field(..., description="任务名称（简洁描述核心动作），大语言模型生成，必须全局唯一，会被dependencies列表引用")
     description: str = Field(default="", description="任务详细说明（可选，补充执行要求/预期结果）")
     status: TaskStatus = Field(default=TaskStatus.PENDING, description=f"任务状态枚举：{[status.value for status in TaskStatus]}")
     output: str = Field(default="", description="执行结果（完成/失败时填写）")
+    dependencies: Optional[List[str]] = Field(default=None, description="依赖的任务名称的列表，任务名称必须是task_name")  # 可选，列出前置任务名称
     research_directions: Optional[List[str]] = Field(default=None, description="深度研究方向（可选，仅复杂任务需要）")
     children: Optional[List["RecursivePlanTreeNode"]] = Field(default=None, description="子任务列表（层级嵌套）")
 
@@ -68,7 +69,7 @@ RecursivePlanTreeNode.model_rebuild()
 # 3. 完整递归计划树模型
 class RecursivePlanTree(BaseModel):
     """完整递归计划树：包含层级任务树、核心目标、状态统计等"""
-    plan_tree_id: str = Field(default_factory=lambda: str(uuid.uuid4()), description="计划树唯一ID（自动生成）")
+    plan_tree_id: str = Field(default_factory=lambda: f"RPT-{str(uuid.uuid4())}", description="计划树唯一ID（自动生成）")
     core_goal: str = Field(..., description="核心目标（计划树要达成的最终目的）")
     current_status: Dict[str, int] = Field(default_factory=dict, description="状态统计（各状态的任务数量）")
     tree_nodes: List[RecursivePlanTreeNode] = Field(default_factory=list, description="计划树根任务列表")

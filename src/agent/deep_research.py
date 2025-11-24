@@ -8,6 +8,7 @@ import memory
 import tool
 import tool.schema
 import tool.python_tool
+import tool.todo_tool
 
 
 @traceable
@@ -17,7 +18,8 @@ def user_query(user_input):
 
     messages = memory.init_messages(user_input)
     tools_schema_list = tool.schema.get_tools_schema([
-        tool.python_tool.ExecutePythonCodeTool
+        tool.python_tool.ExecutePythonCodeTool,
+        tool.todo_tool.RecursivePlanTreeTodoTool,
         ])
     
     # 模型的第一轮调用
@@ -54,4 +56,4 @@ def user_query(user_input):
 
 # 测试
 if __name__ == "__main__":
-    user_query("你好，帮我执行 print('Hello, World!') 这段代码，并告诉我结果是什么？")
+    user_query("帮我制定一个研究计划，目标是了解量子计算的基本原理和应用，并列出具体的任务步骤。")
