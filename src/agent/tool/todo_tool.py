@@ -48,7 +48,7 @@ class RecursivePlanTreeNode(BaseModel):
     task_id: str = Field(default_factory=lambda: str(uuid.uuid4()), description="任务唯一ID（自动生成，全局唯一）")
     task_name: str = Field(..., description="任务名称（简洁描述核心动作）")
     description: str = Field(default="", description="任务详细说明（可选，补充执行要求/预期结果）")
-    status: TaskStatus = Field(default=TaskStatus.PENDING, description="任务状态")
+    status: TaskStatus = Field(default=TaskStatus.PENDING, description=f"任务状态枚举：{[status.value for status in TaskStatus]}")
     output: str = Field(default="", description="执行结果（完成/失败时填写）")
     research_directions: Optional[List[str]] = Field(default=None, description="深度研究方向（可选，仅复杂任务需要）")
     children: Optional[List["RecursivePlanTreeNode"]] = Field(default=None, description="子任务列表（层级嵌套）")
@@ -58,7 +58,7 @@ class RecursivePlanTreeNode(BaseModel):
         return v if v and len(v) > 0 else None
 
     class Config:
-        use_enum_values = True  # 序列化时使用枚举值（如"pending"）而非枚举对象
+        # use_enum_values = True  # 序列化时使用枚举值（如"pending"）而非枚举对象
         arbitrary_types_allowed = True  # 允许任意类型（适配嵌套模型）
 
 # 解决自引用问题（V2 仍需手动调用 model_rebuild）
@@ -111,7 +111,7 @@ class RecursivePlanTree(BaseModel):
         return status_count
 
     class Config:
-        use_enum_values = True  # 序列化时使用枚举值
+        # use_enum_values = True  # 序列化时使用枚举值
         arbitrary_types_allowed = True
 
 
