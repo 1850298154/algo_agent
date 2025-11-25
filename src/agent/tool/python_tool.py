@@ -7,6 +7,7 @@ from src.runtime import subprocess_python_executor
 from src.runtime import workspace
 class ExecutePythonCodeTool(base_tool.BaseTool):
     """
+必须调用在每一轮推理中，作为计算工具。
 在有状态的环境中执行Python代码片段，类似于在Jupyter Notebook中运行单元格。
 
 **功能：**

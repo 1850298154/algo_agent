@@ -187,9 +187,9 @@ def log_function(
             #         args_dict.update({f"arg_{i+1}": format_value(arg) for i, arg in enumerate(args[1:])})
             #     else:
             #         args_dict.update({f"arg_{i+1}": format_value(arg) for i, arg in enumerate(args)})
-            args_dict = args
+            args_dict = pprint.pformat(args)
             # kwargs_filtered = {k: format_value(v) for k, v in kwargs.items() if k not in exclude_args}
-            kwargs_filtered = kwargs
+            kwargs_filtered = pprint.pformat(kwargs)
 
             # 3. 记录调用开始
             logger.log(

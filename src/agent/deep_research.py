@@ -105,5 +105,6 @@ if __name__ == "__main__":
 3. 场景模拟：如何利用生成的数据模拟不同的应急救援场景。
 4. 算法测试：如何设计多种不同的算法实验来测试多智能体协同调度算法的性能和效果。
 """
-    all_prompt = f"{data_info}\n\n{user_query_prompt}"
+    tool_use_prompt = """必须使用python工具进行算法描述和测试，不能直接给出答案"""
+    all_prompt = f"{data_info}\n\n{user_query_prompt}\n\n{tool_use_prompt}"
     user_query(all_prompt)

@@ -32,6 +32,7 @@ class RecursivePlanTreeTodoTool(BaseTool):
         s  = (f"变更总结：\n{result['changes_summary']}")
         s += (f"Markdown清单：\n{result['markdown_todo_list']}\n")
         s += (f"status_statistics: {pprint.pformat(result['status_statistics'])}")
+        s = ""
         return s
 
 # ------------------------------
