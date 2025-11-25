@@ -6,6 +6,7 @@ import sys
 import traceback
 from typing import Any, Dict, Optional
 from src.runtime.schemas import ExecutionStatus, ExecutionResult
+from src.runtime import cwd
 from src.utils import global_logger, traceable
 
 
@@ -23,7 +24,8 @@ def _worker_with_pipe(
     child_conn: PipeConnection,
 ) -> None:
     """Execute a command in a subprocess with output captured via pipes."""
-
+    cwd.create_cwd()
+    
     class _PipeWriter:
         def __init__(self, child_conn: PipeConnection):
             self.child_conn = child_conn
@@ -99,7 +101,7 @@ def run_structured_in_subprocess(
                     subprocess_stdout_buffer.append(str(msg))
         except (EOFError, OSError) as e:
             global_logger.info(
-                f"Pipe reader error: type={type(e).__name__}, value={str(e)}, kv={repr(e)}, traceback={traceback.format_exc()}"
+                f"Pipe reader error: type={type(e).__name__}, value={str(e)}, kv={repr(e)}"  # , traceback={traceback.format_exc()}"
             )
             pass
 
@@ -107,7 +109,7 @@ def run_structured_in_subprocess(
         target=_worker_with_pipe, args=(command, _globals, _locals, timeout, child_conn)
     )
     p.start()
-    
+
     # 必须关闭父进程持有的子端句柄，否则 reader 无法收到 EOF
     child_conn.close()
 
@@ -153,3 +155,11 @@ def run_structured_in_subprocess(
     final_res.ret_stdout = "".join(subprocess_stdout_buffer)  # 填充 stdout 字段
     final_res.ret_tool2llm = ExecutionStatus.get_return_llm(final_res.exit_status, final_res)  # 填充 stdout 字段
     return final_res
+
+if __name__ == "__main__":
+    test_code = """
+import os
+print(os.getcwd())
+    """
+    result = run_structured_in_subprocess(test_code, {},  timeout=5)
+    print(result)
