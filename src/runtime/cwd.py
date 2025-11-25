@@ -5,7 +5,15 @@ from src.utils import global_logger
 import os
 from datetime import datetime
 
-def _create_subfolder(base_path):
+def _get_or_create_subfolder(base_path=None):
+    if base_path:
+        base_path = os.path.abspath(base_path)
+        os.makedirs(base_path, exist_ok=True)
+        return base_path
+    
+    base_path = "./ws" 
+    base_path = os.path.abspath(base_path)
+        
     # 确保父目录存在
     os.makedirs(base_path, exist_ok=True)
     # 获取当前子文件夹数量（仅统计目录，排除文件）
@@ -26,14 +34,12 @@ def _create_subfolder(base_path):
     return subfolder_path
 
 
-def create_cwd():
+def create_cwd(cwd=None):
     """
     子进程的包装函数，用于在执行实际任务前更改工作目录。
     """
-    cwd = "./ws" 
-    # 转变成绝对路径（可选），兼容win和linux
-    cwd = os.path.abspath(cwd)
-    cwd = _create_subfolder(cwd)
+    cwd = _get_or_create_subfolder(cwd)
+
     global_logger.info(f"子进程 PID: {os.getpid()} 要将工作目录更改为: {cwd}")
     if not cwd:
         return False
