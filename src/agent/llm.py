@@ -15,7 +15,7 @@ def generate_chat_completion(messages: list[dict], tools_schema_list=None) -> Ch
     completion: ChatCompletion = client.chat.completions.create(
         model="qwen-plus",  # 模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
         # https://help.aliyun.com/zh/model-studio/models
-        messages=messages,
+        messages=messages, # api 说明 https://zhuanlan.zhihu.com/p/692336625
         tools=tools_schema_list,
     )
     return completion
