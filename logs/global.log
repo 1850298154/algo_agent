@@ -2090,3 +2090,1285 @@
           d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:110 <module>
 [2025-11-25 17:52:15,288]  【调用成功】 栈路径： llm.None.has_tool_call | 耗时： 7.592ms | 返回值： False
 [2025-11-25 17:52:15,290]  【调用成功】 栈路径： __main__.None.user_query | 耗时： 43037.356ms | 返回值： None
+[2025-11-26 03:39:03,258]  【调用开始】 栈路径： memory.None.init_messages_with_system_prompt | 开始时间： 2025-11-26 03:39:03.256786 | 位置参数： ('\n'
+ '你所在的工作路径下面，可以用python工具  ExecutePythonCodeTool  写一段包含读取json文件的代码，读取一下文件\n'
+ '例如：“\n'
+ 'import json\n'
+ '\n'
+ "with open('schema.json', 'r') as file:\n"
+ '    schema = json.load(file)\n'
+ '    print(json.dumps(schema, indent=2))\n'
+ '”，读取以下文件：\n'
+ '1. **schema.json** - 完整的数据结构Schema定义\n'
+ '2. **emergency_response_data_01.json** 至 **emergency_response_data_05.json** '
+ '- 5个随机生成的应急救援场景数据\n'
+ '\n'
+ '### 数据特点\n'
+ '\n'
+ '1. **真实性**：\n'
+ '   - 基于真实地理范围生成坐标\n'
+ '   - 模拟不同类型的灾害场景\n'
+ '   - 包含合理的物资、载体属性\n'
+ '\n'
+ '2. **多样性**：\n'
+ '   - 多种任务类型和优先级\n'
+ '   - 不同类型的运输载体\n'
+ '   - 随机生成的风险点和路径\n'
+ '\n'
+ '3. **完整性**：\n'
+ '   - 包含所有核心实体和关系\n'
+ '   - 覆盖各种可能的状态组合\n'
+ '   - 包含任务反馈和救援指标\n'
+ '\n'
+ '4. **可扩展性**：\n'
+ '   - 代码结构清晰，易于添加新的字段或实体\n'
+ '   - 生成策略可调整，可根据需要增加特定场景的数据\n'
+ '\n'
+ '### 使用建议\n'
+ '\n'
+ '1. **测试算法**：\n'
+ '   - 可用于测试任务指派、路径规划、ETA预测等算法\n'
+ '   - 包含各种边界情况（高优先级任务、复杂路径、设备故障等）\n'
+ '\n'
+ '2. **系统集成**：\n'
+ '   - 可作为应急物资运输调度系统的测试数据\n'
+ '   - 支持系统功能验证和性能测试\n'
+ '\n'
+ '3. **场景模拟**：\n'
+ '   - 可用于模拟不同类型的灾害救援场景\n'
+ '   - 支持应急响应演练和决策支持系统测试\n'
+ '\n'
+ '这个数据生成器可以满足你对多智能体协同调度、动态在线路径规划等场景的测试需求，生成的随机数据具有较高的真实性和多样性。\n'
+ '    \n'
+ '\n'
+ '你的目标是基于以下数据特点和使用建议，制定一个详细的研究计划，帮助你深入了解数据结构，并分析如何利用这些数据解决应急物资运输调度中的问题。\n'
+ '请列出具体的任务步骤，包括但不限于以下方面：\n'
+ '1. 数据结构分析：如何理解和解析 schema.json 中定义的各个实体及其关系。\n'
+ '2. 数据生成逻辑：如何理解随机数据生成的策略和方法。\n'
+ '3. 场景模拟：如何利用生成的数据模拟不同的应急救援场景。\n'
+ '4. 算法测试：如何设计多种不同的算法实验来测试多智能体协同调度算法的性能和效果。\n'
+ '\n'
+ '\n'
+ '不支持function_call，必须使用tool_calls调用多个工具执行。必须使用python工具进行算法编码和测试，不能直接给出答案',) | 关键字参数： {}
+[2025-11-26 03:39:03,399]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:18 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:03,402]  【调用成功】 栈路径： memory.None.init_messages_with_system_prompt | 耗时： 142.600ms | 返回值： [{'content': '你是一个资深的深度研究专家，擅长通过调用各种工具来获取信息并进行分析。\n'
+             '你的任务是根据用户的问题，决定是否需要调用工具来获取更多信息，或者直接给出答案。\n'
+             '你的主循环是维护一颗分析计划树：\n'
+             '1. 罗列值得计算和探索的方向，形成分析计划树的节点。\n'
+             '2. 根据分析计划树的节点，决定是否需要调用工具来获取信息。\n'
+             '3. 在必要时，调用工具并处理返回的信息，以便提供准确的答案。\n'
+             '4. 根据获取的信息，更新分析计划树，继续进行分析，直到得出最终结论。\n'
+             '如果遇到工具调用错误：\n'
+             '1. 记录错误信息，分析错误原因。\n'
+             '2. 尝试调整重试，或者调整分析计划树，重新规划路径。\n'
+             '3. 记录重试次数，避免无限循环。\n'
+             '4. 如果多次重试仍然失败，考虑放弃该路径，转向其他分析方向。\n',
+  'role': 'system'},
+ {'content': '\n'
+             '你所在的工作路径下面，可以用python工具  ExecutePythonCodeTool  '
+             '写一段包含读取json文件的代码，读取一下文件\n'
+             '例如：“\n'
+             'import json\n'
+             '\n'
+             "with open('schema.json', 'r') as file:\n"
+             '    schema = json.load(file)\n'
+             '    print(json.dumps(schema, indent=2))\n'
+             '”，读取以下文件：\n'
+             '1. **schema.json** - 完整的数据结构Schema定义\n'
+             '2. **emergency_response_data_01.json** 至 '
+             '**emergency_response_data_05.json** - 5个随机生成的应急救援场景数据\n'
+             '\n'
+             '### 数据特点\n'
+             '\n'
+             '1. **真实性**：\n'
+             '   - 基于真实地理范围生成坐标\n'
+             '   - 模拟不同类型的灾害场景\n'
+             '   - 包含合理的物资、载体属性\n'
+             '\n'
+             '2. **多样性**：\n'
+             '   - 多种任务类型和优先级\n'
+             '   - 不同类型的运输载体\n'
+             '   - 随机生成的风险点和路径\n'
+             '\n'
+             '3. **完整性**：\n'
+             '   - 包含所有核心实体和关系\n'
+             '   - 覆盖各种可能的状态组合\n'
+             '   - 包含任务反馈和救援指标\n'
+             '\n'
+             '4. **可扩展性**：\n'
+             '   - 代码结构清晰，易于添加新的字段或实体\n'
+             '   - 生成策略可调整，可根据需要增加特定场景的数据\n'
+             '\n'
+             '### 使用建议\n'
+             '\n'
+             '1. **测试算法**：\n'
+             '   - 可用于测试任务指派、路径规划、ETA预测等算法\n'
+             '   - 包含各种边界情况（高优先级任务、复杂路径、设备故障等）\n'
+             '\n'
+             '2. **系统集成**：\n'
+             '   - 可作为应急物资运输调度系统的测试数据\n'
+             '   - 支持系统功能验证和性能测试\n'
+             '\n'
+             '3. **场景模拟**：\n'
+             '   - 可用于模拟不同类型的灾害救援场景\n'
+             '   - 支持应急响应演练和决策支持系统测试\n'
+             '\n'
+             '这个数据生成器可以满足你对多智能体协同调度、动态在线路径规划等场景的测试需求，生成的随机数据具有较高的真实性和多样性。\n'
+             '    \n'
+             '\n'
+             '你的目标是基于以下数据特点和使用建议，制定一个详细的研究计划，帮助你深入了解数据结构，并分析如何利用这些数据解决应急物资运输调度中的问题。\n'
+             '请列出具体的任务步骤，包括但不限于以下方面：\n'
+             '1. 数据结构分析：如何理解和解析 schema.json 中定义的各个实体及其关系。\n'
+             '2. 数据生成逻辑：如何理解随机数据生成的策略和方法。\n'
+             '3. 场景模拟：如何利用生成的数据模拟不同的应急救援场景。\n'
+             '4. 算法测试：如何设计多种不同的算法实验来测试多智能体协同调度算法的性能和效果。\n'
+             '\n'
+             '\n'
+             '不支持function_call，必须使用tool_calls调用多个工具执行。必须使用python工具进行算法编码和测试，不能直接给出答案',
+  'role': 'user'}]
+[2025-11-26 03:39:03,406]  【调用开始】 栈路径： tool.schema.None.get_tools_schema | 开始时间： 2025-11-26 03:39:03.406494 | 位置参数： ([<class 'tool.python_tool.ExecutePythonCodeTool'>],) | 关键字参数： {}
+[2025-11-26 03:39:03,407]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:19 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:03,431]  【调用成功】 栈路径： tool.schema.None.get_tools_schema | 耗时： 22.967ms | 返回值： [{'function': {'description': '所有工具的基类，定义统一接口',
+               'name': 'execute_python_code',
+               'parameters': {'properties': {'python_code_snippet': {'description': '要执行的有效 '
+                                                                                    'Python '
+                                                                                    '代码片段。不得包含恶意代码（例如，修改系统文件、访问敏感数据或执行无限循环的代码）。',
+                                                                     'examples': ["print('Hello, "
+                                                                                  "World!')"],
+                                                                     'title': 'Python '
+                                                                              'Code '
+                                                                              'Snippet',
+                                                                     'type': 'string'},
+                                             'timeout': {'default': 30,
+                                                         'description': '执行代码的最大时间（秒）。如果代码运行时间超过此值，将被终止并返回错误消息。',
+                                                         'title': 'Timeout',
+                                                         'type': 'integer'},
+                                             'tool_call_purpose': {'description': '工具调用的目的，即调用该工具的具体场景或问题。',
+                                                                   'title': 'Tool '
+                                                                            'Call '
+                                                                            'Purpose',
+                                                                   'type': 'string'}},
+                              'required': ['tool_call_purpose',
+                                           'python_code_snippet'],
+                              'title': 'ExecutePythonCodeTool',
+                              'type': 'object'}},
+  'type': 'function'}]
+[2025-11-26 03:39:03,437]  【调用开始】 栈路径： llm.None.generate_chat_completion | 开始时间： 2025-11-26 03:39:03.436494 | 位置参数： ([{'content': '你是一个资深的深度研究专家，擅长通过调用各种工具来获取信息并进行分析。\n'
+              '你的任务是根据用户的问题，决定是否需要调用工具来获取更多信息，或者直接给出答案。\n'
+              '你的主循环是维护一颗分析计划树：\n'
+              '1. 罗列值得计算和探索的方向，形成分析计划树的节点。\n'
+              '2. 根据分析计划树的节点，决定是否需要调用工具来获取信息。\n'
+              '3. 在必要时，调用工具并处理返回的信息，以便提供准确的答案。\n'
+              '4. 根据获取的信息，更新分析计划树，继续进行分析，直到得出最终结论。\n'
+              '如果遇到工具调用错误：\n'
+              '1. 记录错误信息，分析错误原因。\n'
+              '2. 尝试调整重试，或者调整分析计划树，重新规划路径。\n'
+              '3. 记录重试次数，避免无限循环。\n'
+              '4. 如果多次重试仍然失败，考虑放弃该路径，转向其他分析方向。\n',
+   'role': 'system'},
+  {'content': '\n'
+              '你所在的工作路径下面，可以用python工具  ExecutePythonCodeTool  '
+              '写一段包含读取json文件的代码，读取一下文件\n'
+              '例如：“\n'
+              'import json\n'
+              '\n'
+              "with open('schema.json', 'r') as file:\n"
+              '    schema = json.load(file)\n'
+              '    print(json.dumps(schema, indent=2))\n'
+              '”，读取以下文件：\n'
+              '1. **schema.json** - 完整的数据结构Schema定义\n'
+              '2. **emergency_response_data_01.json** 至 '
+              '**emergency_response_data_05.json** - 5个随机生成的应急救援场景数据\n'
+              '\n'
+              '### 数据特点\n'
+              '\n'
+              '1. **真实性**：\n'
+              '   - 基于真实地理范围生成坐标\n'
+              '   - 模拟不同类型的灾害场景\n'
+              '   - 包含合理的物资、载体属性\n'
+              '\n'
+              '2. **多样性**：\n'
+              '   - 多种任务类型和优先级\n'
+              '   - 不同类型的运输载体\n'
+              '   - 随机生成的风险点和路径\n'
+              '\n'
+              '3. **完整性**：\n'
+              '   - 包含所有核心实体和关系\n'
+              '   - 覆盖各种可能的状态组合\n'
+              '   - 包含任务反馈和救援指标\n'
+              '\n'
+              '4. **可扩展性**：\n'
+              '   - 代码结构清晰，易于添加新的字段或实体\n'
+              '   - 生成策略可调整，可根据需要增加特定场景的数据\n'
+              '\n'
+              '### 使用建议\n'
+              '\n'
+              '1. **测试算法**：\n'
+              '   - 可用于测试任务指派、路径规划、ETA预测等算法\n'
+              '   - 包含各种边界情况（高优先级任务、复杂路径、设备故障等）\n'
+              '\n'
+              '2. **系统集成**：\n'
+              '   - 可作为应急物资运输调度系统的测试数据\n'
+              '   - 支持系统功能验证和性能测试\n'
+              '\n'
+              '3. **场景模拟**：\n'
+              '   - 可用于模拟不同类型的灾害救援场景\n'
+              '   - 支持应急响应演练和决策支持系统测试\n'
+              '\n'
+              '这个数据生成器可以满足你对多智能体协同调度、动态在线路径规划等场景的测试需求，生成的随机数据具有较高的真实性和多样性。\n'
+              '    \n'
+              '\n'
+              '你的目标是基于以下数据特点和使用建议，制定一个详细的研究计划，帮助你深入了解数据结构，并分析如何利用这些数据解决应急物资运输调度中的问题。\n'
+              '请列出具体的任务步骤，包括但不限于以下方面：\n'
+              '1. 数据结构分析：如何理解和解析 schema.json 中定义的各个实体及其关系。\n'
+              '2. 数据生成逻辑：如何理解随机数据生成的策略和方法。\n'
+              '3. 场景模拟：如何利用生成的数据模拟不同的应急救援场景。\n'
+              '4. 算法测试：如何设计多种不同的算法实验来测试多智能体协同调度算法的性能和效果。\n'
+              '\n'
+              '\n'
+              '不支持function_call，必须使用tool_calls调用多个工具执行。必须使用python工具进行算法编码和测试，不能直接给出答案',
+   'role': 'user'}],
+ [{'function': {'description': '所有工具的基类，定义统一接口',
+                'name': 'execute_python_code',
+                'parameters': {'properties': {'python_code_snippet': {'description': '要执行的有效 '
+                                                                                     'Python '
+                                                                                     '代码片段。不得包含恶意代码（例如，修改系统文件、访问敏感数据或执行无限循环的代码）。',
+                                                                      'examples': ["print('Hello, "
+                                                                                   "World!')"],
+                                                                      'title': 'Python '
+                                                                               'Code '
+                                                                               'Snippet',
+                                                                      'type': 'string'},
+                                              'timeout': {'default': 30,
+                                                          'description': '执行代码的最大时间（秒）。如果代码运行时间超过此值，将被终止并返回错误消息。',
+                                                          'title': 'Timeout',
+                                                          'type': 'integer'},
+                                              'tool_call_purpose': {'description': '工具调用的目的，即调用该工具的具体场景或问题。',
+                                                                    'title': 'Tool '
+                                                                             'Call '
+                                                                             'Purpose',
+                                                                    'type': 'string'}},
+                               'required': ['tool_call_purpose',
+                                            'python_code_snippet'],
+                               'title': 'ExecutePythonCodeTool',
+                               'type': 'object'}},
+   'type': 'function'}]) | 关键字参数： {}
+[2025-11-26 03:39:03,442]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\llm.py:25 extract_assistant_output_from_chat
+          d:\zyt\git_ln\algo_agent\src\agent\llm.py:33 generate_assistant_output_append
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:25 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:09,867]  【调用成功】 栈路径： llm.None.generate_chat_completion | 耗时： 6429.612ms | 返回值： ChatCompletion(id='chatcmpl-a4105651-afc0-462c-ab0f-fa1e3642e0e0', choices=[Choice(finish_reason='tool_calls', index=0, logprobs=None, message=ChatCompletionMessage(content='', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_3085f1f75d534390a7c2b7', function=Function(arguments='{\n    "tool_call_purpose": "读取并解析 schema.json 文件，了解数据结构定义",\n    "python_code_snippet": "import json\\n\\nwith open(\'schema.json\', \'r\') as file:\\n    schema = json.load(file)\\n    print(json.dumps(schema, indent=2))"\n  }\n', name='execute_python_code'), type='function', index=0), ChatCompletionMessageFunctionToolCall(id='call_ab025bb2bb3e430aaefd92', function=Function(arguments='{\n    "tool_call_purpose": "读取并解析 emergency_response_data_01.json 文件，查看第一个应急救援场景数据",\n    "python_code_snippet": "import json\\n\\nwith open(\'emergency_response_data_01.json\', \'r\') as file:\\n    data = json.load(file)\\n    print(json.dumps(data, indent=2))"\n  }\n', name='execute_python_code'), type='function', index=1), ChatCompletionMessageFunctionToolCall(id='call_92fd80e050c34c78a18ea9', function=Function(arguments='{\n    "tool_call_purpose": "读取并解析 emergency_response_data_02.json 文件，查看第二个应急救援场景数据",\n    "python_code_snippet": "import json\\n\\nwith open(\'emergency_response_data_02.json\', \'r\') as file:\\n    data = json.load(file)\\n    print(json.dumps(data, indent=2))"\n  }\n', name='execute_python_code'), type='function', index=2)]))], created=1764099550, model='qwen-plus', object='chat.completion', service_tier=None, system_fingerprint=None, usage=CompletionUsage(completion_tokens=281, prompt_tokens=1104, total_tokens=1385, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=0)))
+[2025-11-26 03:39:09,870]  【调用开始】 栈路径： action.None.call_tools_safely | 开始时间： 2025-11-26 03:39:09.870984 | 位置参数： ({'content': '',
+  'role': 'tool',
+  'tool_call_arguments': '{\n'
+                         '    "tool_call_purpose": "读取并解析 schema.json '
+                         '文件，了解数据结构定义",\n'
+                         '    "python_code_snippet": "import json\\n\\nwith '
+                         "open('schema.json', 'r') as file:\\n    schema = "
+                         'json.load(file)\\n    print(json.dumps(schema, '
+                         'indent=2))"\n'
+                         '  }\n',
+  'tool_call_id': 'call_3085f1f75d534390a7c2b7',
+  'tool_call_name': 'execute_python_code'},) | 关键字参数： {}
+[2025-11-26 03:39:09,871]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:49 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:09,875]  【调用开始】 栈路径： src.runtime.subprocess_python_executor.None.run_structured_in_subprocess | 开始时间： 2025-11-26 03:39:09.875993 | 位置参数： () | 关键字参数： {'_globals': {'__name__': '__main__'},
+ 'command': 'import json\n'
+            '\n'
+            "with open('schema.json', 'r') as file:\n"
+            '    schema = json.load(file)\n'
+            '    print(json.dumps(schema, indent=2))',
+ 'timeout': 30}
+[2025-11-26 03:39:09,878]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\tool\python_tool.py:38 run
+          d:\zyt\git_ln\algo_agent\src\agent\action.py:17 call_tools
+          d:\zyt\git_ln\algo_agent\src\agent\action.py:41 call_tools_safely
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:217 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:49 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:11,783]  【调用成功】 栈路径： src.runtime.subprocess_python_executor.None.run_structured_in_subprocess | 耗时： 1903.351ms | 返回值： ExecutionResult(arg_command="import json\n\nwith open('schema.json', 'r') as file:\n    schema = json.load(file)\n    print(json.dumps(schema, indent=2))", arg_timeout=30, arg_globals={'__name__': '__main__'}, exit_status=<ExecutionStatus.CRASHED: 'crashed'>, exit_code=1, exception_repr=None, exception_type=None, exception_value=None, exception_traceback=None, ret_stdout='Process Process-1:\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 44, in _worker_with_pipe\n    exec(command, _globals, _locals)\n  File "<string>", line 4, in <module>\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", line 293, in load\n    return loads(fp.read(),\n                 ^^^^^^^^^\nUnicodeDecodeError: \'gbk\' codec can\'t decode byte 0x94 in position 1265: illegal multibyte sequence\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 54, in _worker_with_pipe\n    res = ExecutionResult(\n          ^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", line 250, in __init__\n    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", line 83, in field_validate_globals\n    return workspace.filter_and_deepcopy_globals(value)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line 55, in filter_and_deepcopy_globals\n    filtered_dict[key] = copy.deepcopy(value)\n                         ^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", line 151, in deepcopy\n    rv = reductor(4)\n         ^^^^^^^^^^^\nTypeError: cannot pickle \'TextIOWrapper\' instances\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 314, in _bootstrap\n    self.run()\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 108, in run\n    self._target(*self._args, **self._kwargs)\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 66, in _worker_with_pipe\n    child_conn.send((_PipeType.RESULT, res))\n                                       ^^^\nUnboundLocalError: cannot access local variable \'res\' where it is not associated with a value\n', ret_tool2llm='## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n### 终端输出：\nProcess Process-1:\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 44, in _worker_with_pipe\n    exec(command, _globals, _locals)\n  File "<string>", line 4, in <module>\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", line 293, in load\n    return loads(fp.read(),\n                 ^^^^^^^^^\nUnicodeDecodeError: \'gbk\' codec can\'t decode byte 0x94 in position 1265: illegal multibyte sequence\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 54, in _worker_with_pipe\n    res = ExecutionResult(\n          ^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", line 250, in __init__\n    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", line 83, in field_validate_globals\n    return workspace.filter_and_deepcopy_globals(value)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line 55, in filter_and_deepcopy_globals\n    filtered_dict[key] = copy.deepcopy(value)\n                         ^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", line 151, in deepcopy\n    rv = reductor(4)\n         ^^^^^^^^^^^\nTypeError: cannot pickle \'TextIOWrapper\' instances\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 314, in _bootstrap\n    self.run()\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 108, in run\n    self._target(*self._args, **self._kwargs)\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 66, in _worker_with_pipe\n    child_conn.send((_PipeType.RESULT, res))\n                                       ^^^\nUnboundLocalError: cannot access local variable \'res\' where it is not associated with a value\n### 退出状态码：1\n')
+[2025-11-26 03:39:11,793]  【调用成功】 栈路径： action.None.call_tools_safely | 耗时： 1916.324ms | 返回值： {'content': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+            '### 终端输出：\n'
+            'Process Process-1:\n'
+            'Traceback (most recent call last):\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+            'line 44, in _worker_with_pipe\n'
+            '    exec(command, _globals, _locals)\n'
+            '  File "<string>", line 4, in <module>\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", '
+            'line 293, in load\n'
+            '    return loads(fp.read(),\n'
+            '                 ^^^^^^^^^\n'
+            "UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in "
+            'position 1265: illegal multibyte sequence\n'
+            '\n'
+            'During handling of the above exception, another exception '
+            'occurred:\n'
+            '\n'
+            'Traceback (most recent call last):\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+            'line 54, in _worker_with_pipe\n'
+            '    res = ExecutionResult(\n'
+            '          ^^^^^^^^^^^^^^^^\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", '
+            'line 250, in __init__\n'
+            '    validated_self = '
+            'self.__pydantic_validator__.validate_python(data, '
+            'self_instance=self)\n'
+            '                     '
+            '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+            '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", '
+            'line 83, in field_validate_globals\n'
+            '    return workspace.filter_and_deepcopy_globals(value)\n'
+            '        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+            '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", '
+            'line 55, in filter_and_deepcopy_globals\n'
+            '    filtered_dict[key] = copy.deepcopy(value)\n'
+            '                         ^^^^^^^^^^^^^^^^^^^^\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", '
+            'line 151, in deepcopy\n'
+            '    rv = reductor(4)\n'
+            '         ^^^^^^^^^^^\n'
+            "TypeError: cannot pickle 'TextIOWrapper' instances\n"
+            '\n'
+            'During handling of the above exception, another exception '
+            'occurred:\n'
+            '\n'
+            'Traceback (most recent call last):\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+            'line 314, in _bootstrap\n'
+            '    self.run()\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+            'line 108, in run\n'
+            '    self._target(*self._args, **self._kwargs)\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+            'line 66, in _worker_with_pipe\n'
+            '    child_conn.send((_PipeType.RESULT, res))\n'
+            '                                       ^^^\n'
+            "UnboundLocalError: cannot access local variable 'res' where it is "
+            'not associated with a value\n'
+            '### 退出状态码：1\n',
+ 'role': 'tool',
+ 'tool_call_arguments': '{\n'
+                        '    "tool_call_purpose": "读取并解析 schema.json '
+                        '文件，了解数据结构定义",\n'
+                        '    "python_code_snippet": "import json\\n\\nwith '
+                        "open('schema.json', 'r') as file:\\n    schema = "
+                        'json.load(file)\\n    print(json.dumps(schema, '
+                        'indent=2))"\n'
+                        '  }\n',
+ 'tool_call_id': 'call_3085f1f75d534390a7c2b7',
+ 'tool_call_name': 'execute_python_code'}
+[2025-11-26 03:39:11,802]  【调用开始】 栈路径： action.None.call_tools_safely | 开始时间： 2025-11-26 03:39:11.801396 | 位置参数： ({'content': '',
+  'role': 'tool',
+  'tool_call_arguments': '{\n'
+                         '    "tool_call_purpose": "读取并解析 '
+                         'emergency_response_data_01.json 文件，查看第一个应急救援场景数据",\n'
+                         '    "python_code_snippet": "import json\\n\\nwith '
+                         "open('emergency_response_data_01.json', 'r') as "
+                         'file:\\n    data = json.load(file)\\n    '
+                         'print(json.dumps(data, indent=2))"\n'
+                         '  }\n',
+  'tool_call_id': 'call_ab025bb2bb3e430aaefd92',
+  'tool_call_name': 'execute_python_code'},) | 关键字参数： {}
+[2025-11-26 03:39:11,805]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:49 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:11,808]  【调用开始】 栈路径： src.runtime.subprocess_python_executor.None.run_structured_in_subprocess | 开始时间： 2025-11-26 03:39:11.807646 | 位置参数： () | 关键字参数： {'_globals': {'__name__': '__main__'},
+ 'command': 'import json\n'
+            '\n'
+            "with open('emergency_response_data_01.json', 'r') as file:\n"
+            '    data = json.load(file)\n'
+            '    print(json.dumps(data, indent=2))',
+ 'timeout': 30}
+[2025-11-26 03:39:11,809]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\tool\python_tool.py:38 run
+          d:\zyt\git_ln\algo_agent\src\agent\action.py:17 call_tools
+          d:\zyt\git_ln\algo_agent\src\agent\action.py:41 call_tools_safely
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:217 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:49 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:13,083]  【调用成功】 栈路径： src.runtime.subprocess_python_executor.None.run_structured_in_subprocess | 耗时： 1272.820ms | 返回值： ExecutionResult(arg_command="import json\n\nwith open('emergency_response_data_01.json', 'r') as file:\n    data = json.load(file)\n    print(json.dumps(data, indent=2))", arg_timeout=30, arg_globals={'__name__': '__main__'}, exit_status=<ExecutionStatus.CRASHED: 'crashed'>, exit_code=1, exception_repr=None, exception_type=None, exception_value=None, exception_traceback=None, ret_stdout='Process Process-2:\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 44, in _worker_with_pipe\n    exec(command, _globals, _locals)\n  File "<string>", line 4, in <module>\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", line 293, in load\n    return loads(fp.read(),\n                 ^^^^^^^^^\nUnicodeDecodeError: \'gbk\' codec can\'t decode byte 0x80 in position 50: illegal multibyte sequence\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 54, in _worker_with_pipe\n    res = ExecutionResult(\n          ^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", line 250, in __init__\n    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", line 83, in field_validate_globals\n    return workspace.filter_and_deepcopy_globals(value)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line 55, in filter_and_deepcopy_globals\n    filtered_dict[key] = copy.deepcopy(value)\n                         ^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", line 151, in deepcopy\n    rv = reductor(4)\n         ^^^^^^^^^^^\nTypeError: cannot pickle \'TextIOWrapper\' instances\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 314, in _bootstrap\n    self.run()\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 108, in run\n    self._target(*self._args, **self._kwargs)\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 66, in _worker_with_pipe\n    child_conn.send((_PipeType.RESULT, res))\n                                       ^^^\nUnboundLocalError: cannot access local variable \'res\' where it is not associated with a value\n', ret_tool2llm='## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n### 终端输出：\nProcess Process-2:\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 44, in _worker_with_pipe\n    exec(command, _globals, _locals)\n  File "<string>", line 4, in <module>\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", line 293, in load\n    return loads(fp.read(),\n                 ^^^^^^^^^\nUnicodeDecodeError: \'gbk\' codec can\'t decode byte 0x80 in position 50: illegal multibyte sequence\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 54, in _worker_with_pipe\n    res = ExecutionResult(\n          ^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", line 250, in __init__\n    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", line 83, in field_validate_globals\n    return workspace.filter_and_deepcopy_globals(value)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line 55, in filter_and_deepcopy_globals\n    filtered_dict[key] = copy.deepcopy(value)\n                         ^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", line 151, in deepcopy\n    rv = reductor(4)\n         ^^^^^^^^^^^\nTypeError: cannot pickle \'TextIOWrapper\' instances\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 314, in _bootstrap\n    self.run()\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 108, in run\n    self._target(*self._args, **self._kwargs)\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 66, in _worker_with_pipe\n    child_conn.send((_PipeType.RESULT, res))\n                                       ^^^\nUnboundLocalError: cannot access local variable \'res\' where it is not associated with a value\n### 退出状态码：1\n')
+[2025-11-26 03:39:13,090]  【调用成功】 栈路径： action.None.call_tools_safely | 耗时： 1283.258ms | 返回值： {'content': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+            '### 终端输出：\n'
+            'Process Process-2:\n'
+            'Traceback (most recent call last):\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+            'line 44, in _worker_with_pipe\n'
+            '    exec(command, _globals, _locals)\n'
+            '  File "<string>", line 4, in <module>\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", '
+            'line 293, in load\n'
+            '    return loads(fp.read(),\n'
+            '                 ^^^^^^^^^\n'
+            "UnicodeDecodeError: 'gbk' codec can't decode byte 0x80 in "
+            'position 50: illegal multibyte sequence\n'
+            '\n'
+            'During handling of the above exception, another exception '
+            'occurred:\n'
+            '\n'
+            'Traceback (most recent call last):\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+            'line 54, in _worker_with_pipe\n'
+            '    res = ExecutionResult(\n'
+            '          ^^^^^^^^^^^^^^^^\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", '
+            'line 250, in __init__\n'
+            '    validated_self = '
+            'self.__pydantic_validator__.validate_python(data, '
+            'self_instance=self)\n'
+            '                     '
+            '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+            '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", '
+            'line 83, in field_validate_globals\n'
+            '    return workspace.filter_and_deepcopy_globals(value)\n'
+            '        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+            '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", '
+            'line 55, in filter_and_deepcopy_globals\n'
+            '    filtered_dict[key] = copy.deepcopy(value)\n'
+            '                         ^^^^^^^^^^^^^^^^^^^^\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", '
+            'line 151, in deepcopy\n'
+            '    rv = reductor(4)\n'
+            '         ^^^^^^^^^^^\n'
+            "TypeError: cannot pickle 'TextIOWrapper' instances\n"
+            '\n'
+            'During handling of the above exception, another exception '
+            'occurred:\n'
+            '\n'
+            'Traceback (most recent call last):\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+            'line 314, in _bootstrap\n'
+            '    self.run()\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+            'line 108, in run\n'
+            '    self._target(*self._args, **self._kwargs)\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+            'line 66, in _worker_with_pipe\n'
+            '    child_conn.send((_PipeType.RESULT, res))\n'
+            '                                       ^^^\n'
+            "UnboundLocalError: cannot access local variable 'res' where it is "
+            'not associated with a value\n'
+            '### 退出状态码：1\n',
+ 'role': 'tool',
+ 'tool_call_arguments': '{\n'
+                        '    "tool_call_purpose": "读取并解析 '
+                        'emergency_response_data_01.json 文件，查看第一个应急救援场景数据",\n'
+                        '    "python_code_snippet": "import json\\n\\nwith '
+                        "open('emergency_response_data_01.json', 'r') as "
+                        'file:\\n    data = json.load(file)\\n    '
+                        'print(json.dumps(data, indent=2))"\n'
+                        '  }\n',
+ 'tool_call_id': 'call_ab025bb2bb3e430aaefd92',
+ 'tool_call_name': 'execute_python_code'}
+[2025-11-26 03:39:13,096]  【调用开始】 栈路径： action.None.call_tools_safely | 开始时间： 2025-11-26 03:39:13.096288 | 位置参数： ({'content': '',
+  'role': 'tool',
+  'tool_call_arguments': '{\n'
+                         '    "tool_call_purpose": "读取并解析 '
+                         'emergency_response_data_02.json 文件，查看第二个应急救援场景数据",\n'
+                         '    "python_code_snippet": "import json\\n\\nwith '
+                         "open('emergency_response_data_02.json', 'r') as "
+                         'file:\\n    data = json.load(file)\\n    '
+                         'print(json.dumps(data, indent=2))"\n'
+                         '  }\n',
+  'tool_call_id': 'call_92fd80e050c34c78a18ea9',
+  'tool_call_name': 'execute_python_code'},) | 关键字参数： {}
+[2025-11-26 03:39:13,099]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:49 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:13,102]  【调用开始】 栈路径： src.runtime.subprocess_python_executor.None.run_structured_in_subprocess | 开始时间： 2025-11-26 03:39:13.102304 | 位置参数： () | 关键字参数： {'_globals': {'__name__': '__main__'},
+ 'command': 'import json\n'
+            '\n'
+            "with open('emergency_response_data_02.json', 'r') as file:\n"
+            '    data = json.load(file)\n'
+            '    print(json.dumps(data, indent=2))',
+ 'timeout': 30}
+[2025-11-26 03:39:13,105]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          D:\zyt\git_ln\algo_agent\src\agent\tool\python_tool.py:38 run
+          d:\zyt\git_ln\algo_agent\src\agent\action.py:17 call_tools
+          d:\zyt\git_ln\algo_agent\src\agent\action.py:41 call_tools_safely
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:217 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:49 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:14,372]  【调用成功】 栈路径： src.runtime.subprocess_python_executor.None.run_structured_in_subprocess | 耗时： 1268.405ms | 返回值： ExecutionResult(arg_command="import json\n\nwith open('emergency_response_data_02.json', 'r') as file:\n    data = json.load(file)\n    print(json.dumps(data, indent=2))", arg_timeout=30, arg_globals={'__name__': '__main__'}, exit_status=<ExecutionStatus.CRASHED: 'crashed'>, exit_code=1, exception_repr=None, exception_type=None, exception_value=None, exception_traceback=None, ret_stdout='Process Process-3:\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 44, in _worker_with_pipe\n    exec(command, _globals, _locals)\n  File "<string>", line 4, in <module>\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", line 293, in load\n    return loads(fp.read(),\n                 ^^^^^^^^^\nUnicodeDecodeError: \'gbk\' codec can\'t decode byte 0xa3 in position 44: illegal multibyte sequence\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 54, in _worker_with_pipe\n    res = ExecutionResult(\n          ^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", line 250, in __init__\n    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", line 83, in field_validate_globals\n    return workspace.filter_and_deepcopy_globals(value)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line 55, in filter_and_deepcopy_globals\n    filtered_dict[key] = copy.deepcopy(value)\n                         ^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", line 151, in deepcopy\n    rv = reductor(4)\n         ^^^^^^^^^^^\nTypeError: cannot pickle \'TextIOWrapper\' instances\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 314, in _bootstrap\n    self.run()\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 108, in run\n    self._target(*self._args, **self._kwargs)\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 66, in _worker_with_pipe\n    child_conn.send((_PipeType.RESULT, res))\n                                       ^^^\nUnboundLocalError: cannot access local variable \'res\' where it is not associated with a value\n', ret_tool2llm='## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n### 终端输出：\nProcess Process-3:\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 44, in _worker_with_pipe\n    exec(command, _globals, _locals)\n  File "<string>", line 4, in <module>\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", line 293, in load\n    return loads(fp.read(),\n                 ^^^^^^^^^\nUnicodeDecodeError: \'gbk\' codec can\'t decode byte 0xa3 in position 44: illegal multibyte sequence\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 54, in _worker_with_pipe\n    res = ExecutionResult(\n          ^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", line 250, in __init__\n    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", line 83, in field_validate_globals\n    return workspace.filter_and_deepcopy_globals(value)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line 55, in filter_and_deepcopy_globals\n    filtered_dict[key] = copy.deepcopy(value)\n                         ^^^^^^^^^^^^^^^^^^^^\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", line 151, in deepcopy\n    rv = reductor(4)\n         ^^^^^^^^^^^\nTypeError: cannot pickle \'TextIOWrapper\' instances\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 314, in _bootstrap\n    self.run()\n  File "C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", line 108, in run\n    self._target(*self._args, **self._kwargs)\n  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", line 66, in _worker_with_pipe\n    child_conn.send((_PipeType.RESULT, res))\n                                       ^^^\nUnboundLocalError: cannot access local variable \'res\' where it is not associated with a value\n### 退出状态码：1\n')
+[2025-11-26 03:39:14,378]  【调用成功】 栈路径： action.None.call_tools_safely | 耗时： 1278.505ms | 返回值： {'content': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+            '### 终端输出：\n'
+            'Process Process-3:\n'
+            'Traceback (most recent call last):\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+            'line 44, in _worker_with_pipe\n'
+            '    exec(command, _globals, _locals)\n'
+            '  File "<string>", line 4, in <module>\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", '
+            'line 293, in load\n'
+            '    return loads(fp.read(),\n'
+            '                 ^^^^^^^^^\n'
+            "UnicodeDecodeError: 'gbk' codec can't decode byte 0xa3 in "
+            'position 44: illegal multibyte sequence\n'
+            '\n'
+            'During handling of the above exception, another exception '
+            'occurred:\n'
+            '\n'
+            'Traceback (most recent call last):\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+            'line 54, in _worker_with_pipe\n'
+            '    res = ExecutionResult(\n'
+            '          ^^^^^^^^^^^^^^^^\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", '
+            'line 250, in __init__\n'
+            '    validated_self = '
+            'self.__pydantic_validator__.validate_python(data, '
+            'self_instance=self)\n'
+            '                     '
+            '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+            '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", '
+            'line 83, in field_validate_globals\n'
+            '    return workspace.filter_and_deepcopy_globals(value)\n'
+            '        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+            '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", '
+            'line 55, in filter_and_deepcopy_globals\n'
+            '    filtered_dict[key] = copy.deepcopy(value)\n'
+            '                         ^^^^^^^^^^^^^^^^^^^^\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", '
+            'line 151, in deepcopy\n'
+            '    rv = reductor(4)\n'
+            '         ^^^^^^^^^^^\n'
+            "TypeError: cannot pickle 'TextIOWrapper' instances\n"
+            '\n'
+            'During handling of the above exception, another exception '
+            'occurred:\n'
+            '\n'
+            'Traceback (most recent call last):\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+            'line 314, in _bootstrap\n'
+            '    self.run()\n'
+            '  File '
+            '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+            'line 108, in run\n'
+            '    self._target(*self._args, **self._kwargs)\n'
+            '  File '
+            '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+            'line 66, in _worker_with_pipe\n'
+            '    child_conn.send((_PipeType.RESULT, res))\n'
+            '                                       ^^^\n'
+            "UnboundLocalError: cannot access local variable 'res' where it is "
+            'not associated with a value\n'
+            '### 退出状态码：1\n',
+ 'role': 'tool',
+ 'tool_call_arguments': '{\n'
+                        '    "tool_call_purpose": "读取并解析 '
+                        'emergency_response_data_02.json 文件，查看第二个应急救援场景数据",\n'
+                        '    "python_code_snippet": "import json\\n\\nwith '
+                        "open('emergency_response_data_02.json', 'r') as "
+                        'file:\\n    data = json.load(file)\\n    '
+                        'print(json.dumps(data, indent=2))"\n'
+                        '  }\n',
+ 'tool_call_id': 'call_92fd80e050c34c78a18ea9',
+ 'tool_call_name': 'execute_python_code'}
+[2025-11-26 03:39:14,388]  【调用开始】 栈路径： llm.None.generate_chat_completion | 开始时间： 2025-11-26 03:39:14.382913 | 位置参数： ([{'content': '你是一个资深的深度研究专家，擅长通过调用各种工具来获取信息并进行分析。\n'
+              '你的任务是根据用户的问题，决定是否需要调用工具来获取更多信息，或者直接给出答案。\n'
+              '你的主循环是维护一颗分析计划树：\n'
+              '1. 罗列值得计算和探索的方向，形成分析计划树的节点。\n'
+              '2. 根据分析计划树的节点，决定是否需要调用工具来获取信息。\n'
+              '3. 在必要时，调用工具并处理返回的信息，以便提供准确的答案。\n'
+              '4. 根据获取的信息，更新分析计划树，继续进行分析，直到得出最终结论。\n'
+              '如果遇到工具调用错误：\n'
+              '1. 记录错误信息，分析错误原因。\n'
+              '2. 尝试调整重试，或者调整分析计划树，重新规划路径。\n'
+              '3. 记录重试次数，避免无限循环。\n'
+              '4. 如果多次重试仍然失败，考虑放弃该路径，转向其他分析方向。\n',
+   'role': 'system'},
+  {'content': '\n'
+              '你所在的工作路径下面，可以用python工具  ExecutePythonCodeTool  '
+              '写一段包含读取json文件的代码，读取一下文件\n'
+              '例如：“\n'
+              'import json\n'
+              '\n'
+              "with open('schema.json', 'r') as file:\n"
+              '    schema = json.load(file)\n'
+              '    print(json.dumps(schema, indent=2))\n'
+              '”，读取以下文件：\n'
+              '1. **schema.json** - 完整的数据结构Schema定义\n'
+              '2. **emergency_response_data_01.json** 至 '
+              '**emergency_response_data_05.json** - 5个随机生成的应急救援场景数据\n'
+              '\n'
+              '### 数据特点\n'
+              '\n'
+              '1. **真实性**：\n'
+              '   - 基于真实地理范围生成坐标\n'
+              '   - 模拟不同类型的灾害场景\n'
+              '   - 包含合理的物资、载体属性\n'
+              '\n'
+              '2. **多样性**：\n'
+              '   - 多种任务类型和优先级\n'
+              '   - 不同类型的运输载体\n'
+              '   - 随机生成的风险点和路径\n'
+              '\n'
+              '3. **完整性**：\n'
+              '   - 包含所有核心实体和关系\n'
+              '   - 覆盖各种可能的状态组合\n'
+              '   - 包含任务反馈和救援指标\n'
+              '\n'
+              '4. **可扩展性**：\n'
+              '   - 代码结构清晰，易于添加新的字段或实体\n'
+              '   - 生成策略可调整，可根据需要增加特定场景的数据\n'
+              '\n'
+              '### 使用建议\n'
+              '\n'
+              '1. **测试算法**：\n'
+              '   - 可用于测试任务指派、路径规划、ETA预测等算法\n'
+              '   - 包含各种边界情况（高优先级任务、复杂路径、设备故障等）\n'
+              '\n'
+              '2. **系统集成**：\n'
+              '   - 可作为应急物资运输调度系统的测试数据\n'
+              '   - 支持系统功能验证和性能测试\n'
+              '\n'
+              '3. **场景模拟**：\n'
+              '   - 可用于模拟不同类型的灾害救援场景\n'
+              '   - 支持应急响应演练和决策支持系统测试\n'
+              '\n'
+              '这个数据生成器可以满足你对多智能体协同调度、动态在线路径规划等场景的测试需求，生成的随机数据具有较高的真实性和多样性。\n'
+              '    \n'
+              '\n'
+              '你的目标是基于以下数据特点和使用建议，制定一个详细的研究计划，帮助你深入了解数据结构，并分析如何利用这些数据解决应急物资运输调度中的问题。\n'
+              '请列出具体的任务步骤，包括但不限于以下方面：\n'
+              '1. 数据结构分析：如何理解和解析 schema.json 中定义的各个实体及其关系。\n'
+              '2. 数据生成逻辑：如何理解随机数据生成的策略和方法。\n'
+              '3. 场景模拟：如何利用生成的数据模拟不同的应急救援场景。\n'
+              '4. 算法测试：如何设计多种不同的算法实验来测试多智能体协同调度算法的性能和效果。\n'
+              '\n'
+              '\n'
+              '不支持function_call，必须使用tool_calls调用多个工具执行。必须使用python工具进行算法编码和测试，不能直接给出答案',
+   'role': 'user'},
+  ChatCompletionMessage(content='', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_3085f1f75d534390a7c2b7', function=Function(arguments='{\n    "tool_call_purpose": "读取并解析 schema.json 文件，了解数据结构定义",\n    "python_code_snippet": "import json\\n\\nwith open(\'schema.json\', \'r\') as file:\\n    schema = json.load(file)\\n    print(json.dumps(schema, indent=2))"\n  }\n', name='execute_python_code'), type='function', index=0), ChatCompletionMessageFunctionToolCall(id='call_ab025bb2bb3e430aaefd92', function=Function(arguments='{\n    "tool_call_purpose": "读取并解析 emergency_response_data_01.json 文件，查看第一个应急救援场景数据",\n    "python_code_snippet": "import json\\n\\nwith open(\'emergency_response_data_01.json\', \'r\') as file:\\n    data = json.load(file)\\n    print(json.dumps(data, indent=2))"\n  }\n', name='execute_python_code'), type='function', index=1), ChatCompletionMessageFunctionToolCall(id='call_92fd80e050c34c78a18ea9', function=Function(arguments='{\n    "tool_call_purpose": "读取并解析 emergency_response_data_02.json 文件，查看第二个应急救援场景数据",\n    "python_code_snippet": "import json\\n\\nwith open(\'emergency_response_data_02.json\', \'r\') as file:\\n    data = json.load(file)\\n    print(json.dumps(data, indent=2))"\n  }\n', name='execute_python_code'), type='function', index=2)]),
+  {'content': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+              '### 终端输出：\n'
+              'Process Process-1:\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 44, in _worker_with_pipe\n'
+              '    exec(command, _globals, _locals)\n'
+              '  File "<string>", line 4, in <module>\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", '
+              'line 293, in load\n'
+              '    return loads(fp.read(),\n'
+              '                 ^^^^^^^^^\n'
+              "UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in "
+              'position 1265: illegal multibyte sequence\n'
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 54, in _worker_with_pipe\n'
+              '    res = ExecutionResult(\n'
+              '          ^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", '
+              'line 250, in __init__\n'
+              '    validated_self = '
+              'self.__pydantic_validator__.validate_python(data, '
+              'self_instance=self)\n'
+              '                     '
+              '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", '
+              'line 83, in field_validate_globals\n'
+              '    return workspace.filter_and_deepcopy_globals(value)\n'
+              '        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line '
+              '55, in filter_and_deepcopy_globals\n'
+              '    filtered_dict[key] = copy.deepcopy(value)\n'
+              '                         ^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", '
+              'line 151, in deepcopy\n'
+              '    rv = reductor(4)\n'
+              '         ^^^^^^^^^^^\n'
+              "TypeError: cannot pickle 'TextIOWrapper' instances\n"
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 314, in _bootstrap\n'
+              '    self.run()\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 108, in run\n'
+              '    self._target(*self._args, **self._kwargs)\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 66, in _worker_with_pipe\n'
+              '    child_conn.send((_PipeType.RESULT, res))\n'
+              '                                       ^^^\n'
+              "UnboundLocalError: cannot access local variable 'res' where it "
+              'is not associated with a value\n'
+              '### 退出状态码：1\n',
+   'role': 'tool',
+   'tool_call_arguments': '{\n'
+                          '    "tool_call_purpose": "读取并解析 schema.json '
+                          '文件，了解数据结构定义",\n'
+                          '    "python_code_snippet": "import json\\n\\nwith '
+                          "open('schema.json', 'r') as file:\\n    schema = "
+                          'json.load(file)\\n    print(json.dumps(schema, '
+                          'indent=2))"\n'
+                          '  }\n',
+   'tool_call_id': 'call_3085f1f75d534390a7c2b7',
+   'tool_call_name': 'execute_python_code'},
+  {'content': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+              '### 终端输出：\n'
+              'Process Process-2:\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 44, in _worker_with_pipe\n'
+              '    exec(command, _globals, _locals)\n'
+              '  File "<string>", line 4, in <module>\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", '
+              'line 293, in load\n'
+              '    return loads(fp.read(),\n'
+              '                 ^^^^^^^^^\n'
+              "UnicodeDecodeError: 'gbk' codec can't decode byte 0x80 in "
+              'position 50: illegal multibyte sequence\n'
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 54, in _worker_with_pipe\n'
+              '    res = ExecutionResult(\n'
+              '          ^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", '
+              'line 250, in __init__\n'
+              '    validated_self = '
+              'self.__pydantic_validator__.validate_python(data, '
+              'self_instance=self)\n'
+              '                     '
+              '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", '
+              'line 83, in field_validate_globals\n'
+              '    return workspace.filter_and_deepcopy_globals(value)\n'
+              '        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line '
+              '55, in filter_and_deepcopy_globals\n'
+              '    filtered_dict[key] = copy.deepcopy(value)\n'
+              '                         ^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", '
+              'line 151, in deepcopy\n'
+              '    rv = reductor(4)\n'
+              '         ^^^^^^^^^^^\n'
+              "TypeError: cannot pickle 'TextIOWrapper' instances\n"
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 314, in _bootstrap\n'
+              '    self.run()\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 108, in run\n'
+              '    self._target(*self._args, **self._kwargs)\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 66, in _worker_with_pipe\n'
+              '    child_conn.send((_PipeType.RESULT, res))\n'
+              '                                       ^^^\n'
+              "UnboundLocalError: cannot access local variable 'res' where it "
+              'is not associated with a value\n'
+              '### 退出状态码：1\n',
+   'role': 'tool',
+   'tool_call_arguments': '{\n'
+                          '    "tool_call_purpose": "读取并解析 '
+                          'emergency_response_data_01.json 文件，查看第一个应急救援场景数据",\n'
+                          '    "python_code_snippet": "import json\\n\\nwith '
+                          "open('emergency_response_data_01.json', 'r') as "
+                          'file:\\n    data = json.load(file)\\n    '
+                          'print(json.dumps(data, indent=2))"\n'
+                          '  }\n',
+   'tool_call_id': 'call_ab025bb2bb3e430aaefd92',
+   'tool_call_name': 'execute_python_code'},
+  {'content': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+              '### 终端输出：\n'
+              'Process Process-3:\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 44, in _worker_with_pipe\n'
+              '    exec(command, _globals, _locals)\n'
+              '  File "<string>", line 4, in <module>\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", '
+              'line 293, in load\n'
+              '    return loads(fp.read(),\n'
+              '                 ^^^^^^^^^\n'
+              "UnicodeDecodeError: 'gbk' codec can't decode byte 0xa3 in "
+              'position 44: illegal multibyte sequence\n'
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 54, in _worker_with_pipe\n'
+              '    res = ExecutionResult(\n'
+              '          ^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", '
+              'line 250, in __init__\n'
+              '    validated_self = '
+              'self.__pydantic_validator__.validate_python(data, '
+              'self_instance=self)\n'
+              '                     '
+              '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", '
+              'line 83, in field_validate_globals\n'
+              '    return workspace.filter_and_deepcopy_globals(value)\n'
+              '        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line '
+              '55, in filter_and_deepcopy_globals\n'
+              '    filtered_dict[key] = copy.deepcopy(value)\n'
+              '                         ^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", '
+              'line 151, in deepcopy\n'
+              '    rv = reductor(4)\n'
+              '         ^^^^^^^^^^^\n'
+              "TypeError: cannot pickle 'TextIOWrapper' instances\n"
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 314, in _bootstrap\n'
+              '    self.run()\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 108, in run\n'
+              '    self._target(*self._args, **self._kwargs)\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 66, in _worker_with_pipe\n'
+              '    child_conn.send((_PipeType.RESULT, res))\n'
+              '                                       ^^^\n'
+              "UnboundLocalError: cannot access local variable 'res' where it "
+              'is not associated with a value\n'
+              '### 退出状态码：1\n',
+   'role': 'tool',
+   'tool_call_arguments': '{\n'
+                          '    "tool_call_purpose": "读取并解析 '
+                          'emergency_response_data_02.json 文件，查看第二个应急救援场景数据",\n'
+                          '    "python_code_snippet": "import json\\n\\nwith '
+                          "open('emergency_response_data_02.json', 'r') as "
+                          'file:\\n    data = json.load(file)\\n    '
+                          'print(json.dumps(data, indent=2))"\n'
+                          '  }\n',
+   'tool_call_id': 'call_92fd80e050c34c78a18ea9',
+   'tool_call_name': 'execute_python_code'}],) | 关键字参数： {}
+[2025-11-26 03:39:14,401]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:55 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:31,649]  【调用成功】 栈路径： llm.None.generate_chat_completion | 耗时： 17264.389ms | 返回值： ChatCompletion(id='chatcmpl-73a6adfe-8a4c-4f93-8f96-40efce8faa66', choices=[Choice(finish_reason='function_call', index=0, logprobs=None, message=ChatCompletionMessage(content="### 错误分析与调试\n\n当前执行的三段 Python 代码均因相同的两个问题失败：\n\n---\n\n#### ❌ **错误 1：`UnicodeDecodeError: 'gbk' codec can't decode byte ...`**\n\n- **原因**：  \n  Windows 系统默认使用 `gbk` 编码读取文件，但 JSON 文件是以 UTF-8 编码保存的。当文件中包含非 ASCII 字符（如中文、特殊符号）时，`gbk` 解码器无法正确解析，导致崩溃。\n\n- **解决方案**：  \n  显式指定编码为 `utf-8`：\n  ```python\n  with open('file.json', 'r', encoding='utf-8') as file:\n      data = json.load(file)\n  ```\n\n---\n\n#### ❌ **错误 2：`TypeError: cannot pickle 'TextIOWrapper' instances` 和 `UnboundLocalError: cannot access local variable 'res'`**\n\n- **根本原因**：  \n  在执行环境中，Python 工具尝试将全局变量（包括 `file` 这种文件句柄对象）进行序列化（pickle），以便跨进程传递结果。但由于 `TextIOWrapper`（即 `open()` 返回的对象）不可被序列化，导致 `copy.deepcopy` 失败。\n\n- **解决方案**：  \n  - 避免在全局作用域保留文件句柄。\n  - 使用局部上下文管理（`with` 块）确保资源及时释放。\n  - 不要将 `file` 或其他不可序列化的对象暴露给外部环境。\n  - 尽早读取并关闭文件，只返回可序列化的数据结构（如字典、列表）。\n\n---\n\n### ✅ 修正策略\n\n我们将重新提交工具调用，采用以下改进措施：\n\n1. 所有 `open()` 操作都加上 `encoding='utf-8'`\n2. 确保 `with` 块内完成所有读取操作\n3. 只输出纯 JSON 数据或字符串，不保留任何文件引用\n4. 分步执行：先读 schema，再依次读取数据文件\n\n---\n\n### 🔧 重试第一步：安全读取 `schema.json`\n\n", refusal=None, role='assistant', annotations=None, audio=None, function_call=FunctionCall(arguments='{\n    "tool_call_purpose": "安全读取 schema.json，显式指定 UTF-8 编码并避免变量污染",\n    "python_code_snippet": "import json\\n\\ntry:\\n    with open(\'schema.json\', \'r\', encoding=\'utf-8\') as f:\\n        schema = json.load(f)\\n    print(json.dumps(schema, indent=2, ensure_ascii=False))\\nexcept Exception as e:\\n    print(f\\"Error reading schema.json: {e}\\")"\n}', name='execute_python_code'), tool_calls=None))], created=1764099572, model='qwen-plus', object='chat.completion', service_tier=None, system_fingerprint=None, usage=CompletionUsage(completion_tokens=599, prompt_tokens=3329, total_tokens=3928, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=0)))
+[2025-11-26 03:39:31,663]  【调用开始】 栈路径： llm.None.generate_chat_completion | 开始时间： 2025-11-26 03:39:31.654669 | 位置参数： ([{'content': '你是一个资深的深度研究专家，擅长通过调用各种工具来获取信息并进行分析。\n'
+              '你的任务是根据用户的问题，决定是否需要调用工具来获取更多信息，或者直接给出答案。\n'
+              '你的主循环是维护一颗分析计划树：\n'
+              '1. 罗列值得计算和探索的方向，形成分析计划树的节点。\n'
+              '2. 根据分析计划树的节点，决定是否需要调用工具来获取信息。\n'
+              '3. 在必要时，调用工具并处理返回的信息，以便提供准确的答案。\n'
+              '4. 根据获取的信息，更新分析计划树，继续进行分析，直到得出最终结论。\n'
+              '如果遇到工具调用错误：\n'
+              '1. 记录错误信息，分析错误原因。\n'
+              '2. 尝试调整重试，或者调整分析计划树，重新规划路径。\n'
+              '3. 记录重试次数，避免无限循环。\n'
+              '4. 如果多次重试仍然失败，考虑放弃该路径，转向其他分析方向。\n',
+   'role': 'system'},
+  {'content': '\n'
+              '你所在的工作路径下面，可以用python工具  ExecutePythonCodeTool  '
+              '写一段包含读取json文件的代码，读取一下文件\n'
+              '例如：“\n'
+              'import json\n'
+              '\n'
+              "with open('schema.json', 'r') as file:\n"
+              '    schema = json.load(file)\n'
+              '    print(json.dumps(schema, indent=2))\n'
+              '”，读取以下文件：\n'
+              '1. **schema.json** - 完整的数据结构Schema定义\n'
+              '2. **emergency_response_data_01.json** 至 '
+              '**emergency_response_data_05.json** - 5个随机生成的应急救援场景数据\n'
+              '\n'
+              '### 数据特点\n'
+              '\n'
+              '1. **真实性**：\n'
+              '   - 基于真实地理范围生成坐标\n'
+              '   - 模拟不同类型的灾害场景\n'
+              '   - 包含合理的物资、载体属性\n'
+              '\n'
+              '2. **多样性**：\n'
+              '   - 多种任务类型和优先级\n'
+              '   - 不同类型的运输载体\n'
+              '   - 随机生成的风险点和路径\n'
+              '\n'
+              '3. **完整性**：\n'
+              '   - 包含所有核心实体和关系\n'
+              '   - 覆盖各种可能的状态组合\n'
+              '   - 包含任务反馈和救援指标\n'
+              '\n'
+              '4. **可扩展性**：\n'
+              '   - 代码结构清晰，易于添加新的字段或实体\n'
+              '   - 生成策略可调整，可根据需要增加特定场景的数据\n'
+              '\n'
+              '### 使用建议\n'
+              '\n'
+              '1. **测试算法**：\n'
+              '   - 可用于测试任务指派、路径规划、ETA预测等算法\n'
+              '   - 包含各种边界情况（高优先级任务、复杂路径、设备故障等）\n'
+              '\n'
+              '2. **系统集成**：\n'
+              '   - 可作为应急物资运输调度系统的测试数据\n'
+              '   - 支持系统功能验证和性能测试\n'
+              '\n'
+              '3. **场景模拟**：\n'
+              '   - 可用于模拟不同类型的灾害救援场景\n'
+              '   - 支持应急响应演练和决策支持系统测试\n'
+              '\n'
+              '这个数据生成器可以满足你对多智能体协同调度、动态在线路径规划等场景的测试需求，生成的随机数据具有较高的真实性和多样性。\n'
+              '    \n'
+              '\n'
+              '你的目标是基于以下数据特点和使用建议，制定一个详细的研究计划，帮助你深入了解数据结构，并分析如何利用这些数据解决应急物资运输调度中的问题。\n'
+              '请列出具体的任务步骤，包括但不限于以下方面：\n'
+              '1. 数据结构分析：如何理解和解析 schema.json 中定义的各个实体及其关系。\n'
+              '2. 数据生成逻辑：如何理解随机数据生成的策略和方法。\n'
+              '3. 场景模拟：如何利用生成的数据模拟不同的应急救援场景。\n'
+              '4. 算法测试：如何设计多种不同的算法实验来测试多智能体协同调度算法的性能和效果。\n'
+              '\n'
+              '\n'
+              '不支持function_call，必须使用tool_calls调用多个工具执行。必须使用python工具进行算法编码和测试，不能直接给出答案',
+   'role': 'user'},
+  ChatCompletionMessage(content='', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_3085f1f75d534390a7c2b7', function=Function(arguments='{\n    "tool_call_purpose": "读取并解析 schema.json 文件，了解数据结构定义",\n    "python_code_snippet": "import json\\n\\nwith open(\'schema.json\', \'r\') as file:\\n    schema = json.load(file)\\n    print(json.dumps(schema, indent=2))"\n  }\n', name='execute_python_code'), type='function', index=0), ChatCompletionMessageFunctionToolCall(id='call_ab025bb2bb3e430aaefd92', function=Function(arguments='{\n    "tool_call_purpose": "读取并解析 emergency_response_data_01.json 文件，查看第一个应急救援场景数据",\n    "python_code_snippet": "import json\\n\\nwith open(\'emergency_response_data_01.json\', \'r\') as file:\\n    data = json.load(file)\\n    print(json.dumps(data, indent=2))"\n  }\n', name='execute_python_code'), type='function', index=1), ChatCompletionMessageFunctionToolCall(id='call_92fd80e050c34c78a18ea9', function=Function(arguments='{\n    "tool_call_purpose": "读取并解析 emergency_response_data_02.json 文件，查看第二个应急救援场景数据",\n    "python_code_snippet": "import json\\n\\nwith open(\'emergency_response_data_02.json\', \'r\') as file:\\n    data = json.load(file)\\n    print(json.dumps(data, indent=2))"\n  }\n', name='execute_python_code'), type='function', index=2)]),
+  {'content': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+              '### 终端输出：\n'
+              'Process Process-1:\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 44, in _worker_with_pipe\n'
+              '    exec(command, _globals, _locals)\n'
+              '  File "<string>", line 4, in <module>\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", '
+              'line 293, in load\n'
+              '    return loads(fp.read(),\n'
+              '                 ^^^^^^^^^\n'
+              "UnicodeDecodeError: 'gbk' codec can't decode byte 0x94 in "
+              'position 1265: illegal multibyte sequence\n'
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 54, in _worker_with_pipe\n'
+              '    res = ExecutionResult(\n'
+              '          ^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", '
+              'line 250, in __init__\n'
+              '    validated_self = '
+              'self.__pydantic_validator__.validate_python(data, '
+              'self_instance=self)\n'
+              '                     '
+              '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", '
+              'line 83, in field_validate_globals\n'
+              '    return workspace.filter_and_deepcopy_globals(value)\n'
+              '        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line '
+              '55, in filter_and_deepcopy_globals\n'
+              '    filtered_dict[key] = copy.deepcopy(value)\n'
+              '                         ^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", '
+              'line 151, in deepcopy\n'
+              '    rv = reductor(4)\n'
+              '         ^^^^^^^^^^^\n'
+              "TypeError: cannot pickle 'TextIOWrapper' instances\n"
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 314, in _bootstrap\n'
+              '    self.run()\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 108, in run\n'
+              '    self._target(*self._args, **self._kwargs)\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 66, in _worker_with_pipe\n'
+              '    child_conn.send((_PipeType.RESULT, res))\n'
+              '                                       ^^^\n'
+              "UnboundLocalError: cannot access local variable 'res' where it "
+              'is not associated with a value\n'
+              '### 退出状态码：1\n',
+   'role': 'tool',
+   'tool_call_arguments': '{\n'
+                          '    "tool_call_purpose": "读取并解析 schema.json '
+                          '文件，了解数据结构定义",\n'
+                          '    "python_code_snippet": "import json\\n\\nwith '
+                          "open('schema.json', 'r') as file:\\n    schema = "
+                          'json.load(file)\\n    print(json.dumps(schema, '
+                          'indent=2))"\n'
+                          '  }\n',
+   'tool_call_id': 'call_3085f1f75d534390a7c2b7',
+   'tool_call_name': 'execute_python_code'},
+  {'content': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+              '### 终端输出：\n'
+              'Process Process-2:\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 44, in _worker_with_pipe\n'
+              '    exec(command, _globals, _locals)\n'
+              '  File "<string>", line 4, in <module>\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", '
+              'line 293, in load\n'
+              '    return loads(fp.read(),\n'
+              '                 ^^^^^^^^^\n'
+              "UnicodeDecodeError: 'gbk' codec can't decode byte 0x80 in "
+              'position 50: illegal multibyte sequence\n'
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 54, in _worker_with_pipe\n'
+              '    res = ExecutionResult(\n'
+              '          ^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", '
+              'line 250, in __init__\n'
+              '    validated_self = '
+              'self.__pydantic_validator__.validate_python(data, '
+              'self_instance=self)\n'
+              '                     '
+              '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", '
+              'line 83, in field_validate_globals\n'
+              '    return workspace.filter_and_deepcopy_globals(value)\n'
+              '        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line '
+              '55, in filter_and_deepcopy_globals\n'
+              '    filtered_dict[key] = copy.deepcopy(value)\n'
+              '                         ^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", '
+              'line 151, in deepcopy\n'
+              '    rv = reductor(4)\n'
+              '         ^^^^^^^^^^^\n'
+              "TypeError: cannot pickle 'TextIOWrapper' instances\n"
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 314, in _bootstrap\n'
+              '    self.run()\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 108, in run\n'
+              '    self._target(*self._args, **self._kwargs)\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 66, in _worker_with_pipe\n'
+              '    child_conn.send((_PipeType.RESULT, res))\n'
+              '                                       ^^^\n'
+              "UnboundLocalError: cannot access local variable 'res' where it "
+              'is not associated with a value\n'
+              '### 退出状态码：1\n',
+   'role': 'tool',
+   'tool_call_arguments': '{\n'
+                          '    "tool_call_purpose": "读取并解析 '
+                          'emergency_response_data_01.json 文件，查看第一个应急救援场景数据",\n'
+                          '    "python_code_snippet": "import json\\n\\nwith '
+                          "open('emergency_response_data_01.json', 'r') as "
+                          'file:\\n    data = json.load(file)\\n    '
+                          'print(json.dumps(data, indent=2))"\n'
+                          '  }\n',
+   'tool_call_id': 'call_ab025bb2bb3e430aaefd92',
+   'tool_call_name': 'execute_python_code'},
+  {'content': '## 代码执行崩溃，进程异常退出，根据报错信息进行调试\n'
+              '### 终端输出：\n'
+              'Process Process-3:\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 44, in _worker_with_pipe\n'
+              '    exec(command, _globals, _locals)\n'
+              '  File "<string>", line 4, in <module>\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\json\\__init__.py", '
+              'line 293, in load\n'
+              '    return loads(fp.read(),\n'
+              '                 ^^^^^^^^^\n'
+              "UnicodeDecodeError: 'gbk' codec can't decode byte 0xa3 in "
+              'position 44: illegal multibyte sequence\n'
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 54, in _worker_with_pipe\n'
+              '    res = ExecutionResult(\n'
+              '          ^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\.venv\\Lib\\site-packages\\pydantic\\main.py", '
+              'line 250, in __init__\n'
+              '    validated_self = '
+              'self.__pydantic_validator__.validate_python(data, '
+              'self_instance=self)\n'
+              '                     '
+              '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File "D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\schemas.py", '
+              'line 83, in field_validate_globals\n'
+              '    return workspace.filter_and_deepcopy_globals(value)\n'
+              '        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\workspace.py", line '
+              '55, in filter_and_deepcopy_globals\n'
+              '    filtered_dict[key] = copy.deepcopy(value)\n'
+              '                         ^^^^^^^^^^^^^^^^^^^^\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\copy.py", '
+              'line 151, in deepcopy\n'
+              '    rv = reductor(4)\n'
+              '         ^^^^^^^^^^^\n'
+              "TypeError: cannot pickle 'TextIOWrapper' instances\n"
+              '\n'
+              'During handling of the above exception, another exception '
+              'occurred:\n'
+              '\n'
+              'Traceback (most recent call last):\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 314, in _bootstrap\n'
+              '    self.run()\n'
+              '  File '
+              '"C:\\Users\\zooos\\AppData\\Roaming\\uv\\python\\cpython-3.12.11-windows-x86_64-none\\Lib\\multiprocessing\\process.py", '
+              'line 108, in run\n'
+              '    self._target(*self._args, **self._kwargs)\n'
+              '  File '
+              '"D:\\zyt\\git_ln\\algo_agent\\src\\runtime\\subprocess_python_executor.py", '
+              'line 66, in _worker_with_pipe\n'
+              '    child_conn.send((_PipeType.RESULT, res))\n'
+              '                                       ^^^\n'
+              "UnboundLocalError: cannot access local variable 'res' where it "
+              'is not associated with a value\n'
+              '### 退出状态码：1\n',
+   'role': 'tool',
+   'tool_call_arguments': '{\n'
+                          '    "tool_call_purpose": "读取并解析 '
+                          'emergency_response_data_02.json 文件，查看第二个应急救援场景数据",\n'
+                          '    "python_code_snippet": "import json\\n\\nwith '
+                          "open('emergency_response_data_02.json', 'r') as "
+                          'file:\\n    data = json.load(file)\\n    '
+                          'print(json.dumps(data, indent=2))"\n'
+                          '  }\n',
+   'tool_call_id': 'call_92fd80e050c34c78a18ea9',
+   'tool_call_name': 'execute_python_code'},
+  ChatCompletionMessage(content="### 错误分析与调试\n\n当前执行的三段 Python 代码均因相同的两个问题失败：\n\n---\n\n#### ❌ **错误 1：`UnicodeDecodeError: 'gbk' codec can't decode byte ...`**\n\n- **原因**：  \n  Windows 系统默认使用 `gbk` 编码读取文件，但 JSON 文件是以 UTF-8 编码保存的。当文件中包含非 ASCII 字符（如中文、特殊符号）时，`gbk` 解码器无法正确解析，导致崩溃。\n\n- **解决方案**：  \n  显式指定编码为 `utf-8`：\n  ```python\n  with open('file.json', 'r', encoding='utf-8') as file:\n      data = json.load(file)\n  ```\n\n---\n\n#### ❌ **错误 2：`TypeError: cannot pickle 'TextIOWrapper' instances` 和 `UnboundLocalError: cannot access local variable 'res'`**\n\n- **根本原因**：  \n  在执行环境中，Python 工具尝试将全局变量（包括 `file` 这种文件句柄对象）进行序列化（pickle），以便跨进程传递结果。但由于 `TextIOWrapper`（即 `open()` 返回的对象）不可被序列化，导致 `copy.deepcopy` 失败。\n\n- **解决方案**：  \n  - 避免在全局作用域保留文件句柄。\n  - 使用局部上下文管理（`with` 块）确保资源及时释放。\n  - 不要将 `file` 或其他不可序列化的对象暴露给外部环境。\n  - 尽早读取并关闭文件，只返回可序列化的数据结构（如字典、列表）。\n\n---\n\n### ✅ 修正策略\n\n我们将重新提交工具调用，采用以下改进措施：\n\n1. 所有 `open()` 操作都加上 `encoding='utf-8'`\n2. 确保 `with` 块内完成所有读取操作\n3. 只输出纯 JSON 数据或字符串，不保留任何文件引用\n4. 分步执行：先读 schema，再依次读取数据文件\n\n---\n\n### 🔧 重试第一步：安全读取 `schema.json`\n\n", refusal=None, role='assistant', annotations=None, audio=None, function_call=FunctionCall(arguments='{\n    "tool_call_purpose": "安全读取 schema.json，显式指定 UTF-8 编码并避免变量污染",\n    "python_code_snippet": "import json\\n\\ntry:\\n    with open(\'schema.json\', \'r\', encoding=\'utf-8\') as f:\\n        schema = json.load(f)\\n    print(json.dumps(schema, indent=2, ensure_ascii=False))\\nexcept Exception as e:\\n    print(f\\"Error reading schema.json: {e}\\")"\n}', name='execute_python_code'), tool_calls=None),
+  {'content': '没有定义function_call工具调用，无法执行function_call，请使用tool_calls调用工具。',
+   'role': 'user'}],) | 关键字参数： {}
+[2025-11-26 03:39:31,682]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:202 wrapper
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:55 user_query
+          d:\zyt\git_ln\algo_agent\src\agent\deep_research.py:123 <module>
+[2025-11-26 03:39:32,232]  【调用失败】 栈路径： llm.None.generate_chat_completion | 耗时： 504.143ms | 异常位置： llm.None.generate_chat_completion:1047 | 异常类型： BadRequestError | 异常信息： Error code: 400 - {'error': {'message': '<400> InternalError.Algo.InvalidParameter: An assistant message with "tool_calls" must be followed by tool messages responding to each "tool_call_id". The following tool_call_ids did not have response messages: message[7].role', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_parameter_error'}, 'id': 'chatcmpl-9d85a766-ffac-4c01-b53d-f09f4392b6ff', 'request_id': '9d85a766-ffac-4c01-b53d-f09f4392b6ff'}
+Traceback (most recent call last):
+  File "D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py", line 217, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "d:\zyt\git_ln\algo_agent\src\agent\llm.py", line 15, in generate_chat_completion
+    completion: ChatCompletion = client.chat.completions.create(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1156, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\openai\_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': '<400> InternalError.Algo.InvalidParameter: An assistant message with "tool_calls" must be followed by tool messages responding to each "tool_call_id". The following tool_call_ids did not have response messages: message[7].role', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_parameter_error'}, 'id': 'chatcmpl-9d85a766-ffac-4c01-b53d-f09f4392b6ff', 'request_id': '9d85a766-ffac-4c01-b53d-f09f4392b6ff'}

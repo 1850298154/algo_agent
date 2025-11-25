@@ -5,6 +5,7 @@ import time
 import inspect
 import json
 from functools import wraps
+import traceback
 from typing import Callable, Optional, Dict, Any, Union, get_type_hints, Type
 from datetime import datetime
 from typing_extensions import get_origin, get_args  # 处理泛型（如 List、Dict）
@@ -232,12 +233,13 @@ def log_function(
                 exception_type = type(e).__name__
                 exception_msg = str(e)
                 exc_lineno = inspect.trace()[-1][2] if inspect.trace() else lineno
+                traceback_str = traceback.format_exc()
 
                 # 记录异常（保留完整堆栈）
                 logger.error(
                     f"【调用失败】 栈路径： {stack_full_path} | 耗时： {elapsed_time:.3f}ms "
                     f"| 异常位置： {module_name}.{class_name}.{func_name}:{exc_lineno} "
-                    f"| 异常类型： {exception_type} | 异常信息： {exception_msg}",
+                    f"| 异常类型： {exception_type} | 异常信息： {exception_msg} | 堆栈信息： {traceback_str}",
                     exc_info=True
                 )
 

@@ -8,7 +8,6 @@ from src.agent.tool.python_tool import ExecutePythonCodeTool
 from src.agent.tool.todo_tool import RecursivePlanTreeTodoTool
 @traceable
 def call_tools_safely(tool_info: dict):
-    @traceable
     def call_tools(tool_info: dict):
         function_name = tool_info["tool_call_name"]
         arguments = json.loads(tool_info["tool_call_arguments"])
@@ -44,4 +43,6 @@ def call_tools_safely(tool_info: dict):
         # 获取完整的错误信息（包括堆栈）
         error_msg = traceback.format_exc()        
         global_logger.error(f"工具函数调用失败{tool_info['content']}, 错误信息: {error_msg}", exc_info=True)
+        tool_info["content"] = f"工具函数调用失败{tool_info['content']}, 错误信息: {error_msg}"
+        return tool_info
 

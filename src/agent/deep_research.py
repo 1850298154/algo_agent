@@ -11,7 +11,6 @@ import tool.python_tool
 import tool.todo_tool
 
 
-@traceable
 def user_query(user_input):
     user_hint = "用户输入："
     global_logger.info(f"{user_hint} ： {user_input}\n\n")
