@@ -5,15 +5,20 @@ from openai.types.chat.chat_completion import ChatCompletionMessage
 
 from src.utils import global_logger, traceable
 from src.agent.tool.python_tool import ExecutePythonCodeTool 
+from src.agent.tool.todo_tool import RecursivePlanTreeTodoTool
 @traceable
 def call_tools_safely(tool_info: dict):
     @traceable
     def call_tools(tool_info: dict):
         function_name = tool_info["tool_call_name"]
         arguments = json.loads(tool_info["tool_call_arguments"])
-        if function_name == ExecutePythonCodeTool.tool_name():
+        if False:pass
+        elif function_name == ExecutePythonCodeTool.tool_name():
             execute_python_code_tool = ExecutePythonCodeTool(**arguments)
             tool_info["content"] = execute_python_code_tool.run()
+        elif function_name == RecursivePlanTreeTodoTool.tool_name():
+            recursive_plan_tree_todo_tool = RecursivePlanTreeTodoTool(**arguments)
+            tool_info["content"] = recursive_plan_tree_todo_tool.run()
         return  tool_info
         # elif assistant_output.tool_calls[0].function.name == list_indices_tool.name:
         #     # 提取位置参数信息

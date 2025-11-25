@@ -16,7 +16,7 @@ def user_query(user_input):
     user_hint = "用户输入："
     global_logger.info(f"{user_hint} ： {user_input}\n\n")
 
-    messages = memory.init_messages(user_input)
+    messages = memory.init_messages_with_system_prompt(user_input)
     tools_schema_list = tool.schema.get_tools_schema([
         tool.python_tool.ExecutePythonCodeTool,
         tool.todo_tool.RecursivePlanTreeTodoTool,
