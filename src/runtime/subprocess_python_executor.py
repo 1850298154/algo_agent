@@ -66,7 +66,7 @@ def _worker_with_pipe(
         child_conn.send((_PipeType.RESULT, res))
         child_conn.close()
 
-
+@traceable
 def run_structured_in_subprocess(
     command: str,
     _globals: dict[str, Any] | None = None,

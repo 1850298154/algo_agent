@@ -6,9 +6,9 @@ import inflection
 # ---------------------- 工具基类（统一接口） ----------------------
 class BaseTool(BaseModel):
     """所有工具的基类，定义统一接口"""
-    goal: str = Field(
+    tool_call_purpose: str = Field(
         ..., 
-        description="The goal of the tool. This should be a clear and concise description of this call to the tool."
+        description="工具调用的目的，即调用该工具的具体场景或问题。"
     )
     @classmethod
     def tool_name(cls) -> str:
