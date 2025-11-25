@@ -20,5 +20,6 @@ dependencies = [
     "pytest-cov>=7.0.0",
     "requests>=2.32.5",
     "scikit-learn>=1.7.2",
+    "wordcloud>=1.9.4",
     "yapf>=0.43.0",
 ]

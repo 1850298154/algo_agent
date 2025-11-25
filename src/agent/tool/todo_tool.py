@@ -119,11 +119,11 @@ class RecursivePlanTree(BaseModel):
 # 4. 计划树管理工具（存储+变更对比+Markdown渲染）
 class RecursivePlanTreeTodoTool(BaseTool):
     """
-    递归计划树管理工具：
-    1. 自动存储当前计划树，维护历史版本
-    2. 对比当前与上一版本，识别任务变更（新增/状态变更/层级调整）
-    3. 渲染Markdown格式的树状Todo清单，包含状态可视化
-    """
+递归计划树管理工具：
+1. 自动存储当前计划树，维护历史版本
+2. 对比当前与上一版本，识别任务变更（新增/状态变更/层级调整）
+3. 渲染Markdown格式的树状Todo清单，包含状态可视化
+    """.strip()
     name: str = "recursive_plan_tree_todo_manager"
     description: str = "用于管理递归结构的计划树，支持变更追踪、状态可视化和Markdown渲染"
     
