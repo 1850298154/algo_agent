@@ -19,33 +19,40 @@ def user_query(user_input):
     messages = memory.init_messages_with_system_prompt(user_input)
     tools_schema_list = tool.schema.get_tools_schema([
         tool.python_tool.ExecutePythonCodeTool,
-        tool.todo_tool.RecursivePlanTreeTodoTool,
+        # tool.todo_tool.RecursivePlanTreeTodoTool,
         ])
     
     # 模型的第一轮调用
     assistant_output: ChatCompletionMessage = llm.generate_assistant_output_append(messages, tools_schema_list)
-    if not llm.has_tool_call(assistant_output):
+    if not llm.has_tool_call(assistant_output) and not llm.has_function_call(assistant_output):
         global_logger.info(f"无需调用工具，我可以直接回复：{assistant_output.content}")
         return
     
     # 如果需要调用工具，则进行模型的多轮调用，直到模型判断无需调用工具
-    while llm.has_tool_call(assistant_output):
-        # 如果判断需要调用查询天气工具，则运行查询天气工具
-        tool_info = {
-            "content": "",
-            "role": "tool",
-            "tool_call_id": assistant_output.tool_calls[0].id,
-            # 其他非必须
-            "tool_call_name": assistant_output.tool_calls[0].function.name,
-            "tool_call_arguments": assistant_output.tool_calls[0].function.arguments,
-        }
+    while llm.has_tool_call(assistant_output) or llm.has_function_call(assistant_output):
+        if llm.has_function_call(assistant_output):
+            messages.append(        {
+                "content": "没有定义function_call工具调用，无法执行function_call，请使用tool_calls调用工具。",
+                "role": "user",
+            })
+        if llm.has_tool_call(assistant_output):
+            for i in range(len(assistant_output.tool_calls)):
+                # 如果判断需要调用查询天气工具，则运行查询天气工具
+                tool_info = {
+                    "content": "",
+                    "role": "tool",
+                    "tool_call_id": assistant_output.tool_calls[i].id,
+                    # 其他非必须
+                    "tool_call_name": assistant_output.tool_calls[i].function.name,
+                    "tool_call_arguments": assistant_output.tool_calls[i].function.arguments,
+                }
 
-        action.call_tools_safely(tool_info)
+                action.call_tools_safely(tool_info)
 
-        tool_output = tool_info["content"]
-        global_logger.info(f"工具输出信息： {tool_output}\n")
-        global_logger.info("-" * 60)
-        messages.append(tool_info)
+                tool_output = tool_info["content"]
+                global_logger.info(f"工具输出信息： {tool_output}\n")
+                global_logger.info("-" * 60)
+                messages.append(tool_info)
         loop_response = llm.generate_chat_completion(messages)
         assistant_output = loop_response.choices[0].message
         if assistant_output.content is None:
@@ -57,7 +64,14 @@ def user_query(user_input):
 # 测试
 if __name__ == "__main__":
     data_info = """
-你所在的工作路径下面，可以读取一下文件
+你所在的工作路径下面，可以用python工具  ExecutePythonCodeTool  写一段包含读取json文件的代码，读取一下文件
+例如：“
+import json
+
+with open('schema.json', 'r') as file:
+    schema = json.load(file)
+    print(json.dumps(schema, indent=2))
+”，读取以下文件：
 1. **schema.json** - 完整的数据结构Schema定义
 2. **emergency_response_data_01.json** 至 **emergency_response_data_05.json** - 5个随机生成的应急救援场景数据
 
@@ -105,6 +119,6 @@ if __name__ == "__main__":
 3. 场景模拟：如何利用生成的数据模拟不同的应急救援场景。
 4. 算法测试：如何设计多种不同的算法实验来测试多智能体协同调度算法的性能和效果。
 """
-    tool_use_prompt = """必须使用python工具进行算法描述和测试，不能直接给出答案"""
+    tool_use_prompt = """不支持function_call，必须使用tool_calls调用多个工具执行。必须使用python工具进行算法编码和测试，不能直接给出答案"""
     all_prompt = f"{data_info}\n\n{user_query_prompt}\n\n{tool_use_prompt}"
     user_query(all_prompt)

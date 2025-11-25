@@ -20,14 +20,14 @@ def generate_chat_completion(messages: list[dict], tools_schema_list=None) -> Ch
     )
     return completion
 
-@traceable
+
 def extract_assistant_output_from_chat(messages: list[dict], tools_schema_list=None) -> ChatCompletionMessage:
     completion: ChatCompletion = generate_chat_completion(messages, tools_schema_list)
     assistant_output: ChatCompletionMessage = completion.choices[0].message
     # assistant_output.finish_reason == "stop" or "length"
     return assistant_output
 
-@traceable
+
 def generate_assistant_output_append(messages: list[dict], tools_schema_list=None) -> ChatCompletionMessage:
     global_logger.info("-" * 60)
     assistant_output: ChatCompletionMessage = extract_assistant_output_from_chat(messages, tools_schema_list)
@@ -38,6 +38,11 @@ def generate_assistant_output_append(messages: list[dict], tools_schema_list=Non
     messages.append(assistant_output)
     return assistant_output
 
-@traceable
+
 def has_tool_call(assistant_output: ChatCompletionMessage) -> bool:
     return assistant_output.tool_calls is not None
+
+
+def has_function_call(assistant_output: ChatCompletionMessage) -> bool:
+    return assistant_output.function_call is not None
+
