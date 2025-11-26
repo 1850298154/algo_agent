@@ -30,6 +30,7 @@ class BaseTool(BaseModel):
     @classmethod
     def get_tool_schema(cls) -> str:
         """
+        https://cookbook.openai.com/examples/how_to_call_functions_with_chat_models
         获取工具参数描述（供 Agent 理解参数含义）
         例子：
         {
@@ -44,20 +45,28 @@ class BaseTool(BaseModel):
                         "location": {
                             "type": "string",
                             "description": "城市或县区，比如北京市、杭州市、余杭区等。",
-                        }
+                        },
+                        "format": {
+                            "type": "string",
+                            "enum": ["celsius", "fahrenheit"],
+                            "description": "The temperature unit to use. Infer this from the users location.",
+                        },                        
                     },
-                    "required": ["location"],
+                    "required": ["location", "format"],
                 },
+                "strict": True,
             },
         },   
         """
         tool_schema = {
             "type": "function",
             "function": {
+                "type": "function",
                 "name": cls.tool_name(),  # 调用同类的类函数 tool_name
                 "description": cls.tool_description(),  # 调用同类的类函数 tool_description
-                "parameters": cls.get_parameter_schema()  # 调用同类的类函数 get_parameter_schema
-            }
+                "parameters": cls.get_parameter_schema(),  # 调用同类的类函数 get_parameter_schema
+                "strict": True,
+            },
         }
         return tool_schema
 

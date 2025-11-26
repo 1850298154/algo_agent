@@ -3372,3 +3372,27 @@ Traceback (most recent call last):
   File "D:\zyt\git_ln\algo_agent\.venv\Lib\site-packages\openai\_base_client.py", line 1047, in request
     raise self._make_status_error_from_response(err.response) from None
 openai.BadRequestError: Error code: 400 - {'error': {'message': '<400> InternalError.Algo.InvalidParameter: An assistant message with "tool_calls" must be followed by tool messages responding to each "tool_call_id". The following tool_call_ids did not have response messages: message[7].role', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_parameter_error'}, 'id': 'chatcmpl-9d85a766-ffac-4c01-b53d-f09f4392b6ff', 'request_id': '9d85a766-ffac-4c01-b53d-f09f4392b6ff'}
+[2025-11-27 05:07:36,290]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-27 05:07:36.290478 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-27 05:07:36,308]  【调用栈】 
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:203 wrapper
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:303 <module>
+[2025-11-27 05:07:36,309]  【调用成功】 栈路径： __main__.None.test_function | 耗时： 18.327ms | 返回值： True
+[2025-11-27 05:08:21,253]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-27 05:08:21.252342 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-27 05:11:15,327]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-27 05:11:15.327494 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-27 05:11:15,341]  【调用栈】 
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:203 wrapper
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:303 <module>
+[2025-11-27 05:11:15,342]  【调用成功】 栈路径： __main__.None.test_function | 耗时： 14.139ms | 返回值： True
+[2025-11-27 05:11:39,236]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-27 05:11:39.234731 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-27 05:11:58,384]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-27 05:11:58.384584 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-27 05:11:58,400]  【调用栈】 
+          d:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:303 <module>
+[2025-11-27 05:11:58,401]  【调用成功】 栈路径： __main__.None.test_function | 耗时： 16.665ms | 返回值： True
+[2025-11-27 05:12:09,880]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-27 05:12:09.879819 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-27 05:13:03,499]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:303 <module>
+[2025-11-27 05:13:03,501]  【调用成功】 栈路径： __main__.None.test_function | 耗时： 53621.045ms | 返回值： True
+[2025-11-27 05:13:58,065]  【调用开始】 栈路径： __main__.None.test_function | 开始时间： 2025-11-27 05:13:58.064574 | 位置参数： (1, '2', {'key': 3}) | 关键字参数： {}
+[2025-11-27 05:14:02,192]  【调用栈】 
+          D:\zyt\git_ln\algo_agent\src\utils\log_decorator.py:303 <module>
+[2025-11-27 05:14:37,931]  【调用成功】 栈路径： __main__.None.test_function | 耗时： 8948.482ms | 返回值： True

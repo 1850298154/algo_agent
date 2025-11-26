@@ -17,6 +17,8 @@ def generate_chat_completion(messages: list[dict], tools_schema_list=None) -> Ch
         # https://help.aliyun.com/zh/model-studio/models
         messages=messages, # api 说明 https://zhuanlan.zhihu.com/p/692336625
         tools=tools_schema_list,
+        function_call=None,
+        # parallel_tool_calls=True,
     )
     return completion
 

@@ -30,10 +30,19 @@ def user_query(user_input):
     # 如果需要调用工具，则进行模型的多轮调用，直到模型判断无需调用工具
     while llm.has_tool_call(assistant_output) or llm.has_function_call(assistant_output):
         if llm.has_function_call(assistant_output):
-            messages.append(        {
-                "content": "没有定义function_call工具调用，无法执行function_call，请使用tool_calls调用工具。",
-                "role": "user",
-            })
+            tool_info = {
+                "content": "",
+                "role": "tool",
+                "tool_call_id": "",
+                # 其他非必须
+                "tool_call_name": assistant_output.function_call.name,
+                "tool_call_arguments": assistant_output.function_call.arguments,
+            }            
+            action.call_tools_safely(tool_info)
+            tool_output = tool_info["content"]
+            global_logger.info(f"工具 function call 输出信息： {tool_output}\n")
+            global_logger.info("-" * 60)
+            messages.append(tool_info)
         if llm.has_tool_call(assistant_output):
             for i in range(len(assistant_output.tool_calls)):
                 # 如果判断需要调用查询天气工具，则运行查询天气工具
@@ -49,7 +58,7 @@ def user_query(user_input):
                 action.call_tools_safely(tool_info)
 
                 tool_output = tool_info["content"]
-                global_logger.info(f"工具输出信息： {tool_output}\n")
+                global_logger.info(f"工具 tool call 输出信息： {tool_output}\n")
                 global_logger.info("-" * 60)
                 messages.append(tool_info)
         loop_response = llm.generate_chat_completion(messages)

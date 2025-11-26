@@ -67,7 +67,7 @@ def format_value(value: Any) -> str:
     def pf(*args, **kwargs):
         """Format a Python object into a pretty-printed representation."""
         output_format_str = pprint.pformat(*args, **kwargs)
-        print(output_format_str+'\n')
+        # print(output_format_str+'\n')
         return output_format_str
     try:
         return pf(value)
@@ -204,13 +204,13 @@ def log_function(
                 # stack_info = inspect.stack()[2:]
                 def is_in_project(file_path):
                     project_root = os.path.abspath(os.getcwd())  # 获取项目根目录的绝对路径
-                    abs_path = os.path.abspath(file_path)
+                    stack_abs_path = os.path.abspath(file_path)
                     # Windows下忽略大小写，路径分隔符统一
-                    return os.path.normcase(abs_path).startswith(os.path.normcase(project_root))
+                    return os.path.normcase(stack_abs_path).startswith(os.path.normcase(project_root))
                 
                 stack_str = "\n".join([f"          {frame.filename}:{frame.lineno} {frame.function}" 
                                         for frame in stack_info 
-                                        if is_in_project(frame.filename)])
+                                        if is_in_project(frame.filename) and not frame.function == "wrapper"])
                 logger.debug(f"【调用栈】 \n{stack_str}")
 
             try:
@@ -281,15 +281,16 @@ def log_function(
 #     default_return_value=None  # 算法异常时返回None
 # )(func)
 
-global_logger_file = "logs/global.log"
+traceable_logger_file = "logs/trace.log"
 traceable = lambda func: log_function(
     logger_name="traceable_function_decorator",
-    log_file=global_logger_file,
+    log_file=traceable_logger_file,
     exclude_args=["password", "token", "secret"],
     level=logging.DEBUG
 )(func)
 
-global_logger = setup_logger("utils", "logs/utils.log", logging.DEBUG)
+global_logger_file = "logs/print.log"
+global_logger = setup_logger("utils", global_logger_file, logging.DEBUG)
 
 # test
 if __name__ == "__main__":
