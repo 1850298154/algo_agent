@@ -11,7 +11,7 @@ client = openai.OpenAI(
 )
 
 @traceable
-def generate_chat_completion(messages: list[dict], tools_schema_list=None) -> ChatCompletion:
+def _generate_chat_completion(messages: list[dict], tools_schema_list=None) -> ChatCompletion:
     completion: ChatCompletion = client.chat.completions.create(
         model="qwen-plus",  # 模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
         # https://help.aliyun.com/zh/model-studio/models
@@ -23,8 +23,8 @@ def generate_chat_completion(messages: list[dict], tools_schema_list=None) -> Ch
     return completion
 
 
-def extract_assistant_output_from_chat(messages: list[dict], tools_schema_list=None) -> ChatCompletionMessage:
-    completion: ChatCompletion = generate_chat_completion(messages, tools_schema_list)
+def _extract_assistant_output_from_chat(messages: list[dict], tools_schema_list=None) -> ChatCompletionMessage:
+    completion: ChatCompletion = _generate_chat_completion(messages, tools_schema_list)
     assistant_output: ChatCompletionMessage = completion.choices[0].message
     # assistant_output.finish_reason == "stop" or "length"
     return assistant_output
@@ -32,7 +32,7 @@ def extract_assistant_output_from_chat(messages: list[dict], tools_schema_list=N
 
 def generate_assistant_output_append(messages: list[dict], tools_schema_list=None) -> ChatCompletionMessage:
     global_logger.info("-" * 60)
-    assistant_output: ChatCompletionMessage = extract_assistant_output_from_chat(messages, tools_schema_list)
+    assistant_output: ChatCompletionMessage = _extract_assistant_output_from_chat(messages, tools_schema_list)
     global_logger.info(f"\n第{len(messages)}轮大模型输出信息：{assistant_output}\n")
     
     if assistant_output.content is None:

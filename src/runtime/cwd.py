@@ -1,44 +1,15 @@
 
 import os
-from src.utils import global_logger
-
-import os
 from datetime import datetime
-
-def _get_or_create_subfolder(base_path=None):
-    if base_path:
-        base_path = os.path.abspath(base_path)
-        os.makedirs(base_path, exist_ok=True)
-        return base_path
-    
-    base_path = "./ws" 
-    base_path = os.path.abspath(base_path)
-        
-    # 确保父目录存在
-    os.makedirs(base_path, exist_ok=True)
-    # 获取当前子文件夹数量（仅统计目录，排除文件）
-    subfolder_count = len([f for f in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, f))])
-
-    # 计算下一个序号，并格式化为4位（不足补0）
-    next_seq = subfolder_count + 1
-    seq_str = f"{next_seq:04d}"  # 关键：用 :04d 格式化为4位，不足补0
-    
-    # 生成精确到微秒的时间字符串
-    time_str = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-    # 拼接子文件夹名（序号+时间）
-    subfolder_name = f"{seq_str}_{time_str}"
-    # 完整路径
-    subfolder_path = os.path.join(base_path, subfolder_name)
-    # 创建子文件夹
-    os.makedirs(subfolder_path, exist_ok=False)
-    return subfolder_path
+from src.utils import global_logger
+from src.utils import create_folder
 
 
 def create_cwd(cwd=None):
     """
     子进程的包装函数，用于在执行实际任务前更改工作目录。
     """
-    cwd = _get_or_create_subfolder(cwd)
+    cwd = create_folder.get_or_create_subfolder(fix_relate_from_project=cwd)
 
     global_logger.info(f"子进程 PID: {os.getpid()} 要将工作目录更改为: {cwd}")
     if not cwd:

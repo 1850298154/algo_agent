@@ -1,4 +1,10 @@
 
+## start
+
+```
+uv run python src/agent/deep_research.py
+```
+
 ## install
 ```
 uv python install 3.12

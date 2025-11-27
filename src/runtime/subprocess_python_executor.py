@@ -33,7 +33,8 @@ def _worker_with_pipe(
         def write(self, msg: str):
             if msg:
                 # 通道1：标记为 'stdout'，传输实时输出
-                self.child_conn.send((_PipeType.STDOUT, msg))
+                decoded_msg = msg.encode('utf-8').decode('unicode_escape')
+                self.child_conn.send((_PipeType.STDOUT, decoded_msg))
 
         def flush(self):
             pass

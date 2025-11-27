@@ -32,7 +32,7 @@ def user_query(user_input):
         if llm.has_function_call(assistant_output):
             tool_info = {
                 "content": "",
-                "role": "tool",
+                "role": "function",
                 "tool_call_id": "",
                 # 其他非必须
                 "tool_call_name": assistant_output.function_call.name,
@@ -61,11 +61,9 @@ def user_query(user_input):
                 global_logger.info(f"工具 tool call 输出信息： {tool_output}\n")
                 global_logger.info("-" * 60)
                 messages.append(tool_info)
-        loop_response = llm.generate_chat_completion(messages)
-        assistant_output = loop_response.choices[0].message
+        assistant_output = llm.generate_assistant_output_append(messages, tools_schema_list)
         if assistant_output.content is None:
             assistant_output.content = ""
-        messages.append(assistant_output)
         global_logger.info(f"第{len(messages) // 2}轮大模型输出信息： {assistant_output}\n")
     global_logger.info(f"最终答案： {assistant_output.content}")
 
@@ -76,12 +74,13 @@ if __name__ == "__main__":
 例如：“
 import json
 
-with open('schema.json', 'r') as file:
+with open('schema.json', 'r', encoding='utf-8') as file:
     schema = json.load(file)
     print(json.dumps(schema, indent=2))
 ”，读取以下文件：
 1. **schema.json** - 完整的数据结构Schema定义
-2. **emergency_response_data_01.json** 至 **emergency_response_data_05.json** - 5个随机生成的应急救援场景数据
+2. **emergency_response_data_01.json** 至 **emergency_response_data_05.json** - 5个随机生成的应急救援场景数据。
+3. 不要输出文件内容，因为数量会很大，只需按照schema.json中定义的字段读取部分内容进行分析。
 
 ### 数据特点
 

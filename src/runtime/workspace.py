@@ -42,6 +42,26 @@ def filter_and_deepcopy_globals(original_globals: Dict[str, Any]) -> Dict[str, A
     1. 排除键为 '__builtins__' 的项。
     2. 排除值为模块类型的项。
     """
+    def _is_serializable(value) -> bool:
+        """
+        判断单个对象是否可被 pickle 序列化
+        :param value: 任意待判断的 Python 对象
+        :return: 可序列化返回 True，不可序列化返回 False
+        """
+        import pickle
+        try:
+            # 使用最高协议版本序列化（兼容性最好），仅验证不保存
+            pickle.dumps(value, protocol=pickle.HIGHEST_PROTOCOL)
+            return True
+        except (
+            # 捕获所有序列化相关异常
+            pickle.PicklingError,
+            TypeError,
+            AttributeError,
+            RecursionError,
+            MemoryError
+        ):
+            return False    
     filtered_dict = {}
     for key, value in original_globals.items():
         # 检查键是否为 '__builtins__'
@@ -50,6 +70,8 @@ def filter_and_deepcopy_globals(original_globals: Dict[str, Any]) -> Dict[str, A
         # 检查值是否为模块类型
         import sys
         if isinstance(value, type(sys)):  # 使用 sys 模块的类型来判断其他模块
+            continue
+        if _is_serializable(value) is False:
             continue
         # 对符合条件的值进行深拷贝并添加到新字典
         filtered_dict[key] = copy.deepcopy(value)
