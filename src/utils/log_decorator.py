@@ -284,24 +284,25 @@ def log_function(
 #     default_return_value=None  # 算法异常时返回None
 # )(func)
 
-# # 子进程会出问题， 重新生成时间和文件夹
-# sub_folder_for_logs = create_folder.get_or_create_subfolder(gen_time_path_from_project="logs")
-sub_folder_for_logs = "logs"
-traceable_logger_file = os.path.join(sub_folder_for_logs, "trace.log")
+# 子进程会出问题， 重新生成时间和文件夹
+sub_folder_for_logs = create_folder.get_or_create_subfolder(gen_time_path_from_project="logs")
+# sub_folder_for_logs = "logs"
+
+traceable_logger_file_name = os.path.join(sub_folder_for_logs, "trace.log")
 traceable = lambda func: log_function(
     logger_name="all.trace",
-    log_file=traceable_logger_file,
+    log_file=traceable_logger_file_name,
     exclude_args=["password", "token", "secret"],
     level=logging.DEBUG
 )(func)
 
-global_logger_file = os.path.join(sub_folder_for_logs, "print.log")
+global_logger_file_name = os.path.join(sub_folder_for_logs, "print.log")
 global_logger = setup_logger(
-    logger_name="all.print", log_file=global_logger_file, level=logging.DEBUG)
+    logger_name="all.print", log_file=global_logger_file_name, level=logging.DEBUG)
 
-all_logger_file = os.path.join(sub_folder_for_logs, "all.log")
-all_logger = setup_logger(
-    logger_name="all", log_file=all_logger_file, level=logging.DEBUG)
+# all_logger_file_name = os.path.join(sub_folder_for_logs, "all.log")
+# all_logger = setup_logger(
+#     logger_name="all", log_file=all_logger_file_name, level=logging.DEBUG)
 
 
 

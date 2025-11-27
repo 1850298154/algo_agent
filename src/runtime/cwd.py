@@ -11,19 +11,19 @@ def create_cwd(cwd=None):
     """
     cwd = create_folder.get_or_create_subfolder(fix_relate_from_project=cwd)
 
-    global_logger.info(f"子进程 PID: {os.getpid()} 要将工作目录更改为: {cwd}")
+    # global_logger.info(f"子进程 PID: {os.getpid()} 要将工作目录更改为: {cwd}")
     if not cwd:
         return False
     try:
         os.chdir(cwd)
-        global_logger.info(f"子进程 PID: {os.getpid()} 已将工作目录更改为: {os.getcwd()}")
+        # global_logger.info(f"子进程 PID: {os.getpid()} 已将工作目录更改为: {os.getcwd()}")
         return True
     except OSError as e:
-        global_logger.error(f"子进程 PID: {os.getpid()} 更改工作目录失败: {e}")
+        # global_logger.error(f"子进程 PID: {os.getpid()} 更改工作目录失败: {e}")
         # 根据需要处理错误，例如发送错误信息到主进程或直接退出
         return False
     except Exception as e:
-        global_logger.error(f"子进程 PID: {os.getpid()} 更改工作目录时发生异常: {e}")
+        # global_logger.error(f"子进程 PID: {os.getpid()} 更改工作目录时发生异常: {e}")
         return False
     
 

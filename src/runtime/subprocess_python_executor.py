@@ -33,8 +33,12 @@ def _worker_with_pipe(
         def write(self, msg: str):
             if msg:
                 # 通道1：标记为 'stdout'，传输实时输出
-                decoded_msg = msg.encode('utf-8').decode('unicode_escape')
-                self.child_conn.send((_PipeType.STDOUT, decoded_msg))
+                # x1 = (f"\n\n\n\n[DEBUG] 子进程msg输出:-----------------------------------\n {msg}\n\n\n\n")
+                # x2 = (f"\n\n\n\n[DEBUG] 子进程msg.encode('utf-8')输出:-----------------------------------\n {msg.encode('utf-8')}\n\n\n\n")
+                # x3 = (f"\n\n\n\n[DEBUG] 子进程msg.encode('utf-8').decode('unicode_escape')输出:-----------------------------------\n {msg.encode('utf-8').decode('unicode_escape')}\n\n\n\n")
+                # decoded_msg = msg.encode('utf-8').decode('unicode_escape')
+                # _x_ = x1+x2+x3
+                self.child_conn.send((_PipeType.STDOUT, msg))
 
         def flush(self):
             pass
@@ -43,7 +47,7 @@ def _worker_with_pipe(
     sys.stderr = sys.stdout
     try:
         exec(command, _globals, _locals)
-        global_logger.info("---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult")
+        # global_logger.info("---------- 2.1.1 子进程正常结束：子进程构建成功的 ExecutionResult")
         res = ExecutionResult(
             arg_command=command,
             arg_globals=_globals or {},
@@ -51,7 +55,7 @@ def _worker_with_pipe(
             exit_status=ExecutionStatus.SUCCESS,
         )
     except Exception as e:
-        global_logger.info("---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult")
+        # global_logger.info("---------- 2.1.2 子进程异常结束：子进程捕获堆栈，构建失败的 ExecutionResult")
         res = ExecutionResult(
             arg_command=command,
             arg_globals=_globals or {},
@@ -162,5 +166,38 @@ if __name__ == "__main__":
 import os
 print(os.getcwd())
     """
-    result = run_structured_in_subprocess(test_code, {},  timeout=5)
+    test_code = r"""
+import json
+
+# 分析 schema.json 中的核心实体结构
+def analyze_schema_structure(schema):
+    if not schema:
+        print('Schema is empty.')
+        return
+
+    print('=== 数据结构分析 ===')
+    print(f'根对象: {schema.get("title")}')
+    print(f'描述: {schema.get("description")}')
+
+    defs = schema.get('$defs', {})
+    entities = ['Task', 'Carrier', 'Location', 'Material', 'PathSegment', 'RiskPoint']
+
+    for entity in entities:
+        if entity in defs:
+            props = defs[entity]['properties']
+            required = defs[entity].get('required', [])
+            print(f'\n【{entity}】')
+            print(f'  属性数量: {len(props)}, 必填项: {len(required)}')
+            print(f'  核心字段: {list(props.keys())[:5]}...')
+
+# 加载并分析 schema
+try:
+    with open('schema.json', 'r', encoding='utf-8') as f:
+        schema = json.load(f)
+    analyze_schema_structure(schema)
+except Exception as e:
+    print(f'Error analyzing schema: {e}')    
+    """
+    result = run_structured_in_subprocess(test_code, {},  timeout=600)
+    print('----------- 子进程执行结果 -----------')
     print(result)

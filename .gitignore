@@ -211,3 +211,5 @@ __marimo__/
 secret.py
 
 /ws*/
+
+*.log.*

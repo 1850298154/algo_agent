@@ -33,7 +33,7 @@ def _extract_assistant_output_from_chat(messages: list[dict], tools_schema_list=
 def generate_assistant_output_append(messages: list[dict], tools_schema_list=None) -> ChatCompletionMessage:
     global_logger.info("-" * 60)
     assistant_output: ChatCompletionMessage = _extract_assistant_output_from_chat(messages, tools_schema_list)
-    global_logger.info(f"\n第{len(messages)}轮大模型输出信息：{assistant_output}\n")
+    # global_logger.info(f"\n第{len(messages)}轮大模型输出信息：{assistant_output}\n")
     
     if assistant_output.content is None:
         assistant_output.content = ""
