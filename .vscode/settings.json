@@ -23,6 +23,7 @@
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnType": false,
         "editor.rulers": [80]
-      }
+    },
+    "python.analysis.autoImportCompletions": true
     
 }
