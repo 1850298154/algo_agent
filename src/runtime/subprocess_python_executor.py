@@ -24,7 +24,8 @@ def _worker_with_pipe(
     child_conn: PipeConnection,
 ) -> None:
     """Execute a command in a subprocess with output captured via pipes."""
-    cwd.create_cwd('./wsm/1/g4-1')
+    # cwd.create_cwd('./wsm/1/g4-1')
+    cwd.create_cwd('./wsm/2/')
     
     class _PipeWriter:
         def __init__(self, child_conn: PipeConnection):
