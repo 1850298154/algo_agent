@@ -1,0 +1,221 @@
+{
+    "$defs": {
+        "Edge": {
+            "description": "地图边（道路）模型",
+            "properties": {
+                "start": {
+                    "$ref": "#/$defs/Point",
+                    "description": "边的起点坐标"
+                },
+                "end": {
+                    "$ref": "#/$defs/Point",
+                    "description": "边的终点坐标"
+                },
+                "is_blocked": {
+                    "default": false,
+                    "description": "道路是否阻断，True=阻断，False=通行",
+                    "title": "Is Blocked",
+                    "type": "boolean"
+                },
+                "edge_type": {
+                    "default": "grid",
+                    "description": "边类型：grid=网格连通边",
+                    "title": "Edge Type",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "start",
+                "end"
+            ],
+            "title": "Edge",
+            "type": "object"
+        },
+        "MapData": {
+            "description": "车辆可行驶的地图数据模型",
+            "properties": {
+                "points": {
+                    "description": "地图中所有坐标点列表（网格点）",
+                    "items": {
+                        "$ref": "#/$defs/Point"
+                    },
+                    "title": "Points",
+                    "type": "array"
+                },
+                "edges": {
+                    "description": "地图中所有道路边列表（网格连通边）",
+                    "items": {
+                        "$ref": "#/$defs/Edge"
+                    },
+                    "title": "Edges",
+                    "type": "array"
+                },
+                "grid_config": {
+                    "additionalProperties": {
+                        "type": "integer"
+                    },
+                    "description": "网格配置：rows=行数, cols=列数, cell_size=单元格大小(米)",
+                    "title": "Grid Config",
+                    "type": "object"
+                }
+            },
+            "required": [
+                "points",
+                "edges",
+                "grid_config"
+            ],
+            "title": "MapData",
+            "type": "object"
+        },
+        "Material": {
+            "description": "物资数据模型",
+            "properties": {
+                "material_id": {
+                    "description": "物资唯一标识，如M001",
+                    "title": "Material Id",
+                    "type": "string"
+                },
+                "start_position": {
+                    "$ref": "#/$defs/Point",
+                    "description": "物资起点位置（仓库坐标，网格点）"
+                },
+                "target_position": {
+                    "$ref": "#/$defs/Point",
+                    "description": "物资目标位置（受灾点坐标，网格点）"
+                }
+            },
+            "required": [
+                "material_id",
+                "start_position",
+                "target_position"
+            ],
+            "title": "Material",
+            "type": "object"
+        },
+        "Point": {
+            "description": "地图坐标点模型",
+            "properties": {
+                "x": {
+                    "description": "横坐标，单位：米",
+                    "title": "X",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "纵坐标，单位：米",
+                    "title": "Y",
+                    "type": "number"
+                },
+                "grid_row": {
+                    "description": "网格行号",
+                    "title": "Grid Row",
+                    "type": "integer"
+                },
+                "grid_col": {
+                    "description": "网格列号",
+                    "title": "Grid Col",
+                    "type": "integer"
+                },
+                "grid_value": {
+                    "description": "网格随机值（0-1），可代表通行难度/优先级等",
+                    "title": "Grid Value",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "grid_row",
+                "grid_col",
+                "grid_value"
+            ],
+            "title": "Point",
+            "type": "object"
+        },
+        "UAV": {
+            "description": "无人机数据模型",
+            "properties": {
+                "uav_id": {
+                    "description": "无人机唯一标识，如UAV001",
+                    "title": "Uav Id",
+                    "type": "string"
+                },
+                "load_capacity": {
+                    "default": 1,
+                    "description": "无人机运载容量，固定为1（单位：箱）",
+                    "title": "Load Capacity",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "uav_id"
+            ],
+            "title": "UAV",
+            "type": "object"
+        },
+        "UnmannedVehicle": {
+            "description": "无人车数据模型",
+            "properties": {
+                "uv_id": {
+                    "description": "无人车唯一标识，如UV001",
+                    "title": "Uv Id",
+                    "type": "string"
+                },
+                "position": {
+                    "$ref": "#/$defs/Point",
+                    "description": "无人车当前位置坐标（网格点）"
+                },
+                "uav_capacity": {
+                    "description": "无人车可携带的无人机最大数量",
+                    "title": "Uav Capacity",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "uv_id",
+                "position",
+                "uav_capacity"
+            ],
+            "title": "UnmannedVehicle",
+            "type": "object"
+        }
+    },
+    "description": "全量数据聚合模型",
+    "properties": {
+        "map_data": {
+            "$ref": "#/$defs/MapData",
+            "description": "网格地图数据"
+        },
+        "unmanned_vehicles": {
+            "description": "所有无人车数据",
+            "items": {
+                "$ref": "#/$defs/UnmannedVehicle"
+            },
+            "title": "Unmanned Vehicles",
+            "type": "array"
+        },
+        "uavs": {
+            "description": "所有无人机数据",
+            "items": {
+                "$ref": "#/$defs/UAV"
+            },
+            "title": "Uavs",
+            "type": "array"
+        },
+        "materials": {
+            "description": "所有物资数据",
+            "items": {
+                "$ref": "#/$defs/Material"
+            },
+            "title": "Materials",
+            "type": "array"
+        }
+    },
+    "required": [
+        "map_data",
+        "unmanned_vehicles",
+        "uavs",
+        "materials"
+    ],
+    "title": "AllData",
+    "type": "object"
+}
