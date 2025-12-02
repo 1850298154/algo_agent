@@ -213,3 +213,4 @@ secret.py
 /ws*/
 
 *.log.*
+log*/
