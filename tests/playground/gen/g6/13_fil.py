@@ -5,10 +5,10 @@ from pathlib import Path
 
 # -------------------------- 1. 配置参数与读取数据 --------------------------
 # 定义文件路径
-data_dir = Path(r"D:\zyt\git_ln\algo_agent\tests\playground\gen\g6\log")
-addr_path = data_dir / "CN-addresses.tsv"
-house_path = data_dir / "CN-houses.tsv"
-street_path = data_dir / "CN-streets.tsv"
+data_dir = Path(r"D:\zyt\git_ln\algo_agent\tests\playground\gen\g6\log\filtered_beijing")
+addr_path = data_dir / "CN-addresses-beijing.tsv"
+house_path = data_dir / "CN-houses-beijing.tsv"
+street_path = data_dir / "CN-streets-beijing.tsv"
 
 # 读取TSV文件（处理可能的编码问题）
 df_addr = pd.read_csv(addr_path, sep="\t", encoding="utf-8-sig")
