@@ -1,0 +1,2820 @@
+{
+    "lines": [
+        {
+            "line_name": "1号线八通线",
+            "color": "#FF7F00",
+            "stations": [
+                {
+                    "name": "公主坟",
+                    "longitude": 116.309919,
+                    "latitude": 39.907469,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "军事博物馆",
+                    "longitude": 116.321459,
+                    "latitude": 39.907422,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "9号线"
+                    ]
+                },
+                {
+                    "name": "木樨地",
+                    "longitude": 116.337583,
+                    "latitude": 39.907379,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "16号线"
+                    ]
+                },
+                {
+                    "name": "南礼士路",
+                    "longitude": 116.352583,
+                    "latitude": 39.907234,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "1号线八通线"
+                    ]
+                },
+                {
+                    "name": "复兴门",
+                    "longitude": 116.356866,
+                    "latitude": 39.907242,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "1号线八通线"
+                    ]
+                },
+                {
+                    "name": "西单",
+                    "longitude": 116.374072,
+                    "latitude": 39.907383,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "天安门西",
+                    "longitude": 116.391278,
+                    "latitude": 39.907472,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "1号线八通线"
+                    ]
+                },
+                {
+                    "name": "天安门东",
+                    "longitude": 116.401216,
+                    "latitude": 39.90778,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "1号线八通线"
+                    ]
+                },
+                {
+                    "name": "王府井",
+                    "longitude": 116.411571,
+                    "latitude": 39.908069,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "1号线八通线"
+                    ]
+                },
+                {
+                    "name": "东单",
+                    "longitude": 116.41848,
+                    "latitude": 39.908325,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "建国门",
+                    "longitude": 116.435806,
+                    "latitude": 39.908501,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "1号线八通线"
+                    ]
+                },
+                {
+                    "name": "永安里",
+                    "longitude": 116.450497,
+                    "latitude": 39.908454,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "1号线八通线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "2号线",
+            "color": "#FFFF00",
+            "stations": [
+                {
+                    "name": "积水潭",
+                    "longitude": 116.373126,
+                    "latitude": 39.948653,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "19号线"
+                    ]
+                },
+                {
+                    "name": "鼓楼大街",
+                    "longitude": 116.393776,
+                    "latitude": 39.948972,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "安定门",
+                    "longitude": 116.40824,
+                    "latitude": 39.94918,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "雍和宫",
+                    "longitude": 116.417069,
+                    "latitude": 39.949336,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "东直门",
+                    "longitude": 116.435842,
+                    "latitude": 39.941626,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "首都机场线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "东四十条",
+                    "longitude": 116.434137,
+                    "latitude": 39.933704,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "3号线"
+                    ]
+                },
+                {
+                    "name": "朝阳门",
+                    "longitude": 116.434584,
+                    "latitude": 39.924499,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "建国门",
+                    "longitude": 116.435806,
+                    "latitude": 39.908501,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "1号线八通线"
+                    ]
+                },
+                {
+                    "name": "北京站",
+                    "longitude": 116.427287,
+                    "latitude": 39.904983,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "崇文门",
+                    "longitude": 116.417093,
+                    "latitude": 39.901063,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "前门",
+                    "longitude": 116.397937,
+                    "latitude": 39.900192,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "和平门",
+                    "longitude": 116.384209,
+                    "latitude": 39.900098,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "宣武门",
+                    "longitude": 116.374314,
+                    "latitude": 39.899765,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "长椿街",
+                    "longitude": 116.363355,
+                    "latitude": 39.899433,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "复兴门",
+                    "longitude": 116.356866,
+                    "latitude": 39.907242,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "1号线八通线"
+                    ]
+                },
+                {
+                    "name": "阜成门",
+                    "longitude": 116.356009,
+                    "latitude": 39.923686,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "车公庄",
+                    "longitude": 116.354357,
+                    "latitude": 39.932397,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "西直门",
+                    "longitude": 116.355426,
+                    "latitude": 39.940474,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "4号线大兴线",
+                        "13号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "3号线",
+            "color": "#00FF00",
+            "stations": [
+                {
+                    "name": "东四十条",
+                    "longitude": 116.434137,
+                    "latitude": 39.933704,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "3号线"
+                    ]
+                },
+                {
+                    "name": "工人体育场",
+                    "longitude": 116.450448,
+                    "latitude": 39.934058,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "3号线",
+                        "17号线北段"
+                    ]
+                },
+                {
+                    "name": "团结湖",
+                    "longitude": 116.460186,
+                    "latitude": 39.933734,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "3号线",
+                        "10号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "4号线大兴线",
+            "color": "#00FFFF",
+            "stations": [
+                {
+                    "name": "北京南站",
+                    "longitude": 116.378963,
+                    "latitude": 39.865029,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "14号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "陶然亭",
+                    "longitude": 116.374383,
+                    "latitude": 39.87847,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "菜市口",
+                    "longitude": 116.374425,
+                    "latitude": 39.889296,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "4号线大兴线",
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "宣武门",
+                    "longitude": 116.374314,
+                    "latitude": 39.899765,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "西单",
+                    "longitude": 116.374072,
+                    "latitude": 39.907383,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "灵境胡同",
+                    "longitude": 116.373746,
+                    "latitude": 39.915912,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "西四",
+                    "longitude": 116.373332,
+                    "latitude": 39.924206,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "平安里",
+                    "longitude": 116.372883,
+                    "latitude": 39.933949,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "19号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "新街口",
+                    "longitude": 116.367742,
+                    "latitude": 39.940667,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "西直门",
+                    "longitude": 116.355426,
+                    "latitude": 39.940474,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "4号线大兴线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "动物园",
+                    "longitude": 116.339031,
+                    "latitude": 39.93825,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "国家图书馆",
+                    "longitude": 116.32519,
+                    "latitude": 39.943114,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "16号线",
+                        "9号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "魏公村",
+                    "longitude": 116.32322,
+                    "latitude": 39.957904,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "人民大学",
+                    "longitude": 116.321367,
+                    "latitude": 39.966956,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "海淀黄庄",
+                    "longitude": 116.317564,
+                    "latitude": 39.975996,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "4号线大兴线",
+                        "10号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "5号线",
+            "color": "#0000FF",
+            "stations": [
+                {
+                    "name": "蒲黄榆",
+                    "longitude": 116.423087,
+                    "latitude": 39.865584,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "14号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "天坛东门",
+                    "longitude": 116.420833,
+                    "latitude": 39.882558,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "磁器口",
+                    "longitude": 116.41994,
+                    "latitude": 39.893172,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "7号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "崇文门",
+                    "longitude": 116.417093,
+                    "latitude": 39.901063,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "东单",
+                    "longitude": 116.41848,
+                    "latitude": 39.908325,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "灯市口",
+                    "longitude": 116.417783,
+                    "latitude": 39.917113,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "东四",
+                    "longitude": 116.417493,
+                    "latitude": 39.92437,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "张自忠路",
+                    "longitude": 116.417156,
+                    "latitude": 39.933592,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "北新桥",
+                    "longitude": 116.416884,
+                    "latitude": 39.940782,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "首都机场线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "雍和宫",
+                    "longitude": 116.417069,
+                    "latitude": 39.949336,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "和平里北街",
+                    "longitude": 116.418504,
+                    "latitude": 39.958734,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "和平西桥",
+                    "longitude": 116.41797,
+                    "latitude": 39.968258,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "5号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "6号线",
+            "color": "#8B00FF",
+            "stations": [
+                {
+                    "name": "呼家楼",
+                    "longitude": 116.461618,
+                    "latitude": 39.923337,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "东大桥",
+                    "longitude": 116.451657,
+                    "latitude": 39.923054,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "6号线"
+                    ]
+                },
+                {
+                    "name": "朝阳门",
+                    "longitude": 116.434584,
+                    "latitude": 39.924499,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "东四",
+                    "longitude": 116.417493,
+                    "latitude": 39.92437,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "南锣鼓巷",
+                    "longitude": 116.404192,
+                    "latitude": 39.933848,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "8号线"
+                    ]
+                },
+                {
+                    "name": "北海北",
+                    "longitude": 116.386829,
+                    "latitude": 39.933247,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "6号线"
+                    ]
+                },
+                {
+                    "name": "平安里",
+                    "longitude": 116.372883,
+                    "latitude": 39.933949,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "19号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "车公庄",
+                    "longitude": 116.354357,
+                    "latitude": 39.932397,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "车公庄西",
+                    "longitude": 116.344082,
+                    "latitude": 39.932466,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "6号线"
+                    ]
+                },
+                {
+                    "name": "二里沟",
+                    "longitude": 116.333701,
+                    "latitude": 39.93241,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "16号线"
+                    ]
+                },
+                {
+                    "name": "白石桥南",
+                    "longitude": 116.32568,
+                    "latitude": 39.933022,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "9号线"
+                    ]
+                },
+                {
+                    "name": "花园桥",
+                    "longitude": 116.310683,
+                    "latitude": 39.93234,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "6号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "7号线",
+            "color": "#FF00FF",
+            "stations": [
+                {
+                    "name": "广渠门外",
+                    "longitude": 116.448998,
+                    "latitude": 39.893648,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "广渠门内",
+                    "longitude": 116.433877,
+                    "latitude": 39.893673,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "磁器口",
+                    "longitude": 116.41994,
+                    "latitude": 39.893172,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "7号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "桥湾",
+                    "longitude": 116.408464,
+                    "latitude": 39.892725,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "珠市口",
+                    "longitude": 116.398372,
+                    "latitude": 39.891334,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "虎坊桥",
+                    "longitude": 116.384596,
+                    "latitude": 39.889486,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "菜市口",
+                    "longitude": 116.374425,
+                    "latitude": 39.889296,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "4号线大兴线",
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "广安门内",
+                    "longitude": 116.358239,
+                    "latitude": 39.889418,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "达官营",
+                    "longitude": 116.335608,
+                    "latitude": 39.889898,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "16号线",
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "湾子",
+                    "longitude": 116.327753,
+                    "latitude": 39.889954,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "北京西站",
+                    "longitude": 116.321218,
+                    "latitude": 39.894706,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "9号线",
+                        "7号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "8号线",
+            "color": "#990000",
+            "stations": [
+                {
+                    "name": "永定门外",
+                    "longitude": 116.399369,
+                    "latitude": 39.867435,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "14号线"
+                    ]
+                },
+                {
+                    "name": "天桥",
+                    "longitude": 116.398712,
+                    "latitude": 39.88192,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "8号线"
+                    ]
+                },
+                {
+                    "name": "珠市口",
+                    "longitude": 116.398372,
+                    "latitude": 39.891334,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "前门",
+                    "longitude": 116.397937,
+                    "latitude": 39.900192,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "王府井",
+                    "longitude": 116.411571,
+                    "latitude": 39.908069,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "1号线八通线"
+                    ]
+                },
+                {
+                    "name": "金鱼胡同",
+                    "longitude": 116.411178,
+                    "latitude": 39.915387,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "8号线"
+                    ]
+                },
+                {
+                    "name": "中国美术馆",
+                    "longitude": 116.410803,
+                    "latitude": 39.923705,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "8号线"
+                    ]
+                },
+                {
+                    "name": "南锣鼓巷",
+                    "longitude": 116.404192,
+                    "latitude": 39.933848,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "8号线"
+                    ]
+                },
+                {
+                    "name": "什刹海",
+                    "longitude": 116.396219,
+                    "latitude": 39.937583,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "8号线"
+                    ]
+                },
+                {
+                    "name": "鼓楼大街",
+                    "longitude": 116.393776,
+                    "latitude": 39.948972,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "2号线"
+                    ]
+                },
+                {
+                    "name": "安德里北街",
+                    "longitude": 116.395145,
+                    "latitude": 39.957227,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "8号线"
+                    ]
+                },
+                {
+                    "name": "安华桥",
+                    "longitude": 116.394159,
+                    "latitude": 39.968653,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "12号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "9号线",
+            "color": "#994C00",
+            "stations": [
+                {
+                    "name": "六里桥东",
+                    "longitude": 116.315142,
+                    "latitude": 39.886886,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "9号线"
+                    ]
+                },
+                {
+                    "name": "北京西站",
+                    "longitude": 116.321218,
+                    "latitude": 39.894706,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "9号线",
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "军事博物馆",
+                    "longitude": 116.321459,
+                    "latitude": 39.907422,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "9号线"
+                    ]
+                },
+                {
+                    "name": "白堆子",
+                    "longitude": 116.325762,
+                    "latitude": 39.923818,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "9号线"
+                    ]
+                },
+                {
+                    "name": "白石桥南",
+                    "longitude": 116.32568,
+                    "latitude": 39.933022,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "9号线"
+                    ]
+                },
+                {
+                    "name": "国家图书馆",
+                    "longitude": 116.32519,
+                    "latitude": 39.943114,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "16号线",
+                        "9号线",
+                        "4号线大兴线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "10号线",
+            "color": "#999900",
+            "stations": [
+                {
+                    "name": "海淀黄庄",
+                    "longitude": 116.317564,
+                    "latitude": 39.975996,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "4号线大兴线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "知春里",
+                    "longitude": 116.328709,
+                    "latitude": 39.976334,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "知春路",
+                    "longitude": 116.33996,
+                    "latitude": 39.976476,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "10号线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "西土城",
+                    "longitude": 116.354314,
+                    "latitude": 39.976372,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "昌平线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "太阳宫",
+                    "longitude": 116.448317,
+                    "latitude": 39.973757,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "17号线北段",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "三元桥",
+                    "longitude": 116.456997,
+                    "latitude": 39.961508,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "首都机场线",
+                        "12号线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "亮马桥",
+                    "longitude": 116.461794,
+                    "latitude": 39.949415,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "农业展览馆",
+                    "longitude": 116.461724,
+                    "latitude": 39.941344,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "团结湖",
+                    "longitude": 116.460186,
+                    "latitude": 39.933734,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "3号线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "呼家楼",
+                    "longitude": 116.461618,
+                    "latitude": 39.923337,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "金台夕照",
+                    "longitude": 116.461743,
+                    "latitude": 39.916838,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "劲松",
+                    "longitude": 116.461325,
+                    "latitude": 39.884387,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "潘家园",
+                    "longitude": 116.460926,
+                    "latitude": 39.875387,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "十里河",
+                    "longitude": 116.458103,
+                    "latitude": 39.866135,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "17号线",
+                        "14号线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "莲花桥",
+                    "longitude": 116.310347,
+                    "latitude": 39.897867,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "公主坟",
+                    "longitude": 116.309919,
+                    "latitude": 39.907469,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "10号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "12号线",
+            "color": "#009999",
+            "stations": [
+                {
+                    "name": "三元桥",
+                    "longitude": 116.456997,
+                    "latitude": 39.961508,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "首都机场线",
+                        "12号线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "西坝河",
+                    "longitude": 116.44211,
+                    "latitude": 39.965798,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "17号线北段"
+                    ]
+                },
+                {
+                    "name": "光熙门",
+                    "longitude": 116.431761,
+                    "latitude": 39.968337,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "和平西桥",
+                    "longitude": 116.41797,
+                    "latitude": 39.968258,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "安贞桥",
+                    "longitude": 116.407219,
+                    "latitude": 39.968912,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "12号线"
+                    ]
+                },
+                {
+                    "name": "安华桥",
+                    "longitude": 116.394159,
+                    "latitude": 39.968653,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "12号线"
+                    ]
+                },
+                {
+                    "name": "马甸桥",
+                    "longitude": 116.382214,
+                    "latitude": 39.968261,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "12号线"
+                    ]
+                },
+                {
+                    "name": "北太平庄",
+                    "longitude": 116.370037,
+                    "latitude": 39.967882,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "19号线"
+                    ]
+                },
+                {
+                    "name": "蓟门桥",
+                    "longitude": 116.35597,
+                    "latitude": 39.967747,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "昌平线",
+                        "12号线"
+                    ]
+                },
+                {
+                    "name": "大钟寺",
+                    "longitude": 116.345139,
+                    "latitude": 39.966612,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "人民大学",
+                    "longitude": 116.321367,
+                    "latitude": 39.966956,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "4号线大兴线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "13号线",
+            "color": "#000099",
+            "stations": [
+                {
+                    "name": "西直门",
+                    "longitude": 116.355426,
+                    "latitude": 39.940474,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "4号线大兴线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "大钟寺",
+                    "longitude": 116.345139,
+                    "latitude": 39.966612,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "知春路",
+                    "longitude": 116.33996,
+                    "latitude": 39.976476,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "10号线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "光熙门",
+                    "longitude": 116.431761,
+                    "latitude": 39.968337,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "柳芳",
+                    "longitude": 116.432728,
+                    "latitude": 39.958157,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "东直门",
+                    "longitude": 116.435842,
+                    "latitude": 39.941626,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "首都机场线",
+                        "13号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "14号线",
+            "color": "#660099",
+            "stations": [
+                {
+                    "name": "十里河",
+                    "longitude": 116.458103,
+                    "latitude": 39.866135,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "17号线",
+                        "14号线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "方庄",
+                    "longitude": 116.440244,
+                    "latitude": 39.865864,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "14号线"
+                    ]
+                },
+                {
+                    "name": "蒲黄榆",
+                    "longitude": 116.423087,
+                    "latitude": 39.865584,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "14号线",
+                        "5号线"
+                    ]
+                },
+                {
+                    "name": "景泰",
+                    "longitude": 116.411026,
+                    "latitude": 39.86525,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "14号线"
+                    ]
+                },
+                {
+                    "name": "永定门外",
+                    "longitude": 116.399369,
+                    "latitude": 39.867435,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "8号线",
+                        "14号线"
+                    ]
+                },
+                {
+                    "name": "北京南站",
+                    "longitude": 116.378963,
+                    "latitude": 39.865029,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "14号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "景风门",
+                    "longitude": 116.366033,
+                    "latitude": 39.862631,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "14号线",
+                        "19号线"
+                    ]
+                },
+                {
+                    "name": "菜户营",
+                    "longitude": 116.342444,
+                    "latitude": 39.867627,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "14号线"
+                    ]
+                },
+                {
+                    "name": "丽泽商务区",
+                    "longitude": 116.331268,
+                    "latitude": 39.867718,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "14号线",
+                        "16号线"
+                    ]
+                },
+                {
+                    "name": "东管头",
+                    "longitude": 116.321197,
+                    "latitude": 39.86757,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "14号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "16号线",
+            "color": "#FF0000",
+            "stations": [
+                {
+                    "name": "万寿寺",
+                    "longitude": 116.309904,
+                    "latitude": 39.947773,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "16号线"
+                    ]
+                },
+                {
+                    "name": "国家图书馆",
+                    "longitude": 116.32519,
+                    "latitude": 39.943114,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "16号线",
+                        "9号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "二里沟",
+                    "longitude": 116.333701,
+                    "latitude": 39.93241,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "16号线"
+                    ]
+                },
+                {
+                    "name": "甘家口",
+                    "longitude": 116.334534,
+                    "latitude": 39.923392,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "16号线"
+                    ]
+                },
+                {
+                    "name": "玉渊潭东门",
+                    "longitude": 116.334546,
+                    "latitude": 39.914042,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "16号线"
+                    ]
+                },
+                {
+                    "name": "木樨地",
+                    "longitude": 116.337583,
+                    "latitude": 39.907379,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "1号线八通线",
+                        "16号线"
+                    ]
+                },
+                {
+                    "name": "达官营",
+                    "longitude": 116.335608,
+                    "latitude": 39.889898,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "16号线",
+                        "7号线"
+                    ]
+                },
+                {
+                    "name": "红莲南路",
+                    "longitude": 116.336668,
+                    "latitude": 39.877533,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "16号线"
+                    ]
+                },
+                {
+                    "name": "丽泽商务区",
+                    "longitude": 116.331268,
+                    "latitude": 39.867718,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "14号线",
+                        "16号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "17号线",
+            "color": "#FF7F00",
+            "stations": [
+                {
+                    "name": "十里河",
+                    "longitude": 116.458103,
+                    "latitude": 39.866135,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "17号线",
+                        "14号线",
+                        "10号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "17号线北段",
+            "color": "#FFFF00",
+            "stations": [
+                {
+                    "name": "太阳宫",
+                    "longitude": 116.448317,
+                    "latitude": 39.973757,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "17号线北段",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "西坝河",
+                    "longitude": 116.44211,
+                    "latitude": 39.965798,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "17号线北段"
+                    ]
+                },
+                {
+                    "name": "左家庄",
+                    "longitude": 116.44272,
+                    "latitude": 39.949968,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "17号线北段"
+                    ]
+                },
+                {
+                    "name": "工人体育场",
+                    "longitude": 116.450448,
+                    "latitude": 39.934058,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "3号线",
+                        "17号线北段"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "19号线",
+            "color": "#00FF00",
+            "stations": [
+                {
+                    "name": "景风门",
+                    "longitude": 116.366033,
+                    "latitude": 39.862631,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "14号线",
+                        "19号线"
+                    ]
+                },
+                {
+                    "name": "牛街",
+                    "longitude": 116.363481,
+                    "latitude": 39.889605,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "19号线"
+                    ]
+                },
+                {
+                    "name": "太平桥",
+                    "longitude": 116.363245,
+                    "latitude": 39.909755,
+                    "is_transfer": false,
+                    "belong_lines": [
+                        "19号线"
+                    ]
+                },
+                {
+                    "name": "平安里",
+                    "longitude": 116.372883,
+                    "latitude": 39.933949,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "6号线",
+                        "19号线",
+                        "4号线大兴线"
+                    ]
+                },
+                {
+                    "name": "积水潭",
+                    "longitude": 116.373126,
+                    "latitude": 39.948653,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "19号线"
+                    ]
+                },
+                {
+                    "name": "北太平庄",
+                    "longitude": 116.370037,
+                    "latitude": 39.967882,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "12号线",
+                        "19号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "昌平线",
+            "color": "#00FFFF",
+            "stations": [
+                {
+                    "name": "西土城",
+                    "longitude": 116.354314,
+                    "latitude": 39.976372,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "昌平线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "蓟门桥",
+                    "longitude": 116.35597,
+                    "latitude": 39.967747,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "昌平线",
+                        "12号线"
+                    ]
+                }
+            ]
+        },
+        {
+            "line_name": "首都机场线",
+            "color": "#FF00FF",
+            "stations": [
+                {
+                    "name": "三元桥",
+                    "longitude": 116.456997,
+                    "latitude": 39.961508,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "首都机场线",
+                        "12号线",
+                        "10号线"
+                    ]
+                },
+                {
+                    "name": "东直门",
+                    "longitude": 116.435842,
+                    "latitude": 39.941626,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "2号线",
+                        "首都机场线",
+                        "13号线"
+                    ]
+                },
+                {
+                    "name": "北新桥",
+                    "longitude": 116.416884,
+                    "latitude": 39.940782,
+                    "is_transfer": true,
+                    "belong_lines": [
+                        "首都机场线",
+                        "5号线"
+                    ]
+                }
+            ]
+        }
+    ],
+    "all_stations": [
+        {
+            "name": "公主坟",
+            "longitude": 116.309919,
+            "latitude": 39.907469,
+            "is_transfer": true,
+            "belong_lines": [
+                "1号线八通线",
+                "10号线"
+            ]
+        },
+        {
+            "name": "军事博物馆",
+            "longitude": 116.321459,
+            "latitude": 39.907422,
+            "is_transfer": true,
+            "belong_lines": [
+                "1号线八通线",
+                "9号线"
+            ]
+        },
+        {
+            "name": "木樨地",
+            "longitude": 116.337583,
+            "latitude": 39.907379,
+            "is_transfer": true,
+            "belong_lines": [
+                "1号线八通线",
+                "16号线"
+            ]
+        },
+        {
+            "name": "南礼士路",
+            "longitude": 116.352583,
+            "latitude": 39.907234,
+            "is_transfer": false,
+            "belong_lines": [
+                "1号线八通线"
+            ]
+        },
+        {
+            "name": "复兴门",
+            "longitude": 116.356866,
+            "latitude": 39.907242,
+            "is_transfer": true,
+            "belong_lines": [
+                "2号线",
+                "1号线八通线"
+            ]
+        },
+        {
+            "name": "西单",
+            "longitude": 116.374072,
+            "latitude": 39.907383,
+            "is_transfer": true,
+            "belong_lines": [
+                "1号线八通线",
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "天安门西",
+            "longitude": 116.391278,
+            "latitude": 39.907472,
+            "is_transfer": false,
+            "belong_lines": [
+                "1号线八通线"
+            ]
+        },
+        {
+            "name": "天安门东",
+            "longitude": 116.401216,
+            "latitude": 39.90778,
+            "is_transfer": false,
+            "belong_lines": [
+                "1号线八通线"
+            ]
+        },
+        {
+            "name": "王府井",
+            "longitude": 116.411571,
+            "latitude": 39.908069,
+            "is_transfer": true,
+            "belong_lines": [
+                "8号线",
+                "1号线八通线"
+            ]
+        },
+        {
+            "name": "东单",
+            "longitude": 116.41848,
+            "latitude": 39.908325,
+            "is_transfer": true,
+            "belong_lines": [
+                "1号线八通线",
+                "5号线"
+            ]
+        },
+        {
+            "name": "建国门",
+            "longitude": 116.435806,
+            "latitude": 39.908501,
+            "is_transfer": true,
+            "belong_lines": [
+                "2号线",
+                "1号线八通线"
+            ]
+        },
+        {
+            "name": "永安里",
+            "longitude": 116.450497,
+            "latitude": 39.908454,
+            "is_transfer": false,
+            "belong_lines": [
+                "1号线八通线"
+            ]
+        },
+        {
+            "name": "积水潭",
+            "longitude": 116.373126,
+            "latitude": 39.948653,
+            "is_transfer": true,
+            "belong_lines": [
+                "2号线",
+                "19号线"
+            ]
+        },
+        {
+            "name": "鼓楼大街",
+            "longitude": 116.393776,
+            "latitude": 39.948972,
+            "is_transfer": true,
+            "belong_lines": [
+                "8号线",
+                "2号线"
+            ]
+        },
+        {
+            "name": "安定门",
+            "longitude": 116.40824,
+            "latitude": 39.94918,
+            "is_transfer": false,
+            "belong_lines": [
+                "2号线"
+            ]
+        },
+        {
+            "name": "雍和宫",
+            "longitude": 116.417069,
+            "latitude": 39.949336,
+            "is_transfer": true,
+            "belong_lines": [
+                "2号线",
+                "5号线"
+            ]
+        },
+        {
+            "name": "东直门",
+            "longitude": 116.435842,
+            "latitude": 39.941626,
+            "is_transfer": true,
+            "belong_lines": [
+                "2号线",
+                "首都机场线",
+                "13号线"
+            ]
+        },
+        {
+            "name": "东四十条",
+            "longitude": 116.434137,
+            "latitude": 39.933704,
+            "is_transfer": true,
+            "belong_lines": [
+                "2号线",
+                "3号线"
+            ]
+        },
+        {
+            "name": "朝阳门",
+            "longitude": 116.434584,
+            "latitude": 39.924499,
+            "is_transfer": true,
+            "belong_lines": [
+                "6号线",
+                "2号线"
+            ]
+        },
+        {
+            "name": "北京站",
+            "longitude": 116.427287,
+            "latitude": 39.904983,
+            "is_transfer": false,
+            "belong_lines": [
+                "2号线"
+            ]
+        },
+        {
+            "name": "崇文门",
+            "longitude": 116.417093,
+            "latitude": 39.901063,
+            "is_transfer": true,
+            "belong_lines": [
+                "2号线",
+                "5号线"
+            ]
+        },
+        {
+            "name": "前门",
+            "longitude": 116.397937,
+            "latitude": 39.900192,
+            "is_transfer": true,
+            "belong_lines": [
+                "8号线",
+                "2号线"
+            ]
+        },
+        {
+            "name": "和平门",
+            "longitude": 116.384209,
+            "latitude": 39.900098,
+            "is_transfer": false,
+            "belong_lines": [
+                "2号线"
+            ]
+        },
+        {
+            "name": "宣武门",
+            "longitude": 116.374314,
+            "latitude": 39.899765,
+            "is_transfer": true,
+            "belong_lines": [
+                "2号线",
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "长椿街",
+            "longitude": 116.363355,
+            "latitude": 39.899433,
+            "is_transfer": false,
+            "belong_lines": [
+                "2号线"
+            ]
+        },
+        {
+            "name": "阜成门",
+            "longitude": 116.356009,
+            "latitude": 39.923686,
+            "is_transfer": false,
+            "belong_lines": [
+                "2号线"
+            ]
+        },
+        {
+            "name": "车公庄",
+            "longitude": 116.354357,
+            "latitude": 39.932397,
+            "is_transfer": true,
+            "belong_lines": [
+                "6号线",
+                "2号线"
+            ]
+        },
+        {
+            "name": "西直门",
+            "longitude": 116.355426,
+            "latitude": 39.940474,
+            "is_transfer": true,
+            "belong_lines": [
+                "2号线",
+                "4号线大兴线",
+                "13号线"
+            ]
+        },
+        {
+            "name": "工人体育场",
+            "longitude": 116.450448,
+            "latitude": 39.934058,
+            "is_transfer": true,
+            "belong_lines": [
+                "3号线",
+                "17号线北段"
+            ]
+        },
+        {
+            "name": "团结湖",
+            "longitude": 116.460186,
+            "latitude": 39.933734,
+            "is_transfer": true,
+            "belong_lines": [
+                "3号线",
+                "10号线"
+            ]
+        },
+        {
+            "name": "北京南站",
+            "longitude": 116.378963,
+            "latitude": 39.865029,
+            "is_transfer": true,
+            "belong_lines": [
+                "14号线",
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "陶然亭",
+            "longitude": 116.374383,
+            "latitude": 39.87847,
+            "is_transfer": false,
+            "belong_lines": [
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "菜市口",
+            "longitude": 116.374425,
+            "latitude": 39.889296,
+            "is_transfer": true,
+            "belong_lines": [
+                "4号线大兴线",
+                "7号线"
+            ]
+        },
+        {
+            "name": "灵境胡同",
+            "longitude": 116.373746,
+            "latitude": 39.915912,
+            "is_transfer": false,
+            "belong_lines": [
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "西四",
+            "longitude": 116.373332,
+            "latitude": 39.924206,
+            "is_transfer": false,
+            "belong_lines": [
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "平安里",
+            "longitude": 116.372883,
+            "latitude": 39.933949,
+            "is_transfer": true,
+            "belong_lines": [
+                "6号线",
+                "19号线",
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "新街口",
+            "longitude": 116.367742,
+            "latitude": 39.940667,
+            "is_transfer": false,
+            "belong_lines": [
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "动物园",
+            "longitude": 116.339031,
+            "latitude": 39.93825,
+            "is_transfer": false,
+            "belong_lines": [
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "国家图书馆",
+            "longitude": 116.32519,
+            "latitude": 39.943114,
+            "is_transfer": true,
+            "belong_lines": [
+                "16号线",
+                "9号线",
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "魏公村",
+            "longitude": 116.32322,
+            "latitude": 39.957904,
+            "is_transfer": false,
+            "belong_lines": [
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "人民大学",
+            "longitude": 116.321367,
+            "latitude": 39.966956,
+            "is_transfer": true,
+            "belong_lines": [
+                "12号线",
+                "4号线大兴线"
+            ]
+        },
+        {
+            "name": "海淀黄庄",
+            "longitude": 116.317564,
+            "latitude": 39.975996,
+            "is_transfer": true,
+            "belong_lines": [
+                "4号线大兴线",
+                "10号线"
+            ]
+        },
+        {
+            "name": "蒲黄榆",
+            "longitude": 116.423087,
+            "latitude": 39.865584,
+            "is_transfer": true,
+            "belong_lines": [
+                "14号线",
+                "5号线"
+            ]
+        },
+        {
+            "name": "天坛东门",
+            "longitude": 116.420833,
+            "latitude": 39.882558,
+            "is_transfer": false,
+            "belong_lines": [
+                "5号线"
+            ]
+        },
+        {
+            "name": "磁器口",
+            "longitude": 116.41994,
+            "latitude": 39.893172,
+            "is_transfer": true,
+            "belong_lines": [
+                "7号线",
+                "5号线"
+            ]
+        },
+        {
+            "name": "灯市口",
+            "longitude": 116.417783,
+            "latitude": 39.917113,
+            "is_transfer": false,
+            "belong_lines": [
+                "5号线"
+            ]
+        },
+        {
+            "name": "东四",
+            "longitude": 116.417493,
+            "latitude": 39.92437,
+            "is_transfer": true,
+            "belong_lines": [
+                "6号线",
+                "5号线"
+            ]
+        },
+        {
+            "name": "张自忠路",
+            "longitude": 116.417156,
+            "latitude": 39.933592,
+            "is_transfer": false,
+            "belong_lines": [
+                "5号线"
+            ]
+        },
+        {
+            "name": "北新桥",
+            "longitude": 116.416884,
+            "latitude": 39.940782,
+            "is_transfer": true,
+            "belong_lines": [
+                "首都机场线",
+                "5号线"
+            ]
+        },
+        {
+            "name": "和平里北街",
+            "longitude": 116.418504,
+            "latitude": 39.958734,
+            "is_transfer": false,
+            "belong_lines": [
+                "5号线"
+            ]
+        },
+        {
+            "name": "和平西桥",
+            "longitude": 116.41797,
+            "latitude": 39.968258,
+            "is_transfer": true,
+            "belong_lines": [
+                "12号线",
+                "5号线"
+            ]
+        },
+        {
+            "name": "呼家楼",
+            "longitude": 116.461618,
+            "latitude": 39.923337,
+            "is_transfer": true,
+            "belong_lines": [
+                "6号线",
+                "10号线"
+            ]
+        },
+        {
+            "name": "东大桥",
+            "longitude": 116.451657,
+            "latitude": 39.923054,
+            "is_transfer": false,
+            "belong_lines": [
+                "6号线"
+            ]
+        },
+        {
+            "name": "南锣鼓巷",
+            "longitude": 116.404192,
+            "latitude": 39.933848,
+            "is_transfer": true,
+            "belong_lines": [
+                "6号线",
+                "8号线"
+            ]
+        },
+        {
+            "name": "北海北",
+            "longitude": 116.386829,
+            "latitude": 39.933247,
+            "is_transfer": false,
+            "belong_lines": [
+                "6号线"
+            ]
+        },
+        {
+            "name": "车公庄西",
+            "longitude": 116.344082,
+            "latitude": 39.932466,
+            "is_transfer": false,
+            "belong_lines": [
+                "6号线"
+            ]
+        },
+        {
+            "name": "二里沟",
+            "longitude": 116.333701,
+            "latitude": 39.93241,
+            "is_transfer": true,
+            "belong_lines": [
+                "6号线",
+                "16号线"
+            ]
+        },
+        {
+            "name": "白石桥南",
+            "longitude": 116.32568,
+            "latitude": 39.933022,
+            "is_transfer": true,
+            "belong_lines": [
+                "6号线",
+                "9号线"
+            ]
+        },
+        {
+            "name": "花园桥",
+            "longitude": 116.310683,
+            "latitude": 39.93234,
+            "is_transfer": false,
+            "belong_lines": [
+                "6号线"
+            ]
+        },
+        {
+            "name": "广渠门外",
+            "longitude": 116.448998,
+            "latitude": 39.893648,
+            "is_transfer": false,
+            "belong_lines": [
+                "7号线"
+            ]
+        },
+        {
+            "name": "广渠门内",
+            "longitude": 116.433877,
+            "latitude": 39.893673,
+            "is_transfer": false,
+            "belong_lines": [
+                "7号线"
+            ]
+        },
+        {
+            "name": "桥湾",
+            "longitude": 116.408464,
+            "latitude": 39.892725,
+            "is_transfer": false,
+            "belong_lines": [
+                "7号线"
+            ]
+        },
+        {
+            "name": "珠市口",
+            "longitude": 116.398372,
+            "latitude": 39.891334,
+            "is_transfer": true,
+            "belong_lines": [
+                "8号线",
+                "7号线"
+            ]
+        },
+        {
+            "name": "虎坊桥",
+            "longitude": 116.384596,
+            "latitude": 39.889486,
+            "is_transfer": false,
+            "belong_lines": [
+                "7号线"
+            ]
+        },
+        {
+            "name": "广安门内",
+            "longitude": 116.358239,
+            "latitude": 39.889418,
+            "is_transfer": false,
+            "belong_lines": [
+                "7号线"
+            ]
+        },
+        {
+            "name": "达官营",
+            "longitude": 116.335608,
+            "latitude": 39.889898,
+            "is_transfer": true,
+            "belong_lines": [
+                "16号线",
+                "7号线"
+            ]
+        },
+        {
+            "name": "湾子",
+            "longitude": 116.327753,
+            "latitude": 39.889954,
+            "is_transfer": false,
+            "belong_lines": [
+                "7号线"
+            ]
+        },
+        {
+            "name": "北京西站",
+            "longitude": 116.321218,
+            "latitude": 39.894706,
+            "is_transfer": true,
+            "belong_lines": [
+                "9号线",
+                "7号线"
+            ]
+        },
+        {
+            "name": "永定门外",
+            "longitude": 116.399369,
+            "latitude": 39.867435,
+            "is_transfer": true,
+            "belong_lines": [
+                "8号线",
+                "14号线"
+            ]
+        },
+        {
+            "name": "天桥",
+            "longitude": 116.398712,
+            "latitude": 39.88192,
+            "is_transfer": false,
+            "belong_lines": [
+                "8号线"
+            ]
+        },
+        {
+            "name": "金鱼胡同",
+            "longitude": 116.411178,
+            "latitude": 39.915387,
+            "is_transfer": false,
+            "belong_lines": [
+                "8号线"
+            ]
+        },
+        {
+            "name": "中国美术馆",
+            "longitude": 116.410803,
+            "latitude": 39.923705,
+            "is_transfer": false,
+            "belong_lines": [
+                "8号线"
+            ]
+        },
+        {
+            "name": "什刹海",
+            "longitude": 116.396219,
+            "latitude": 39.937583,
+            "is_transfer": false,
+            "belong_lines": [
+                "8号线"
+            ]
+        },
+        {
+            "name": "安德里北街",
+            "longitude": 116.395145,
+            "latitude": 39.957227,
+            "is_transfer": false,
+            "belong_lines": [
+                "8号线"
+            ]
+        },
+        {
+            "name": "安华桥",
+            "longitude": 116.394159,
+            "latitude": 39.968653,
+            "is_transfer": true,
+            "belong_lines": [
+                "8号线",
+                "12号线"
+            ]
+        },
+        {
+            "name": "六里桥东",
+            "longitude": 116.315142,
+            "latitude": 39.886886,
+            "is_transfer": false,
+            "belong_lines": [
+                "9号线"
+            ]
+        },
+        {
+            "name": "白堆子",
+            "longitude": 116.325762,
+            "latitude": 39.923818,
+            "is_transfer": false,
+            "belong_lines": [
+                "9号线"
+            ]
+        },
+        {
+            "name": "知春里",
+            "longitude": 116.328709,
+            "latitude": 39.976334,
+            "is_transfer": false,
+            "belong_lines": [
+                "10号线"
+            ]
+        },
+        {
+            "name": "知春路",
+            "longitude": 116.33996,
+            "latitude": 39.976476,
+            "is_transfer": true,
+            "belong_lines": [
+                "10号线",
+                "13号线"
+            ]
+        },
+        {
+            "name": "西土城",
+            "longitude": 116.354314,
+            "latitude": 39.976372,
+            "is_transfer": true,
+            "belong_lines": [
+                "昌平线",
+                "10号线"
+            ]
+        },
+        {
+            "name": "太阳宫",
+            "longitude": 116.448317,
+            "latitude": 39.973757,
+            "is_transfer": true,
+            "belong_lines": [
+                "17号线北段",
+                "10号线"
+            ]
+        },
+        {
+            "name": "三元桥",
+            "longitude": 116.456997,
+            "latitude": 39.961508,
+            "is_transfer": true,
+            "belong_lines": [
+                "首都机场线",
+                "12号线",
+                "10号线"
+            ]
+        },
+        {
+            "name": "亮马桥",
+            "longitude": 116.461794,
+            "latitude": 39.949415,
+            "is_transfer": false,
+            "belong_lines": [
+                "10号线"
+            ]
+        },
+        {
+            "name": "农业展览馆",
+            "longitude": 116.461724,
+            "latitude": 39.941344,
+            "is_transfer": false,
+            "belong_lines": [
+                "10号线"
+            ]
+        },
+        {
+            "name": "金台夕照",
+            "longitude": 116.461743,
+            "latitude": 39.916838,
+            "is_transfer": false,
+            "belong_lines": [
+                "10号线"
+            ]
+        },
+        {
+            "name": "劲松",
+            "longitude": 116.461325,
+            "latitude": 39.884387,
+            "is_transfer": false,
+            "belong_lines": [
+                "10号线"
+            ]
+        },
+        {
+            "name": "潘家园",
+            "longitude": 116.460926,
+            "latitude": 39.875387,
+            "is_transfer": false,
+            "belong_lines": [
+                "10号线"
+            ]
+        },
+        {
+            "name": "十里河",
+            "longitude": 116.458103,
+            "latitude": 39.866135,
+            "is_transfer": true,
+            "belong_lines": [
+                "17号线",
+                "14号线",
+                "10号线"
+            ]
+        },
+        {
+            "name": "莲花桥",
+            "longitude": 116.310347,
+            "latitude": 39.897867,
+            "is_transfer": false,
+            "belong_lines": [
+                "10号线"
+            ]
+        },
+        {
+            "name": "西坝河",
+            "longitude": 116.44211,
+            "latitude": 39.965798,
+            "is_transfer": true,
+            "belong_lines": [
+                "12号线",
+                "17号线北段"
+            ]
+        },
+        {
+            "name": "光熙门",
+            "longitude": 116.431761,
+            "latitude": 39.968337,
+            "is_transfer": true,
+            "belong_lines": [
+                "12号线",
+                "13号线"
+            ]
+        },
+        {
+            "name": "安贞桥",
+            "longitude": 116.407219,
+            "latitude": 39.968912,
+            "is_transfer": false,
+            "belong_lines": [
+                "12号线"
+            ]
+        },
+        {
+            "name": "马甸桥",
+            "longitude": 116.382214,
+            "latitude": 39.968261,
+            "is_transfer": false,
+            "belong_lines": [
+                "12号线"
+            ]
+        },
+        {
+            "name": "北太平庄",
+            "longitude": 116.370037,
+            "latitude": 39.967882,
+            "is_transfer": true,
+            "belong_lines": [
+                "12号线",
+                "19号线"
+            ]
+        },
+        {
+            "name": "蓟门桥",
+            "longitude": 116.35597,
+            "latitude": 39.967747,
+            "is_transfer": true,
+            "belong_lines": [
+                "昌平线",
+                "12号线"
+            ]
+        },
+        {
+            "name": "大钟寺",
+            "longitude": 116.345139,
+            "latitude": 39.966612,
+            "is_transfer": true,
+            "belong_lines": [
+                "12号线",
+                "13号线"
+            ]
+        },
+        {
+            "name": "柳芳",
+            "longitude": 116.432728,
+            "latitude": 39.958157,
+            "is_transfer": false,
+            "belong_lines": [
+                "13号线"
+            ]
+        },
+        {
+            "name": "方庄",
+            "longitude": 116.440244,
+            "latitude": 39.865864,
+            "is_transfer": false,
+            "belong_lines": [
+                "14号线"
+            ]
+        },
+        {
+            "name": "景泰",
+            "longitude": 116.411026,
+            "latitude": 39.86525,
+            "is_transfer": false,
+            "belong_lines": [
+                "14号线"
+            ]
+        },
+        {
+            "name": "景风门",
+            "longitude": 116.366033,
+            "latitude": 39.862631,
+            "is_transfer": true,
+            "belong_lines": [
+                "14号线",
+                "19号线"
+            ]
+        },
+        {
+            "name": "菜户营",
+            "longitude": 116.342444,
+            "latitude": 39.867627,
+            "is_transfer": false,
+            "belong_lines": [
+                "14号线"
+            ]
+        },
+        {
+            "name": "丽泽商务区",
+            "longitude": 116.331268,
+            "latitude": 39.867718,
+            "is_transfer": true,
+            "belong_lines": [
+                "14号线",
+                "16号线"
+            ]
+        },
+        {
+            "name": "东管头",
+            "longitude": 116.321197,
+            "latitude": 39.86757,
+            "is_transfer": false,
+            "belong_lines": [
+                "14号线"
+            ]
+        },
+        {
+            "name": "万寿寺",
+            "longitude": 116.309904,
+            "latitude": 39.947773,
+            "is_transfer": false,
+            "belong_lines": [
+                "16号线"
+            ]
+        },
+        {
+            "name": "甘家口",
+            "longitude": 116.334534,
+            "latitude": 39.923392,
+            "is_transfer": false,
+            "belong_lines": [
+                "16号线"
+            ]
+        },
+        {
+            "name": "玉渊潭东门",
+            "longitude": 116.334546,
+            "latitude": 39.914042,
+            "is_transfer": false,
+            "belong_lines": [
+                "16号线"
+            ]
+        },
+        {
+            "name": "红莲南路",
+            "longitude": 116.336668,
+            "latitude": 39.877533,
+            "is_transfer": false,
+            "belong_lines": [
+                "16号线"
+            ]
+        },
+        {
+            "name": "左家庄",
+            "longitude": 116.44272,
+            "latitude": 39.949968,
+            "is_transfer": false,
+            "belong_lines": [
+                "17号线北段"
+            ]
+        },
+        {
+            "name": "牛街",
+            "longitude": 116.363481,
+            "latitude": 39.889605,
+            "is_transfer": false,
+            "belong_lines": [
+                "19号线"
+            ]
+        },
+        {
+            "name": "太平桥",
+            "longitude": 116.363245,
+            "latitude": 39.909755,
+            "is_transfer": false,
+            "belong_lines": [
+                "19号线"
+            ]
+        }
+    ]
+}
