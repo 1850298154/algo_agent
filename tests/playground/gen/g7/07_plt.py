@@ -245,8 +245,8 @@ def main():
     import pathlib
     dir = pathlib.Path(__file__).parent
     SCHEMA_PATH = dir / "metro-draw-schema.json"
-    DATA_PATH = dir / "100" / "metro-draw-data-90%.json"
     DATA_PATH = dir / "metro-draw-data.json"
+    DATA_PATH = dir / "100" / "metro-draw-data-80%.json"
     PERCENTILES = [100, 90, 80, 70, 60, 50, 40, 30]
     
     try:
