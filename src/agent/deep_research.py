@@ -68,7 +68,7 @@ def user_query(user_input):
         global_logger.info(
             f"""第{len(messages) // 2}轮大模型输出信息： 
 \n\nassistant_output.content:: \n\n {pprint.pformat(assistant_output.content)}
-\n\nassistant_output.tool_calls::\n\n {pprint.pformat(assistant_output.tool_calls.model_dump())}\n"""
+\n\nassistant_output.tool_calls::\n\n {pprint.pformat([toolcall for toolcall in assistant_output.tool_calls] if assistant_output.tool_calls else [])}\n"""
         )
     global_logger.info(f"最终答案： {assistant_output.content}")
 
@@ -78,20 +78,21 @@ if __name__ == "__main__":
 你所在的工作路径下面，可以用python工具  ExecutePythonCodeTool  写一段包含读取json文件的代码，读取一下文件
 例如：“
 import json
-with open('schema.json', 'r', encoding='utf-8') as file:
+with open('xx_schema.json', 'r', encoding='utf-8') as file:
     schema = json.load(file)
     print(json.dumps(schema, indent=2))
 ”，读取以下文件：
-1. **schema.json** - 完整的数据结构Schema定义
+1. **{schema}** - 完整的数据结构Schema定义
 2. **{data_file}** 场景数据。
 3. 不要输出文件内容，因为数量会很大，只需按照schema.json中定义的字段读取部分内容进行分析。
 """.format(
-        data_file="deep_research_scene_data.json"
+        schema=["metro-draw-schema.json", "route_schema.json"],
+        data_file=["metro-draw-data-80%.json", "route_data.json"]
         ) 
     # 要把数据放到工作路径下，  同时修改工作路径的代码
     
-    user_query_prompt = f"""
-"""
+    user_query_prompt = f"""你的起点经纬度是：{[(116.269956+116.511821)/2,
+(39.834910+40.020430)/2]}，你需要完整route_data.json文件中的所有路由起点和终点送货，类似旅行商遍历完所有路由，不过需要先拿货，在送货。要尽可能的乘坐地铁，可以节约能量。实在无法乘坐地铁则需要步行。必须详细的输出完整的路径信息，你可以尝试任何算法，尝试不同的方法。"""
     
     tool_use_prompt = """
 1. 必须使用python工具进行算法编码输出得到计算答案，不能直接给出答案。

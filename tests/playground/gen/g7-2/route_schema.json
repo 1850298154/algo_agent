@@ -1,0 +1,77 @@
+{
+    "$defs": {
+        "Point": {
+            "description": "经纬度点模型",
+            "properties": {
+                "longitude": {
+                    "description": "经度",
+                    "maximum": 116.511821,
+                    "minimum": 116.269956,
+                    "title": "Longitude",
+                    "type": "number"
+                },
+                "latitude": {
+                    "description": "纬度",
+                    "maximum": 40.02043,
+                    "minimum": 39.83491,
+                    "title": "Latitude",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "longitude",
+                "latitude"
+            ],
+            "title": "Point",
+            "type": "object"
+        },
+        "Route": {
+            "description": "路线模型（包含起点和终点）",
+            "properties": {
+                "start_point": {
+                    "$ref": "#/$defs/Point",
+                    "description": "起点经纬度"
+                },
+                "end_point": {
+                    "$ref": "#/$defs/Point",
+                    "description": "终点经纬度"
+                }
+            },
+            "required": [
+                "start_point",
+                "end_point"
+            ],
+            "title": "Route",
+            "type": "object"
+        }
+    },
+    "description": "批量路线数据模型",
+    "properties": {
+        "total": {
+            "description": "数据总数",
+            "title": "Total",
+            "type": "integer"
+        },
+        "area_info": {
+            "additionalProperties": true,
+            "description": "区域信息",
+            "title": "Area Info",
+            "type": "object"
+        },
+        "routes": {
+            "description": "路线列表",
+            "items": {
+                "$ref": "#/$defs/Route"
+            },
+            "title": "Routes",
+            "type": "array"
+        }
+    },
+    "required": [
+        "total",
+        "area_info",
+        "routes"
+    ],
+    "title": "RouteData",
+    "type": "object"
+}
