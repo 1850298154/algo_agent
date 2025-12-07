@@ -19,11 +19,16 @@
     // },
     "[python]": {
         "editor.formatOnSaveMode": "file",
-        "editor.formatOnSave": false,
         "editor.defaultFormatter": "ms-python.black-formatter",
-        "editor.formatOnType": false,
-        "editor.rulers": [80]
+        "editor.rulers": [80],
+        "editor.formatOnSave": false,    // 核心：关闭保存时格式化（重命名后保存不再触发）
+        "editor.formatOnType": false,    // 关闭输入时格式化（重命名输入过程不触发）
+        "editor.formatOnPaste": false,   // 可选：关闭粘贴时格式化
+        // 禁用 Python 插件的自动格式化触发（兜底）
+        "python.formatting.autoFormat": false        
     },
-    "python.analysis.autoImportCompletions": true
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.diagnosticMode": "openFilesOnly",  // 仅分析打开的文件
+
     
 }

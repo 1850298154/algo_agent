@@ -5,6 +5,7 @@ import inspect
 
 from src.agent.tool import base_tool
 from src.runtime import subprocess_python_executor
+from src.runtime import subthread_python_executor
 from src.runtime import workspace
 
 from src.utils import global_logger
@@ -40,7 +41,7 @@ class ExecutePythonCodeTool(base_tool.BaseTool):
     def run(self) -> str:
         execution_context: Optional[Dict[str, Any]] = workspace.get_arg_globals()
         global_logger.info(f"执行Python代码片段：{pprint.pformat(self.python_code_snippet)}")
-        exec_result: subprocess_python_executor.ExecutionResult =  subprocess_python_executor.run_structured_in_subprocess(
+        exec_result: subthread_python_executor.ExecutionResult =  subthread_python_executor.run_structured_in_thread(
             command=self.python_code_snippet, 
             _globals=execution_context,
             timeout=self.timeout
