@@ -103,7 +103,14 @@ except ZeroDivisionError as e:
     print('repr',repr(e))
     print('type',type(e).__name__)
     print("处理完毕")
-
+r"""
+ZeroDivisionError: division by zero
+处理
+str division by zero
+repr ZeroDivisionError('division by zero')
+type ZeroDivisionError
+处理完毕
+"""
 def test_try_variable():
     try:
         print("try 块开始执行")

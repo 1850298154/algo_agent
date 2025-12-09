@@ -290,7 +290,7 @@ sub_folder_for_logs = create_folder.get_or_create_subfolder(gen_time_path_from_p
 
 traceable_logger_file_name = os.path.join(sub_folder_for_logs, "trace.log")
 traceable = lambda func: log_function(
-    logger_name="all.trace",
+    logger_name="root.all.trace",
     log_file=traceable_logger_file_name,
     exclude_args=["password", "token", "secret"],
     level=logging.DEBUG
@@ -298,11 +298,11 @@ traceable = lambda func: log_function(
 
 global_logger_file_name = os.path.join(sub_folder_for_logs, "print.log")
 global_logger = setup_logger(
-    logger_name="all.print", log_file=global_logger_file_name, level=logging.DEBUG)
+    logger_name="root.all.print", log_file=global_logger_file_name, level=logging.DEBUG)
 
-# all_logger_file_name = os.path.join(sub_folder_for_logs, "all.log")
-# all_logger = setup_logger(
-#     logger_name="all", log_file=all_logger_file_name, level=logging.DEBUG)
+all_logger_file_name = os.path.join(sub_folder_for_logs, "all.log")
+all_logger = setup_logger(
+    logger_name="root.all", log_file=all_logger_file_name, level=logging.DEBUG)
 
 
 

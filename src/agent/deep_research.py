@@ -68,7 +68,7 @@ def user_query(user_input):
         global_logger.info(
             f"""第{len(messages) // 2}轮大模型输出信息： 
 \n\nassistant_output.content:: \n\n {pprint.pformat(assistant_output.content)}
-\n\nassistant_output.tool_calls::\n\n {pprint.pformat([toolcall for toolcall in assistant_output.tool_calls] if assistant_output.tool_calls else [])}\n"""
+\n\nassistant_output.tool_calls::\n\n {pprint.pformat([toolcall.model_dump() for toolcall in assistant_output.tool_calls] if assistant_output.tool_calls else [])}\n"""
         )
     global_logger.info(f"最终答案： {assistant_output.content}")
 
@@ -82,9 +82,8 @@ with open('xx_schema.json', 'r', encoding='utf-8') as file:
     schema = json.load(file)
     print(json.dumps(schema, indent=2))
 ”，读取以下文件：
-1. **{schema}** - 完整的数据结构Schema定义
-2. **{data_file}** 场景数据。
-3. 不要输出文件内容，因为数量会很大，只需按照schema.json中定义的字段读取部分内容进行分析。
+1. **{schema}** - 完整的数据结构Schema定义，schema数据需要完整输出，知道完整的数据结构。
+2. **{data_file}** 是具体问题需要计算的数据。data数据文件内容，因为数量会很大，只需按照 xx schema.json 中定义的字段分析计算和画图，如果需要print输出，需要控制输出行数和数量。
 """.format(
         schema=["metro-draw-schema.json", "route_schema.json"],
         data_file=["metro-draw-data-80%.json", "route_data.json"]
