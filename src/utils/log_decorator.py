@@ -31,7 +31,7 @@ def setup_logger(logger_name: str, log_file: Optional[str] = None, level: int = 
 
     logger = logging.getLogger(logger_name)
     logger.setLevel(level)
-    logger.propagate = False
+    logger.propagate = True
 
     # fmt = (
     #     "[%(asctime)s] [%(process)d:%(thread)d] [%(name)s] [%(levelname)s] "
@@ -288,6 +288,11 @@ def log_function(
 sub_folder_for_logs = create_folder.get_or_create_subfolder(gen_time_path_from_project="logs")
 # sub_folder_for_logs = "logs"
 
+
+all_logger_file_name = os.path.join(sub_folder_for_logs, "all.log")
+all_logger = setup_logger(
+    logger_name="root.all", log_file=all_logger_file_name, level=logging.DEBUG)
+
 traceable_logger_file_name = os.path.join(sub_folder_for_logs, "trace.log")
 traceable = lambda func: log_function(
     logger_name="root.all.trace",
@@ -299,11 +304,6 @@ traceable = lambda func: log_function(
 global_logger_file_name = os.path.join(sub_folder_for_logs, "print.log")
 global_logger = setup_logger(
     logger_name="root.all.print", log_file=global_logger_file_name, level=logging.DEBUG)
-
-all_logger_file_name = os.path.join(sub_folder_for_logs, "all.log")
-all_logger = setup_logger(
-    logger_name="root.all", log_file=all_logger_file_name, level=logging.DEBUG)
-
 
 
 # test

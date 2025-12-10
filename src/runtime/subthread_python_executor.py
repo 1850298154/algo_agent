@@ -18,7 +18,6 @@ def _worker_with_buffer(
     result_container: list[ExecutionResult],
 ) -> None:
     """Execute a command in a thread with output captured via buffer."""
-    cwd.create_cwd('./wsm/2/g7-2')
 
     class _BufferWriter:
         def __init__(self, buffer: list[str]):
@@ -31,13 +30,10 @@ def _worker_with_buffer(
         def flush(self):
             pass
 
-    old_stdout = sys.stdout
-    old_stderr = sys.stderr
-
-    sys.stdout = _BufferWriter(stdout_buffer)
-    sys.stderr = sys.stdout
     try:
-        exec(command, _globals, _locals)
+        with cwd.ChangeDirectory('./wsm/3/g8-2'):
+            with cwd.Change_STDOUT_STDERR(_BufferWriter(stdout_buffer)):
+                exec(command, _globals, _locals)
         global_logger.info("---------- 2.1.1 子线程正常结束：子线程构建成功的 ExecutionResult")
         res = ExecutionResult(
             arg_command=command,
@@ -85,8 +81,6 @@ def _worker_with_buffer(
         )
     finally:
         result_container.append(res)
-        sys.stdout = old_stdout
-        sys.stderr = old_stderr
 
 @traceable
 def run_structured_in_thread(

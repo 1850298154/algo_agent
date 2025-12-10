@@ -1,0 +1,53 @@
+{
+    "$defs": {
+        "OpenStatusEnum": {
+            "description": "景区开放状态枚举",
+            "enum": [
+                "open",
+                "close"
+            ],
+            "title": "OpenStatusEnum",
+            "type": "string"
+        },
+        "StarRatingEnum": {
+            "description": "景区星级枚举",
+            "enum": [
+                "3A",
+                "4A",
+                "5A"
+            ],
+            "title": "StarRatingEnum",
+            "type": "string"
+        }
+    },
+    "description": "景区信息数据模型（枚举+经纬度拆分）",
+    "properties": {
+        "name": {
+            "title": "Name",
+            "type": "string"
+        },
+        "star_rating": {
+            "$ref": "#/$defs/StarRatingEnum"
+        },
+        "open_status": {
+            "$ref": "#/$defs/OpenStatusEnum"
+        },
+        "longitude": {
+            "title": "Longitude",
+            "type": "number"
+        },
+        "latitude": {
+            "title": "Latitude",
+            "type": "number"
+        }
+    },
+    "required": [
+        "name",
+        "star_rating",
+        "open_status",
+        "longitude",
+        "latitude"
+    ],
+    "title": "ScenicSpot",
+    "type": "object"
+}
