@@ -6,6 +6,7 @@ import traceback
 from typing import Any, Dict, Optional
 from src.runtime.schemas import ExecutionStatus, ExecutionResult
 from src.runtime import cwd
+from src.runtime.before_thread import plt_back_chinese
 from src.utils import global_logger, traceable
 
 
@@ -31,7 +32,7 @@ def _worker_with_buffer(
             pass
 
     try:
-        with cwd.ChangeDirectory('./wsm/3/g8-2'):
+        with cwd.ChangeDirectory('./wsm/3/g8-3'):
             with cwd.Change_STDOUT_STDERR(_BufferWriter(stdout_buffer)):
                 exec(command, _globals, _locals)
         global_logger.info("---------- 2.1.1 子线程正常结束：子线程构建成功的 ExecutionResult")
@@ -161,9 +162,22 @@ try:
 except Exception as e:
     print(f'Error analyzing schema: {e}')    
     """
-    result = run_structured_in_thread(test_code, {},  timeout=10)
-    print('----------- 子线程执行结果 -----------')
-    print(result)
-    result = run_structured_in_thread("1/0", {},  timeout=10)
+    # result = run_structured_in_thread(test_code, {},  timeout=10)
+    # print('----------- 子线程执行结果 -----------')
+    # print(result)
+    # result = run_structured_in_thread("1/0", {},  timeout=10)
+    # print('----------- 子线程执行结果 -----------')
+    # print(result)
+    plt_code = """
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(4, 3))
+plt.title("测试中文显示")      # 如果中文字体没问题，不会出现 Glyph 警告
+plt.plot([1, 2, 3], [1, 4, 9])
+plt.savefig("test_output.png")  # 如果 GUI 问题解决，不会出现子线程警告
+plt.close()
+print("子线程绘图完成并成功保存 test_output.png")
+"""
+    result = run_structured_in_thread(plt_code, {},  timeout=10)
     print('----------- 子线程执行结果 -----------')
     print(result)
