@@ -1,0 +1,122 @@
+[
+    {
+        "name": "北京市宣武艺园",
+        "star_rating": "3A",
+        "open_status": "open",
+        "longitude": 116.360433,
+        "latitude": 39.895624,
+        "suggested_play_hours": 1.0
+    },
+    {
+        "name": "北京老舍茶馆",
+        "star_rating": "3A",
+        "open_status": "open",
+        "longitude": 116.393321,
+        "latitude": 39.899633,
+        "suggested_play_hours": 1.5
+    },
+    {
+        "name": "中国地质博物馆",
+        "star_rating": "3A",
+        "open_status": "open",
+        "longitude": 116.371739,
+        "latitude": 39.923387,
+        "suggested_play_hours": 2.0
+    },
+    {
+        "name": "北京市大栅栏商业街区",
+        "star_rating": "3A",
+        "open_status": "open",
+        "longitude": 116.396282,
+        "latitude": 39.89699,
+        "suggested_play_hours": 2.5
+    },
+    {
+        "name": "恭王府",
+        "star_rating": "5A",
+        "open_status": "open",
+        "longitude": 116.384928,
+        "latitude": 39.938176,
+        "suggested_play_hours": 3.0
+    },
+    {
+        "name": "景山公园",
+        "star_rating": "4A",
+        "open_status": "open",
+        "longitude": 116.399168,
+        "latitude": 39.925824,
+        "suggested_play_hours": 1.0
+    },
+    {
+        "name": "北京古钱币展览馆",
+        "star_rating": "3A",
+        "open_status": "close",
+        "longitude": 116.379005,
+        "latitude": 39.949386,
+        "suggested_play_hours": 1.5
+    },
+    {
+        "name": "北京湖广会馆大戏楼",
+        "star_rating": "3A",
+        "open_status": "close",
+        "longitude": 116.384032,
+        "latitude": 39.8889,
+        "suggested_play_hours": 1.0
+    },
+    {
+        "name": "北京月坛公园",
+        "star_rating": "3A",
+        "open_status": "open",
+        "longitude": 116.352206,
+        "latitude": 39.916423,
+        "suggested_play_hours": 1.0
+    },
+    {
+        "name": "宋庆龄故居",
+        "star_rating": "3A",
+        "open_status": "open",
+        "longitude": 116.383068,
+        "latitude": 39.945538,
+        "suggested_play_hours": 1.5
+    },
+    {
+        "name": "北京市宣南文化博物馆",
+        "star_rating": "3A",
+        "open_status": "close",
+        "longitude": 116.363741,
+        "latitude": 39.892395,
+        "suggested_play_hours": 1.0
+    },
+    {
+        "name": "陶然亭公园",
+        "star_rating": "4A",
+        "open_status": "open",
+        "longitude": 116.38596,
+        "latitude": 39.872721,
+        "suggested_play_hours": 2.0
+    },
+    {
+        "name": "北京天文馆",
+        "star_rating": "4A",
+        "open_status": "open",
+        "longitude": 116.336812,
+        "latitude": 39.937285,
+        "suggested_play_hours": 2.5
+    },
+    {
+        "name": "前门大街景区",
+        "star_rating": "3A",
+        "open_status": "open",
+        "longitude": 116.398843,
+        "latitude": 39.891348,
+        "suggested_play_hours": 2.0
+    },
+    {
+        "name": "北京动物园",
+        "star_rating": "4A",
+        "open_status": "open",
+        "longitude": 116.33668,
+        "latitude": 39.942117,
+        "suggested_play_hours": 4.0
+    }
+]

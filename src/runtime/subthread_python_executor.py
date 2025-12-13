@@ -32,7 +32,7 @@ def _worker_with_buffer(
             pass
 
     try:
-        with cwd.ChangeDirectory('./wsm/3/g8-3'):
+        with cwd.ChangeDirectory('./wsm/4/g9-1'):
             with cwd.Change_STDOUT_STDERR(_BufferWriter(stdout_buffer)):
                 exec(command, _globals, _locals)
         global_logger.info("---------- 2.1.1 子线程正常结束：子线程构建成功的 ExecutionResult")
