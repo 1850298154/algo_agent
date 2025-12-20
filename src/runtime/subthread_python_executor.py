@@ -9,6 +9,7 @@ from src.runtime import cwd
 from src.runtime.before_thread import plt_back_chinese
 from src.utils import global_logger, traceable
 
+work_dir = './wsm/5glm/1'
 
 def _worker_with_buffer(
     command: str,
@@ -32,7 +33,7 @@ def _worker_with_buffer(
             pass
 
     try:
-        with cwd.ChangeDirectory('./wsm/4/g9-1'):
+        with cwd.ChangeDirectory(work_dir):
             with cwd.Change_STDOUT_STDERR(_BufferWriter(stdout_buffer)):
                 exec(command, _globals, _locals)
         global_logger.info("---------- 2.1.1 子线程正常结束：子线程构建成功的 ExecutionResult")

@@ -214,3 +214,5 @@ secret.py
 
 *.log.*
 log*/
+
+*profile*/*
