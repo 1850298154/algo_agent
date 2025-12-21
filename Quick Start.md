@@ -36,8 +36,16 @@ ZHIPU_API_KEY=YOUR_API_KEY_HERE
 
 ## ▶️ 运行示例
 
+* **输入：** “去 Hacker News 首页，找到排名前三的 AI 相关新闻，并把标题和链接整理给我。”
+
+
 ```bash
-python main.py "去 Hacker News 首页，找到排名前三的 AI 相关新闻"
+uv run python tests\unit\agent\test_deep_research\test_glmv46_ai_new.py
+```
+
+* **输入：** “帮我查一下京东上 RTX 4090 显卡现在的最低价格是多少。”
+```bash
+uv run python tests\unit\agent\test_deep_research\test_glmv46_jd_hitl.py
 ```
 
 终端将输出 Agent 的思考日志（Thinking）、浏览器操作过程，以及最终结构化结果。
