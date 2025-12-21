@@ -33,10 +33,10 @@ class ExecutePythonCodeTool(base_tool.BaseTool):
         ),
         examples=["print('Hello, World!')"]
     )
-    # timeout: int = Field(
-    #     30, 
-    #     description="执行代码的最大时间（秒）。如果代码运行时间超过此值，将被终止并返回错误消息。"
-    # )
+    timeout: int = Field(
+        60*2, 
+        description="执行代码的最大时间（秒）。如果代码运行时间超过此值，将被终止并返回错误消息。"
+    )
 
     def run(self) -> str:
         execution_context: Optional[Dict[str, Any]] = workspace.get_arg_globals()
@@ -44,7 +44,7 @@ class ExecutePythonCodeTool(base_tool.BaseTool):
         exec_result: subthread_python_executor.ExecutionResult =  subthread_python_executor.run_structured_in_thread(
             command=self.python_code_snippet, 
             _globals=execution_context,
-            timeout=60*60*24,  # 最多允许一天时间运行
+            timeout=self.timeout,  # 使用定义的超时时间
         )
         workspace.append_out_globals(exec_result.arg_globals)
         return exec_result.ret_tool2llm

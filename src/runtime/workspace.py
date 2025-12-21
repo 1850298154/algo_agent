@@ -19,7 +19,7 @@ def __create_workspace() -> dict:
 
 def initialize_workspace() -> dict:
     workspace: dict = __create_workspace()
-    instance = workspace.update({'__name__': '__main__'})
+    workspace.update({'__name__': '__main__'})
     return workspace
 
 

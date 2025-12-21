@@ -29,6 +29,21 @@ Omni-ReAct：基于 ReAct 框架的任务规划与执行智能体
 - 多天景点规划：将问题建模为有时间窗与优先级的启发式调度问题，支持“夜间转移”策略以优化白天游玩时间。
 ![alt text](zfig/README/0.png)
 
+
+浏览器自动化与视觉大模型结合的 hacker news 新闻查询
+- 结合 Playwright 浏览器自动化与 GLM-4.6V 视觉大模型，实现了对 Hacker News 首页排名前三的 AI 相关新闻的查询与整理。
+- 通过截图与视觉分析，准确识别新闻标题与链接，展示了跨模态信息融合的能力。
+[ 【hacker news】 实验输出详细文档](hacker_new.md)
+![日志记录的大模型最终输出](zfig/README/image-1.png)
+
+浏览器自动化与视觉大模型结合的电商价格查询实验
+- 结合 Playwright 浏览器自动化与 GLM-4.6V 视觉大模型，实现了对京东电商网站上 RTX 4090 显卡最低价格的查询。
+- 通过人机协作方式处理登录验证，确保自动化流程的连续性
+[ 【京东电商网站上 RTX 4090 显卡】 实验输出详细文档](jd_4096.md)
+![要求登录](zfig/jd_4096/image.png)
+![显示出来具体的 RTX 4096 商品](zfig/jd_4096/image-3.png)
+![日志记录的大模型最终输出](zfig/README/image.png)
+
 如何开始
 - 查看入口脚本：main.py
 - 项目依赖与配置：参见 pyproject.toml 与项目根配置文件 .env
