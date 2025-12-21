@@ -76,10 +76,10 @@ uv run python tests\unit\agent\test_deep_research\test_glmv46_jd_hitl.py
 
 ## 🎁 可扩展方向（Bonus）
 
-[X] Human-in-the-loop 决策确认
-[] 点击前 Bounding Box 可视化调试
-[X] JSON Schema / Pydantic 结构化输出
-[] Docker 一键运行
+- [X] Human-in-the-loop 决策确认
+- [] 点击前 Bounding Box 可视化调试
+- [X] JSON Schema / Pydantic 结构化输出
+- [] Docker 一键运行
 
 ---
 
