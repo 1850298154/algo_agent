@@ -33,9 +33,8 @@ def _worker_with_buffer(
             pass
 
     try:
-        with cwd.ChangeDirectory(work_dir):
-            with cwd.Change_STDOUT_STDERR(_BufferWriter(stdout_buffer)):
-                exec(command, _globals, _locals)
+        with cwd.Change_STDOUT_STDERR(_BufferWriter(stdout_buffer)):
+            exec(command, _globals, _locals)
         global_logger.info("---------- 2.1.1 子线程正常结束：子线程构建成功的 ExecutionResult")
         res = ExecutionResult(
             arg_command=command,
@@ -99,8 +98,9 @@ def run_structured_in_thread(
         target=_worker_with_buffer,
         args=(command, _globals, _locals, timeout, stdout_buffer, result_container),
     )
-    t.start()
-    t.join(timeout)
+    with cwd.ChangeDirectory(work_dir):
+        t.start()
+        t.join(timeout)
     if t.is_alive():
         global_logger.info("---------- 1. 超时情况：由主线程构建 ExecutionResult")
         # 线程无法强制终止，只能标记为超时

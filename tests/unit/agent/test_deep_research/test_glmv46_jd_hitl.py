@@ -2,7 +2,7 @@ from src.agent.deep_research_api import user_query
 
 if __name__ == "__main__":
     p_playwright = """
-你可以调用 执行 python 代码的工具，使用 Playwright 编写各种操作，并将结果页面截图保存下来png，然后调用 model="glm-4.6v" 视觉大语言模型观察，进一步推到怎么做。比如：碰到需要京东电商网页要求用户登录的界面（通过"glm-4.6v"观察 Playwright 存储的图片），请编写代码，使用人机协作的方式，不仅要弹出浏览器让用户登录，还需要弹出弹出一个独立的桌面窗口，提示用户在浏览器中完成登录操作，登录完成后用户点击“我已登录，继续”按钮，程序才继续执行后续操作（注意需要 print 打印用户的选择， 方便自己调用 python exec 后拿到终端输出，可以判断用户的行为）。确保该桌面窗口不会因网页刷新而丢失，并且能够跨平台运行（Windows / macOS / Linux）。完成登录确认后，继续执行后续的网页操作，例如搜索商品并截图保存。 如下是参考代码：
+你可以调用 执行 python 代码的工具，使用 Playwright 编写各种操作，并将结果页面截图保存下来png，然后调用 model="glm-4.6v" 视觉大语言模型观察，进一步推到怎么做。比如：碰到需要京东电商网页要求用户登录的界面，通过"glm-4.6v"观察 Playwright 存储的图片，遇到访问限制、反爬虫机制、或者需要登录、或者需要验证码验证、或者需要滑块验证等等验证，请编写代码，使用人机协作的方式，不仅要弹出浏览器让用户登录，还需要弹出弹出一个独立的桌面窗口，提示用户在浏览器中完成登录操作，登录完成后用户点击“我已登录，继续”按钮，程序才继续执行后续操作（注意需要 print 打印用户的选择， 方便自己调用 python exec 后拿到终端输出，可以判断用户的行为）。确保该桌面窗口不会因网页刷新而丢失，并且能够跨平台运行（Windows / macOS / Linux）。完成登录确认后，继续执行后续的网页操作，例如搜索商品并截图保存。 如下是参考代码：
 """
     p_hitl = r"""
 from playwright.async_api import async_playwright, Page
@@ -177,4 +177,5 @@ print(response.choices[0].message)  # 输出例子： ChatCompletionMessage(cont
     user_input = p_playwright + p_hitl + p_glmv46 + p_concat + p_user
     from src.runtime import subthread_python_executor
     subthread_python_executor.work_dir = './wsm/5glm/5jd'
+    subthread_python_executor.work_dir = './wsm/5glm/5-2jd'
     user_query(user_input)

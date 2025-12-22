@@ -109,5 +109,19 @@ if __name__ == "__main__":
     print('----------- 子线程执行结果 -----------')
     print(result)
     
+def test_timeout_in_subthread():
+    subthread_python_executor.work_dir = "./wsm/6/1"
+    timeout_code = """
+import time
+print('开始长时间运行的任务...')
+time.sleep(120)
+print('任务完成！')
+    """
+    result = run_structured_in_thread(timeout_code, _globals={'__name__':'__main__'},  timeout=1)
+    print('----------- 子线程执行结果 -----------')
+    print(result)
 if __name__ == "__main__":
-    test_tkinter_in_subthread()
+
+    # test_tkinter_in_subthread()
+    test_timeout_in_subthread()
+    
