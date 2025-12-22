@@ -50,21 +50,24 @@ uv run python tests\unit\agent\test_deep_research\test_glmv46_jd_hitl.py
 
 终端将输出 Agent 的思考日志（Thinking）、浏览器操作过程，以及最终结构化结果。
 
+* **输入：** “帮我查一下glm-asr-nano总共有多少下载量（hgf）和多少个star（github）”
+```bash
+uv run python tests\unit\agent\test_deep_research\test_glmv46_hgf_github.py
+```
+
+终端将输出 Agent 的思考日志（Thinking）、浏览器操作过程，以及最终结构化结果。
+
 ---
 
 
 ## 🧠 功能概览
 
-* 基于 ReAct + Reflection 框架的任务规划与执行智能体（ 大语言模型 GLM-4.6  ）
+* 基于 ReAct 框架的任务规划与执行智能体（ 大语言模型 GLM-4.6  ）
 * 只有一个核心工具 python 执行器
   * 写 playtwright 脚本自动化浏览器操作
   * 调用视觉大模型解析截图内容 （GLM-4.6V， 用prompt提示）
-  * 人机交互辅助处理登录验证码
-* 多策略代码执行运行时
-  * 子进程隔离执行
-  * 子线程快速执行
-  * 直接执行
-
+  * 人机交互辅助处理登录验证码等复杂场景（ HITL ）
+* reflection 思考与自我修正
 ---
 
 ## 🛡️ 安全与工程规范
@@ -96,3 +99,4 @@ uv run python tests\unit\agent\test_deep_research\test_glmv46_jd_hitl.py
 两个实验
 - [【hacker news】 实验输出详细文档](hacker_new.md)
 - [【京东电商网站上 RTX 4090 显卡】 实验输出详细文档](jd_4096.md)
+- [【帮我查一下glm-asr-nano总共有多少下载量（hgf）和多少个star（github）】 实验输出详细文档](hgf_github.md)
