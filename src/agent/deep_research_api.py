@@ -7,18 +7,15 @@ from src.agent import llm_glm as llm
 from src.agent import action 
 from src.agent import memory 
 from src.agent import tool 
-from src.agent.tool import schema
-from src.agent.tool import python_tool 
-from src.agent.tool import todo_tool 
 
 def user_query(user_input):
     user_hint = "用户输入："
     global_logger.info(f"{user_hint} ： {user_input}\n\n")
 
     messages = memory.init_messages_with_system_prompt(user_input)
-    tools_schema_list = schema.get_tools_schema([
-        python_tool.ExecutePythonCodeTool,
-        # todo_tool.RecursivePlanTreeTodoTool,
+    tools_schema_list = tool.schema.get_tools_schema([
+        tool.python_tool.ExecutePythonCodeTool,
+        # tool.todo_tool.RecursivePlanTreeTodoTool,
         ])
 
     # 模型的第一轮调用

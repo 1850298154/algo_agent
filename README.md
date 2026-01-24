@@ -59,3 +59,17 @@ Omni-ReAct：基于 ReAct 框架的任务规划与执行智能体
 
 简短结语
 Omni-ReAct 致力于把可解释的推理-执行闭环带入现实任务规划场景，兼顾研究灵活性与运行时安全性，适合用于任务规划算法开发、LLM 工具链集成与跨模态信息融合研究。
+
+```
+system
+user 
+
+asistant ( content  +  tool_call schema 填充)
+user / tool action
+
+asistant
+user / tool action
+
+asistant
+user / tool action
+```
