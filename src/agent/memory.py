@@ -8,7 +8,7 @@ from openai.types.chat.chat_completion_message_param import (
     ChatCompletionMessageParam,
 ) 
 from src.utils import global_logger, traceable
-from src.agent.prompt import react_system_prompt
+from src.agent.system_prompt import react_system_prompt
 
 @traceable
 def init_messages_with_system_prompt(user_input: str) -> list[ChatCompletionMessageParam]:
