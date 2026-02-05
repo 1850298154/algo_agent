@@ -1,0 +1,39 @@
+Available pages for 1850298154/algo_agent:
+
+- 1 Overview
+- 2 Getting Started
+- 3 Agent Orchestration
+  - 3.1 Query Processing Loop
+  - 3.2 LLM Integration
+  - 3.3 Memory and Context Management
+  - 3.4 Action Coordination
+- 4 Tool System
+  - 4.1 BaseTool Interface
+  - 4.2 Python Code Execution Tool
+  - 4.3 Recursive Task Planning Tool
+- 5 Execution Runtime
+  - 5.1 Subprocess Execution
+  - 5.2 Subthread Execution
+  - 5.3 Direct Execution
+  - 5.4 ExecutionResult and Status Handling
+  - 5.5 Workspace State Management
+  - 5.6 Working Directory and Environment
+- 6 Observability and Logging
+  - 6.1 Logging System Architecture
+  - 6.2 Log Files and Analysis
+  - 6.3 Tracing and Performance Monitoring
+- 7 Use Cases and Examples
+  - 7.1 Emergency Response Planning Example
+  - 7.2 Data Processing and Visualization
+  - 7.3 Geographic Data Processing
+- 8 Development and Testing
+  - 8.1 Testing the Execution System
+  - 8.2 Creating New Tools
+  - 8.3 Database Setup for Examples
+- 9 Architecture Reference
+  - 9.1 ExecutionResult Schema Reference
+  - 9.2 Task Tree Schema Reference
+  - 9.3 Tool Schema Format
+- 10 Troubleshooting
+  - 10.1 Common Execution Errors
+  - 10.2 Tool Call Errors
