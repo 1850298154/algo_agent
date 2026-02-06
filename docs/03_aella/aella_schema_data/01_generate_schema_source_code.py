@@ -192,3 +192,57 @@ if __name__ == "__main__":
             generator.process_file(file)
         
         generator.save_to_file(OUTPUT_FILE)
+"""
+File Name                      | Status     | Message
+--------------------------------------------------------------------------------
+docs/03_aella/aella_api_req\1_papers.json | ❌ FAIL     | 16 errors. First at [papers->815->title]: Input should be a valid string
+docs/03_aella/aella_api_req\2_papers,18721.json | ✅ PASS     | 成功匹配 PaperDetailResponse
+docs/03_aella/aella_api_req\3_clusters.json | ✅ PASS     | 成功匹配 ClusterListResponse
+docs/03_aella/aella_api_req\4_search.json | ✅ PASS     | 成功匹配 SearchResponse
+docs/03_aella/aella_api_req\5_temporal-data.json | ❌ FAIL     | 100 errors. First at [clusters->0->count]: Field required      
+docs/03_aella/aella_api_req\6_samples.json | ✅ PASS     | 成功匹配 SampleIdListResponse
+docs/03_aella/aella_api_req\7_samples,29.json | ✅ PASS     | 成功匹配 SampleDetailResponse
+
+
+
+其中报错：
+docs/03_aella/aella_api_req\1_papers.json | ❌ FAIL     | 16 errors. First at [papers->815->title]: Input should be a valid string
+
+    {
+      "id": 895,
+      "title": null,
+      "x": -1.1142206192016602,
+      "y": 5.947638034820557,
+      "z": 9.61390495300293,
+      "cluster_id": 77,
+      "cluster_label": "Ecological Studies & Species Conservation",
+      "field_subfield": null,
+      "publication_year": null,
+      "classification": "PARTIAL_TEXT"
+    },
+
+
+docs/03_aella/aella_api_req\5_temporal-data.json | ❌ FAIL     | 100 errors. First at [clusters->0->count]: Field required      
+
+{
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "cluster_label": "Geology & Paleoclimatology",
+      "color": "#1f77b4",
+      "temporal_data": [
+        {
+          "year": 1990,
+          "count": 4
+        },
+        {
+          "year": 1992,
+          "count": 1
+        },
+        {
+          "year": 1994,
+          "count": 3
+        },
+
+给我重新写一下schema，修复错误（比如数据可能字段是缺失的，Field描述强调一下可能缺失），同时给每个schema标注来自哪个url。最后输出的时候，在多一个表格统计一下一下字段链条的缺失占比占比
+"""

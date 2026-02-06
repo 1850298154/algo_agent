@@ -67,7 +67,7 @@ class ExecutionResult(BaseModel):
     exception_traceback: Optional[str] = Field(None, description="完整堆栈信息（失败状态时）")
     """如下延迟父进程获取、自动生成、选填"""
     ret_stdout: str = Field("", description="标准输出或标准错误信息（任意状态时，延迟由父进程获取）")
-    ret_tool2llm: Optional[str] = Field(None, description="返回作为模型输入（根据结果状态，延迟由父进程自动生成）")
+    ret_tool2llm: str = Field("", description="返回作为模型输入（根据结果状态，延迟由父进程自动生成）")
 
     model_config = ConfigDict(
         # use_enum_values=True,
@@ -82,29 +82,3 @@ class ExecutionResult(BaseModel):
             return {}  # 或 return None，根据业务需求调整
         return workspace.filter_and_deepcopy_globals(value)   
 
-
-if __name__ == "__main__":
-    # 简单测试
-    test_globals = {
-        'a': 123,
-        'b': [1, 2, 3],
-        '__builtins__': __builtins__,
-        'math': sys,
-    }
-    filtered_globals = workspace.filter_and_deepcopy_globals(test_globals)
-    print("Filtered Globals:", filtered_globals)
-    
-    test_globals['b'].append(4)
-    print("After Modification - Original Globals:", test_globals)
-    print("Filtered Globals:", filtered_globals)
-
-    # 测试 ExecutionResult 模型
-    result = ExecutionResult(
-        exit_status=ExecutionStatus.SUCCESS,
-        stdout="Execution completed successfully.",
-        globals=test_globals,
-        exception_type=None,
-        exception_value=None,
-        exception_traceback=None
-    )
-    print("ExecutionResult Model:", result.model_dump())

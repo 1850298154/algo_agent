@@ -49,18 +49,16 @@ def user_query(user_input: str) -> None:
             or assist_msg.function_call is not None):
         if assist_msg.function_call is not None:
             function_call: FunctionCall = assist_msg.function_call
-            tool_info = {
-                "content": "",
-                "role": "function",
-                # 其他非必须
-                "tool_call_name": function_call.name,
-                "tool_call_arguments": function_call.arguments,
-            }            
-            action.call_tools_safely(tool_info)
-            tool_output = tool_info["content"]
-            global_logger.info(f"工具 function call 输出信息： {tool_output}\n")
+            func_output = action.call_tools_safely(function_call.name, function_call.arguments)
+            global_logger.info(f"工具 function call 输出信息： {func_output}\n")
             global_logger.info("-" * 60)
-            messages.append(tool_info)
+            messages.append(
+                ChatCompletionFunctionMessageParam(
+                    content=func_output,
+                    name=function_call.name,
+                    role="function",
+                )
+            )
         if assist_msg.tool_calls is not None and assist_msg.tool_calls :
             # 使用 isinstance 过滤并重新生成列表
             tool_calls_list: list[ChatCompletionMessageFunctionToolCall] = [
@@ -68,21 +66,17 @@ def user_query(user_input: str) -> None:
                 if isinstance(tc, ChatCompletionMessageFunctionToolCall)
             ]            
             for i in range(len(tool_calls_list)):
-                tool_info = {
-                    "content": "",
-                    "role": "tool",
-                    "tool_call_id": tool_calls_list[i].id,
-                    # 其他非必须
-                    "tool_call_name": tool_calls_list[i].function.name,
-                    "tool_call_arguments": tool_calls_list[i].function.arguments,
-                }
 
-                action.call_tools_safely(tool_info)
-
-                tool_output = tool_info["content"]
+                tool_output = action.call_tools_safely(tool_calls_list[i].function.name, tool_calls_list[i].function.arguments)
                 global_logger.info(f"工具 tool call 输出信息： {tool_output}\n")
                 global_logger.info("-" * 60)
-                messages.append(tool_info)
+                messages.append(
+                    ChatCompletionToolMessageParam(
+                        content=tool_output,
+                        role="tool",
+                        tool_call_id=tool_calls_list[i].id,
+                    )
+                )
         assist_msg = llm.generate_assistant_output_append(messages, tools_schema_list)
         if assist_msg.content is None:
             assist_msg.content = ""

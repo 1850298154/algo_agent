@@ -10,6 +10,7 @@ class BaseTool(BaseModel):
         ..., 
         description="工具调用的目的，即调用该工具的具体场景或问题。"
     )
+    
     @classmethod
     def tool_name(cls) -> str:
         """工具唯一标识名（用于路由匹配，如 "weatherquery"）"""
@@ -28,7 +29,7 @@ class BaseTool(BaseModel):
         return cls.model_json_schema()
     
     @classmethod
-    def get_tool_schema(cls) -> str:
+    def get_tool_schema(cls) -> dict:
         """
         https://cookbook.openai.com/examples/how_to_call_functions_with_chat_models
         获取工具参数描述（供 Agent 理解参数含义）

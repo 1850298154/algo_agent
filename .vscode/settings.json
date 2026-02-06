@@ -1,8 +1,47 @@
 {
+    // ========== 核心：控制Python语言服务器解析范围（必配） ==========
+    "python.analysis.exclude": [
+        // 排除虚拟环境文件夹
+        "**/venv",
+        "**/env",
+        "**/.venv",
+        // 排除日志/数据文件夹
+        "**/logs",
+        "**/data",
+        // 排除第三方依赖缓存
+        "**/node_modules",
+        // 排除编译后的pyc文件目录
+        "**/__pycache__",
+        // 排除你不想解析的自定义文件夹（示例）
+        "**/unused_code",
+        "**/tests/playground"  // 可选：如果你不需要在测试文件中获得智能提示，可以排除测试文件夹
+    ],
+
+    // ========== 辅助：排除文件监听和资源管理器显示（可选） ==========
+    // 1. 让VSCode文件监视器不监听这些文件夹（减少CPU占用）
+    "files.watcherExclude": {
+        "**/venv/**": true,
+        "**/env/**": true,
+        "**/__pycache__/**": true,
+        "**/logs/**": true,
+        "**/ws*/**": true,
+        "**/unused_code": true,
+    },
+    // 2. 在资源管理器中隐藏这些文件夹（视觉上清理，可选）
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/venv": true,
+        "**/unused_code": true,
+    },
+
+    // ========== 终端：设置工作区的PYTHONPATH ==========
     "terminal.integrated.env.windows": {
         "PYTHONPATH": "${workspaceFolder};${env:PYTHONPATH}"
     },
     "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}:${env:PYTHONPATH}"
+    },
+    "terminal.integrated.env.osx": {
         "PYTHONPATH": "${workspaceFolder}:${env:PYTHONPATH}"
     },
     

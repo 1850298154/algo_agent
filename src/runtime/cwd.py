@@ -10,7 +10,9 @@ def create_cwd(cwd=None):
     """
     子进程的包装函数，用于在执行实际任务前更改工作目录。
     """
-    cwd = create_folder.get_or_create_subfolder(fix_relate_from_project=cwd)
+    cwd = create_folder.get_or_create_subfolder(
+        fix_relate_from_project=cwd,
+        time_relate_from_project="./wsm")
 
     global_logger.info(f"子进程 PID: {os.getpid()} 要将工作目录更改为: {cwd}")
     if not cwd:
@@ -76,17 +78,17 @@ class Change_STDOUT_STDERR:
         # 若返回 False，异常会向上抛出；返回 True 则抑制异常（按需选择）
         return False
 
-# ------------------- 使用示例 -------------------
-if __name__ == "__main__":
-    # create_cwd()
-    # 初始目录
-    print("初始目录:", os.getcwd())
+# # ------------------- 使用示例 -------------------
+# if __name__ == "__main__":
+#     # create_cwd()
+#     # 初始目录
+#     print("初始目录:", os.getcwd())
     
-    # 使用 with 切换目录，执行完自动恢复
-    with ChangeDirectory('./wsm/3/g8-1'):
-        print("with内目录:", os.getcwd())
-        # 在这里执行你的业务逻辑（比如文件操作、数据处理等）
-        # ...
+#     # 使用 with 切换目录，执行完自动恢复
+#     with ChangeDirectory('./wsm/3/g8-1'):
+#         print("with内目录:", os.getcwd())
+#         # 在这里执行你的业务逻辑（比如文件操作、数据处理等）
+#         # ...
     
-    # 退出with后，目录已恢复
-    print("恢复后目录:", os.getcwd())
+#     # 退出with后，目录已恢复
+#     print("恢复后目录:", os.getcwd())

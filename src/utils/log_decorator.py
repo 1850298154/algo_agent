@@ -16,7 +16,7 @@ from src.utils import create_folder
 # ------------------------------
 # 全局logger配置（不变）
 # ------------------------------
-def setup_logger(logger_name: str, log_file: Optional[str] = None, level: int = logging.DEBUG) -> logging.Logger:
+def setup_logger(logger_name: str, log_file: str, level: int = logging.DEBUG) -> logging.Logger:
     # ========== 关键修改： 自动创建日志目录 ==========
     log_dir = os.path.dirname(log_file)
     if log_dir and not os.path.exists(log_dir):
@@ -67,7 +67,7 @@ def setup_logger(logger_name: str, log_file: Optional[str] = None, level: int = 
 # ------------------------------
 def format_value(value: Any) -> str:
     @wraps(pprint.pformat)
-    def pf(*args, **kwargs):
+    def pf(*args, **kwargs) -> str:
         """Format a Python object into a pretty-printed representation."""
         output_format_str = pprint.pformat(*args, **kwargs)
         # print(output_format_str+'\n')
@@ -152,7 +152,7 @@ def get_default_return_value(func: Callable) -> Any:
 # ------------------------------
 def log_function(
     logger_name: str,
-    log_file: Optional[str] = None,
+    log_file: str,
     level: int = logging.DEBUG,
     exclude_args: Optional[list] = None,
     record_stack: bool = True,
@@ -162,11 +162,12 @@ def log_function(
     exclude_args = exclude_args or []
 
     def decorator(func: Callable) -> Callable:
-        @wraps(func) # @wraps 的作用： 保留原函数元数据
+        @wraps(func)  # @wraps 的作用： 保留原函数元数据
         def wrapper(*args, **kwargs) -> Any:
             # 1. 获取核心上下文信息
             func_name = func.__name__
-            module_name = inspect.getmodule(func).__name__
+            module = inspect.getmodule(func)
+            module_name = module.__name__ if module else "None"
             class_name = "None"
             lineno = inspect.getsourcelines(func)[1]
             file_path = inspect.getfile(func)  # 新增：获取文件路径
@@ -285,7 +286,7 @@ def log_function(
 # )(func)
 
 # 子进程会出问题， 重新生成时间和文件夹
-sub_folder_for_logs = create_folder.get_or_create_subfolder(gen_time_path_from_project="logs")
+sub_folder_for_logs = create_folder.create_subfolder_with_auto_time(dir_rel_to_proj="./logs")
 # sub_folder_for_logs = "logs"
 
 
@@ -312,7 +313,7 @@ if __name__ == "__main__":
     def test_function(a: int, b: str, c: Dict[str, Any]) -> Dict[str, Any]:
         """测试函数，故意抛出异常"""
         # return {"result": a + int(b) + c["key"]}
-        return True
+        return {}
 
     # 正常调用
     ret = test_function(1, "2", {"key": 3})

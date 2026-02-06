@@ -27,7 +27,7 @@ class RecursivePlanTreeTodoTool(BaseTool):
 
     def run(
         self,
-    ) -> Dict[str, str]:
+    ) -> str:
         result = todo_track.run(self.recursive_plan_tree)
         s  = (f"变更总结：\n{result['changes_summary']}")
         s += (f"Markdown清单：\n{result['markdown_todo_list']}\n")
