@@ -1,0 +1,604 @@
+{
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "cluster_label": "Geology & Paleoclimatology",
+      "count": 574,
+      "color": "#1f77b4"
+    },
+    {
+      "cluster_id": 1,
+      "cluster_label": "Water Resources & Environmental Hydrology",
+      "count": 1294,
+      "color": "#ff7f0e"
+    },
+    {
+      "cluster_id": 2,
+      "cluster_label": "Energy Economics & Systems",
+      "count": 542,
+      "color": "#2ca02c"
+    },
+    {
+      "cluster_id": 3,
+      "cluster_label": "Clinical Medicine & Risk Assessment",
+      "count": 1188,
+      "color": "#d62728"
+    },
+    {
+      "cluster_id": 4,
+      "cluster_label": "Healthcare Outcomes & Pharmacy",
+      "count": 846,
+      "color": "#9467bd"
+    },
+    {
+      "cluster_id": 5,
+      "cluster_label": "Experimental Chemistry & Modeling",
+      "count": 583,
+      "color": "#8c564b"
+    },
+    {
+      "cluster_id": 6,
+      "cluster_label": "Clinical Trials & Treatment Effects",
+      "count": 1058,
+      "color": "#e377c2"
+    },
+    {
+      "cluster_id": 7,
+      "cluster_label": "Signal Processing & Acoustic Performance",
+      "count": 966,
+      "color": "#7f7f7f"
+    },
+    {
+      "cluster_id": 8,
+      "cluster_label": "HIV Research & Data Science",
+      "count": 978,
+      "color": "#bcbd22"
+    },
+    {
+      "cluster_id": 9,
+      "cluster_label": "Social Determinants of Health",
+      "count": 448,
+      "color": "#17becf"
+    },
+    {
+      "cluster_id": 10,
+      "cluster_label": "Soil Ecology & Biodiversity",
+      "count": 697,
+      "color": "#aec7e8"
+    },
+    {
+      "cluster_id": 11,
+      "cluster_label": "Molecular Biology & Genetics",
+      "count": 632,
+      "color": "#ffbb78"
+    },
+    {
+      "cluster_id": 12,
+      "cluster_label": "Materials Science at High Temperature",
+      "count": 1050,
+      "color": "#98df8a"
+    },
+    {
+      "cluster_id": 13,
+      "cluster_label": "Linguistics & Language Studies",
+      "count": 628,
+      "color": "#ff9896"
+    },
+    {
+      "cluster_id": 14,
+      "cluster_label": "Aquatic Ecology & Fish Biology",
+      "count": 769,
+      "color": "#c5b0d5"
+    },
+    {
+      "cluster_id": 15,
+      "cluster_label": "History & Literary Studies",
+      "count": 1851,
+      "color": "#c49c94"
+    },
+    {
+      "cluster_id": 16,
+      "cluster_label": "Surgical Medicine & Clinical Cases",
+      "count": 708,
+      "color": "#f7b6d2"
+    },
+    {
+      "cluster_id": 17,
+      "cluster_label": "Cancer Biology & microRNA",
+      "count": 1469,
+      "color": "#c7c7c7"
+    },
+    {
+      "cluster_id": 18,
+      "cluster_label": "Pure Mathematics & Theorems",
+      "count": 636,
+      "color": "#dbdb8d"
+    },
+    {
+      "cluster_id": 19,
+      "cluster_label": "Educational Policy & Management",
+      "count": 767,
+      "color": "#9edae5"
+    },
+    {
+      "cluster_id": 20,
+      "cluster_label": "Speech & Communication Disorders",
+      "count": 1073,
+      "color": "#393b79"
+    },
+    {
+      "cluster_id": 21,
+      "cluster_label": "Clinical Medicine & Patient Risk",
+      "count": 1203,
+      "color": "#637939"
+    },
+    {
+      "cluster_id": 22,
+      "cluster_label": "Tumor Biology & Cancer Treatment",
+      "count": 1796,
+      "color": "#8c6d31"
+    },
+    {
+      "cluster_id": 23,
+      "cluster_label": "Urban Planning & Design",
+      "count": 914,
+      "color": "#843c39"
+    },
+    {
+      "cluster_id": 24,
+      "cluster_label": "Learning Sciences & Educational Design",
+      "count": 952,
+      "color": "#7b4173"
+    },
+    {
+      "cluster_id": 25,
+      "cluster_label": "Cell Biology & Molecular Pathways",
+      "count": 1092,
+      "color": "#5254a3"
+    },
+    {
+      "cluster_id": 26,
+      "cluster_label": "Evolutionary Biology & Phylogenetics",
+      "count": 701,
+      "color": "#8ca252"
+    },
+    {
+      "cluster_id": 27,
+      "cluster_label": "Thermal Energy & Heat Transfer",
+      "count": 967,
+      "color": "#bd9e39"
+    },
+    {
+      "cluster_id": 28,
+      "cluster_label": "Protein Structure & Binding",
+      "count": 903,
+      "color": "#ad494a"
+    },
+    {
+      "cluster_id": 29,
+      "cluster_label": "Cellular Therapy & Regenerative Medicine",
+      "count": 1875,
+      "color": "#a55194"
+    },
+    {
+      "cluster_id": 30,
+      "cluster_label": "Epidemiological Modeling & COVID-19",
+      "count": 761,
+      "color": "#1f77b4"
+    },
+    {
+      "cluster_id": 31,
+      "cluster_label": "Quantum Physics & Spin Systems",
+      "count": 811,
+      "color": "#ff7f0e"
+    },
+    {
+      "cluster_id": 32,
+      "cluster_label": "Women's Health & Maternal Care",
+      "count": 970,
+      "color": "#2ca02c"
+    },
+    {
+      "cluster_id": 33,
+      "cluster_label": "Advanced Materials Science",
+      "count": 1192,
+      "color": "#d62728"
+    },
+    {
+      "cluster_id": 34,
+      "cluster_label": "Organizational Behavior & Management",
+      "count": 820,
+      "color": "#9467bd"
+    },
+    {
+      "cluster_id": 35,
+      "cluster_label": "Materials Engineering & Structural Stress",
+      "count": 1235,
+      "color": "#8c564b"
+    },
+    {
+      "cluster_id": 36,
+      "cluster_label": "Antimicrobial Resistance & Microbiology",
+      "count": 1338,
+      "color": "#e377c2"
+    },
+    {
+      "cluster_id": 37,
+      "cluster_label": "Urban Environmental Sociology",
+      "count": 781,
+      "color": "#7f7f7f"
+    },
+    {
+      "cluster_id": 38,
+      "cluster_label": "Antioxidants & In Vivo Studies",
+      "count": 1262,
+      "color": "#bcbd22"
+    },
+    {
+      "cluster_id": 39,
+      "cluster_label": "Computational Linguistics & NLP",
+      "count": 479,
+      "color": "#17becf"
+    },
+    {
+      "cluster_id": 40,
+      "cluster_label": "Software Engineering & Systems",
+      "count": 775,
+      "color": "#aec7e8"
+    },
+    {
+      "cluster_id": 41,
+      "cluster_label": "High Energy Physics",
+      "count": 947,
+      "color": "#ffbb78"
+    },
+    {
+      "cluster_id": 42,
+      "cluster_label": "Infectious Disease & Zoonotic Transmission",
+      "count": 832,
+      "color": "#98df8a"
+    },
+    {
+      "cluster_id": 43,
+      "cluster_label": "Public Health & Risk Epidemiology",
+      "count": 1089,
+      "color": "#ff9896"
+    },
+    {
+      "cluster_id": 44,
+      "cluster_label": "Medical Imaging & Diagnostics",
+      "count": 853,
+      "color": "#c5b0d5"
+    },
+    {
+      "cluster_id": 45,
+      "cluster_label": "Surgical Outcomes & Case Studies",
+      "count": 756,
+      "color": "#c49c94"
+    },
+    {
+      "cluster_id": 46,
+      "cluster_label": "Organic Synthesis & High-Yield Chemistry",
+      "count": 1258,
+      "color": "#f7b6d2"
+    },
+    {
+      "cluster_id": 47,
+      "cluster_label": "Language Teaching & Pedagogy",
+      "count": 1238,
+      "color": "#c7c7c7"
+    },
+    {
+      "cluster_id": 48,
+      "cluster_label": "Health Psychology & Well-being",
+      "count": 1171,
+      "color": "#dbdb8d"
+    },
+    {
+      "cluster_id": 49,
+      "cluster_label": "Bone Cell Biology & In Vivo Studies",
+      "count": 681,
+      "color": "#9edae5"
+    },
+    {
+      "cluster_id": 50,
+      "cluster_label": "Mitochondrial & Cellular Bioenergetics",
+      "count": 626,
+      "color": "#393b79"
+    },
+    {
+      "cluster_id": 51,
+      "cluster_label": "User Experience & Data Accuracy",
+      "count": 464,
+      "color": "#637939"
+    },
+    {
+      "cluster_id": 52,
+      "cluster_label": "Real-Time Computing & Computer Vision",
+      "count": 603,
+      "color": "#8c6d31"
+    },
+    {
+      "cluster_id": 53,
+      "cluster_label": "Numerical Methods & Computational Fluid Dynamics",
+      "count": 1214,
+      "color": "#843c39"
+    },
+    {
+      "cluster_id": 54,
+      "cluster_label": "Water Engineering & Infrastructure",
+      "count": 862,
+      "color": "#7b4173"
+    },
+    {
+      "cluster_id": 55,
+      "cluster_label": "Agricultural Science & Crop Yield",
+      "count": 765,
+      "color": "#5254a3"
+    },
+    {
+      "cluster_id": 56,
+      "cluster_label": "Law & Legal Policy",
+      "count": 1168,
+      "color": "#8ca252"
+    },
+    {
+      "cluster_id": 57,
+      "cluster_label": "Evidence-Based Management",
+      "count": 899,
+      "color": "#bd9e39"
+    },
+    {
+      "cluster_id": 58,
+      "cluster_label": "Higher Education & Academic Science",
+      "count": 780,
+      "color": "#ad494a"
+    },
+    {
+      "cluster_id": 59,
+      "cluster_label": "Microbiology & Functional Genomics",
+      "count": 847,
+      "color": "#a55194"
+    },
+    {
+      "cluster_id": 60,
+      "cluster_label": "Environmental Policy & Sustainability",
+      "count": 526,
+      "color": "#1f77b4"
+    },
+    {
+      "cluster_id": 61,
+      "cluster_label": "Movement Science & Gait Analysis",
+      "count": 487,
+      "color": "#ff7f0e"
+    },
+    {
+      "cluster_id": 62,
+      "cluster_label": "Political Science & Policy Analysis",
+      "count": 820,
+      "color": "#2ca02c"
+    },
+    {
+      "cluster_id": 63,
+      "cluster_label": "Computational Chemistry & Quantum Calculations",
+      "count": 803,
+      "color": "#d62728"
+    },
+    {
+      "cluster_id": 64,
+      "cluster_label": "Model Validation & Data Analysis",
+      "count": 662,
+      "color": "#9467bd"
+    },
+    {
+      "cluster_id": 65,
+      "cluster_label": "Learning Technologies & Educational Innovation",
+      "count": 478,
+      "color": "#8c564b"
+    },
+    {
+      "cluster_id": 66,
+      "cluster_label": "Mass Spectrometry & Analytical Chemistry",
+      "count": 206,
+      "color": "#e377c2"
+    },
+    {
+      "cluster_id": 67,
+      "cluster_label": "Molecular Diagnostics & PCR Methods",
+      "count": 709,
+      "color": "#7f7f7f"
+    },
+    {
+      "cluster_id": 68,
+      "cluster_label": "Plant Breeding & Genomics",
+      "count": 445,
+      "color": "#bcbd22"
+    },
+    {
+      "cluster_id": 69,
+      "cluster_label": "Genomics & Genetic Risk Factors",
+      "count": 1269,
+      "color": "#17becf"
+    },
+    {
+      "cluster_id": 70,
+      "cluster_label": "Control Systems & Aerospace Engineering",
+      "count": 531,
+      "color": "#aec7e8"
+    },
+    {
+      "cluster_id": 71,
+      "cluster_label": "Plant Pathology & Agricultural Control",
+      "count": 648,
+      "color": "#ffbb78"
+    },
+    {
+      "cluster_id": 72,
+      "cluster_label": "Pain Management & Exercise Therapy",
+      "count": 831,
+      "color": "#98df8a"
+    },
+    {
+      "cluster_id": 73,
+      "cluster_label": "High-Temperature Materials Engineering",
+      "count": 896,
+      "color": "#ff9896"
+    },
+    {
+      "cluster_id": 74,
+      "cluster_label": "Health Equity & Risk Factors",
+      "count": 882,
+      "color": "#c5b0d5"
+    },
+    {
+      "cluster_id": 75,
+      "cluster_label": "Environmental Chemistry & Exposure Assessment",
+      "count": 788,
+      "color": "#c49c94"
+    },
+    {
+      "cluster_id": 76,
+      "cluster_label": "Financial Risk & Market Analysis",
+      "count": 1095,
+      "color": "#f7b6d2"
+    },
+    {
+      "cluster_id": 77,
+      "cluster_label": "Ecological Studies & Species Conservation",
+      "count": 830,
+      "color": "#c7c7c7"
+    },
+    {
+      "cluster_id": 78,
+      "cluster_label": "Patient Safety & Clinical Risk Management",
+      "count": 1025,
+      "color": "#dbdb8d"
+    },
+    {
+      "cluster_id": 79,
+      "cluster_label": "Power Electronics & Electrical Control",
+      "count": 321,
+      "color": "#9edae5"
+    },
+    {
+      "cluster_id": 80,
+      "cluster_label": "Primary Care & Patient-Centered Health",
+      "count": 1289,
+      "color": "#393b79"
+    },
+    {
+      "cluster_id": 81,
+      "cluster_label": "Machine Learning & Predictive Accuracy",
+      "count": 971,
+      "color": "#637939"
+    },
+    {
+      "cluster_id": 82,
+      "cluster_label": "Environmental Health & Exposure Risk",
+      "count": 675,
+      "color": "#8c6d31"
+    },
+    {
+      "cluster_id": 83,
+      "cluster_label": "Neuroscience & Neuroimaging",
+      "count": 1340,
+      "color": "#843c39"
+    },
+    {
+      "cluster_id": 84,
+      "cluster_label": "Theoretical Physics & Energy Systems",
+      "count": 826,
+      "color": "#7b4173"
+    },
+    {
+      "cluster_id": 85,
+      "cluster_label": "Network Computing & Time-Series Analysis",
+      "count": 859,
+      "color": "#5254a3"
+    },
+    {
+      "cluster_id": 86,
+      "cluster_label": "Oral Health & Dental Medicine",
+      "count": 741,
+      "color": "#8ca252"
+    },
+    {
+      "cluster_id": 87,
+      "cluster_label": "Radiology & Imaging Case Reports",
+      "count": 678,
+      "color": "#bd9e39"
+    },
+    {
+      "cluster_id": 88,
+      "cluster_label": "Optical Materials & Photonics",
+      "count": 1035,
+      "color": "#ad494a"
+    },
+    {
+      "cluster_id": 89,
+      "cluster_label": "Metabolic Disorders & Insulin Resistance",
+      "count": 1379,
+      "color": "#a55194"
+    },
+    {
+      "cluster_id": 90,
+      "cluster_label": "Social Media & Communication Studies",
+      "count": 926,
+      "color": "#1f77b4"
+    },
+    {
+      "cluster_id": 91,
+      "cluster_label": "Abstract Mathematics & Operator Theory",
+      "count": 616,
+      "color": "#ff7f0e"
+    },
+    {
+      "cluster_id": 92,
+      "cluster_label": "Islamic Studies & Religious Education",
+      "count": 99,
+      "color": "#2ca02c"
+    },
+    {
+      "cluster_id": 93,
+      "cluster_label": "Ophthalmology & Retinal Disease",
+      "count": 637,
+      "color": "#d62728"
+    },
+    {
+      "cluster_id": 94,
+      "cluster_label": "Data Engineering & Time-Series",
+      "count": 693,
+      "color": "#9467bd"
+    },
+    {
+      "cluster_id": 95,
+      "cluster_label": "Cellular Stress & Molecular Biology",
+      "count": 854,
+      "color": "#8c564b"
+    },
+    {
+      "cluster_id": 96,
+      "cluster_label": "Cancer Survival & Risk Stratification",
+      "count": 446,
+      "color": "#e377c2"
+    },
+    {
+      "cluster_id": 97,
+      "cluster_label": "COVID-19 Infection & Clinical Management",
+      "count": 1594,
+      "color": "#7f7f7f"
+    },
+    {
+      "cluster_id": 98,
+      "cluster_label": "Novel Materials & Smart Materials",
+      "count": 1491,
+      "color": "#bcbd22"
+    },
+    {
+      "cluster_id": 99,
+      "cluster_label": "Synthetic Organic Chemistry & Catalysis",
+      "count": 970,
+      "color": "#17becf"
+    }
+  ]
+}

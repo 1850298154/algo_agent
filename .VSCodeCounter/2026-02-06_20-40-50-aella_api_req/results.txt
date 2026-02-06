@@ -1,0 +1,34 @@
+Date : 2026-02-06 20:40:50
+Directory : d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req
+Total : 9 files,  2150683 codes, 0 comments, 1 blanks, all 2150684 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| JSON     |          8 |  2,150,683 |          0 |          0 |  2,150,683 |
+| Markdown |          1 |          0 |          0 |          1 |          1 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                        | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                           |          9 |  2,150,683 |          0 |          1 |  2,150,684 |
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                    | language | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req\1_papers.json          | JSON     |  1,068,100 |          0 |          0 |  1,068,100 |
+| d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req\2_papers,18721.json    | JSON     |        196 |          0 |          0 |        196 |
+| d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req\3_clusters.json        | JSON     |        604 |          0 |          0 |        604 |
+| d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req\4_search.json          | JSON     |        844 |          0 |          0 |        844 |
+| d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req\5_temporal-data.json   | JSON     |     12,728 |          0 |          0 |     12,728 |
+| d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req\6_samples.json         | JSON     |         98 |          0 |          0 |         98 |
+| d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req\7_samples,29.json      | JSON     |         11 |          0 |          0 |         11 |
+| d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req\all_api_results-7.json | JSON     |  1,068,102 |          0 |          0 |  1,068,102 |
+| d:\zyt\git_ln\algo_agent\docs\03_aella\aella_api_req\total.md               | Markdown |          0 |          0 |          1 |          1 |
+| Total                                                                       |          |  2,150,683 |          0 |          1 |  2,150,684 |
++-----------------------------------------------------------------------------+----------+------------+------------+------------+------------+
