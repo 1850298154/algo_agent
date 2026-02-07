@@ -10,13 +10,17 @@ from typing import Callable, Optional, Dict, Any, Union, get_type_hints, Type
 from datetime import datetime
 from typing_extensions import get_origin, get_args  # 处理泛型（如 List、Dict）
 
-from src.utils import create_folder
+from src.utils import create_folder, path_manager
 
 
 # ------------------------------
 # 全局logger配置（不变）
 # ------------------------------
-def setup_logger(logger_name: str, log_file: str, level: int = logging.DEBUG) -> logging.Logger:
+def setup_logger(
+    logger_name: str, 
+    log_file: str, 
+    level: int = logging.DEBUG, 
+    is_open_console: bool = True) -> logging.Logger:
     # ========== 关键修改： 自动创建日志目录 ==========
     log_dir = os.path.dirname(log_file)
     if log_dir and not os.path.exists(log_dir):
@@ -44,10 +48,10 @@ def setup_logger(logger_name: str, log_file: str, level: int = logging.DEBUG) ->
         fmt=fmt,
         # datefmt="%Y-%m-%d %H:%M:%S.%f"
     )
-
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
-    logger.addHandler(console_handler)
+    if is_open_console:
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+        logger.addHandler(console_handler)
 
     if log_file:
         from logging.handlers import RotatingFileHandler
@@ -84,68 +88,6 @@ def format_value(value: Any) -> str:
         else:
             str_val = str(value)
             return str_val[:500] + "..." if len(str_val) > 500 else str_val
-
-# ------------------------------
-# 新增工具函数： 根据返回值类型获取默认值
-# ------------------------------
-def get_default_return_value(func: Callable) -> Any:
-    """
-    根据函数返回值注解，生成对应的默认值（兜底用）
-    支持： 基础类型、泛型（List/Dict/Tuple）、自定义类、None
-    """
-    try:
-        # 获取返回值注解（处理无注解、字符串注解）
-        type_hints = get_type_hints(func)
-        return_type = type_hints.get("return", None)
-
-        if return_type is None or return_type is type(None):
-            # 无返回值注解或返回None： 返回None
-            return None
-
-        # 处理基础类型
-        if return_type == int:
-            return 0
-        elif return_type == float:
-            return 0.0
-        elif return_type == str:
-            return ""
-        elif return_type == bool:
-            return False
-        elif return_type == list:
-            return []
-        elif return_type == dict:
-            return {}
-        elif return_type == tuple:
-            return ()
-        elif return_type == set:
-            return set()
-
-        # 处理泛型（如 List[int]、Dict[str, Any]）
-        origin_type = get_origin(return_type)
-        if origin_type:
-            if origin_type == list:
-                return []
-            elif origin_type == dict:
-                return {}
-            elif origin_type == tuple:
-                return ()
-            elif origin_type == set:
-                return set()
-
-        # 处理自定义类（返回空实例）
-        if inspect.isclass(return_type):
-            try:
-                return return_type()  # 尝试无参实例化
-            except (TypeError, Exception):
-                # 无参实例化失败： 返回None
-                return None
-
-        # 其他未覆盖类型： 返回None
-        return None
-    except Exception as e:
-        # 解析类型注解失败： 返回None
-        logging.warning(f"获取默认返回值失败： {str(e)}")
-        return None
 
 # ------------------------------
 # 增强版日志装饰器（含异常兜底）
@@ -246,14 +188,6 @@ def log_function(
                     f"| 异常类型： {exception_type} | 异常信息： {exception_msg} | 堆栈信息： {traceback_str}",
                     exc_info=True
                 )
-
-                # # 确定兜底返回值（手动指定优先，否则自动推导）
-                # fallback_value = default_return_value if default_return_value is not None else get_default_return_value(func)
-                # logger.warning(
-                #     f"【异常兜底】 栈路径： {stack_full_path} | 返回默认值： {format_value(fallback_value)}"
-                # )
-
-                # return fallback_value  # 兜底返回，不抛出异常
                 
                 raise  # 修改为继续抛出异常
 
@@ -264,47 +198,26 @@ def log_function(
 # ------------------------------
 # 预定义模块logger（支持手动指定默认值）
 # ------------------------------
-# agent_logger = lambda func: log_function(
-#     logger_name="agent",
-#     log_file="logs/agent.log",
-#     level=logging.DEBUG
-# )(func)
-
-# # 召回模块： 手动指定默认返回值为[]（避免无结果时返回None）
-# retrieval_logger = lambda func: log_function(
-#     logger_name="retrieval",
-#     log_file="logs/retrieval.log",
-#     level=logging.DEBUG,
-#     record_stack=True,
-#     default_return_value=[]  # 异常时返回空列表
-# )(func)
-
-# algorithm_logger = lambda func: log_function(
-#     logger_name="algorithm",
-#     level=logging.DEBUG,
-#     default_return_value=None  # 算法异常时返回None
-# )(func)
-
 # 子进程会出问题， 重新生成时间和文件夹
-sub_folder_for_logs = create_folder.create_subfolder_with_auto_time(dir_rel_to_proj="./logs")
-# sub_folder_for_logs = "logs"
+sub_folder_for_logs = create_folder.create_subfolder_with_time_tag(dir_rel_to_proj=path_manager.PathEnum.LOG_DIR_NAME.value)
 
-
-all_logger_file_name = os.path.join(sub_folder_for_logs, "all.log")
 all_logger = setup_logger(
-    logger_name="root.all", log_file=all_logger_file_name, level=logging.DEBUG)
+    logger_name="root.all", 
+    log_file=os.path.join(sub_folder_for_logs, "all.log"), 
+    level=logging.DEBUG, 
+    is_open_console=False)
 
-traceable_logger_file_name = os.path.join(sub_folder_for_logs, "trace.log")
+global_logger = setup_logger(
+    logger_name="root.all.print", 
+    log_file=os.path.join(sub_folder_for_logs, "print.log"), 
+    level=logging.DEBUG)
+
 traceable = lambda func: log_function(
     logger_name="root.all.trace",
-    log_file=traceable_logger_file_name,
+    log_file=os.path.join(sub_folder_for_logs, "trace.log"),
     exclude_args=["password", "token", "secret"],
     level=logging.DEBUG
 )(func)
-
-global_logger_file_name = os.path.join(sub_folder_for_logs, "print.log")
-global_logger = setup_logger(
-    logger_name="root.all.print", log_file=global_logger_file_name, level=logging.DEBUG)
 
 
 # test

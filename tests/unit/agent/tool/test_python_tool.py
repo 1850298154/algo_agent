@@ -1,9 +1,15 @@
 from src.agent.tool import python_tool
+
 def test_execute_python_code_tool():
     code = "print('hello world')"
-    tool = python_tool.ExecutePythonCodeTool(python_code_snippet=code)
+    tool = python_tool.ExecutePythonCodeTool(
+        tool_call_purpose="code",
+        python_code_snippet=code,
+        timeout=10,
+        )
     result = tool.run()
     print(result)
+
 def test_execute_python_code_tool_with_exception():
     code = """
 def myadd(a, b):
@@ -15,9 +21,14 @@ def main():
     print("核心逻辑执行", myadd(1, 2))
 print('global :', globals().keys())
 print('local :',  locals().keys())
+temp = 0
 main()
 """
-    tool = python_tool.ExecutePythonCodeTool(python_code_snippet=code)
+    tool = python_tool.ExecutePythonCodeTool(
+        tool_call_purpose="code",
+        python_code_snippet=code,
+        timeout=10,
+        )
     result = tool.run()
     print(result)
 

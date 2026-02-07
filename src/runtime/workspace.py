@@ -11,31 +11,31 @@ arg_globals_list: list[dict] = []
 out_globals_list: list[dict] = []
 
 
-def __create_workspace() -> dict:
-    workspace = {}
+def __create_workspace() -> dict[str, Any]:
+    workspace:dict[str, Any] = {}
     exec("", workspace)
     return workspace
 
 
-def initialize_workspace() -> dict:
-    workspace: dict = __create_workspace()
+def initialize_workspace() -> dict[str, Any]:
+    workspace: dict[str, Any] = __create_workspace()
     workspace.update({'__name__': '__main__'})
     return workspace
 
 
-def get_workspace_globals_dict(workspace: dict, include_special_vars: bool = False):
+def get_workspace_globals_dict(workspace: dict[str, Any], include_special_vars: bool = False):
     if include_special_vars:
         return {k: v for k, v in workspace.items()}
     return {k: v for k, v in workspace.items() if not k.startswith('__')}
 
 
-def get_workspace_globals_keys(workspace: dict, include_special_vars: bool = False):
+def get_workspace_globals_keys(workspace: dict[str, Any], include_special_vars: bool = False):
     if include_special_vars:
         return [k for k in workspace.keys()]
     return [k for k in workspace.keys() if not k.startswith('__')]
 
 
-def filter_and_deepcopy_globals(original_globals: Dict[str, Any]) -> Dict[str, Any]:
+def filter_and_deepcopy_globals(original_globals: dict[str, Any]) -> dict[str, Any]:
     """
     过滤并深拷贝 globals 字典。
     过滤规则：
@@ -78,7 +78,7 @@ def filter_and_deepcopy_globals(original_globals: Dict[str, Any]) -> Dict[str, A
     return filtered_dict
 
 
-def get_arg_globals() -> dict:
+def get_arg_globals() -> dict[str, Any]:
     global arg_globals_list
     if not arg_globals_list:
         arg_globals = initialize_workspace()
@@ -91,7 +91,7 @@ def get_arg_globals() -> dict:
     return filter_arg_globals
 
 
-def append_out_globals(out_globals: dict):
+def append_out_globals(out_globals: dict[str, Any]):
     global out_globals_list
     filter_out_globals = filter_and_deepcopy_globals(out_globals)
     out_globals_list.append(filter_out_globals)

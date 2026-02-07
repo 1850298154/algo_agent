@@ -2,48 +2,47 @@
 import sys
 import os
 from datetime import datetime
+from tkinter import N
 from src.utils import global_logger
 from src.utils import create_folder
 
 
-def create_cwd(cwd=None):
-    """
-    子进程的包装函数，用于在执行实际任务前更改工作目录。
-    """
-    cwd = create_folder.get_or_create_subfolder(
-        fix_relate_from_project=cwd,
-        time_relate_from_project="./wsm")
+# def create_cwd(cwd=None):
+#     """
+#     子进程的包装函数，用于在执行实际任务前更改工作目录。
+#     """
+#     cwd = create_folder.get_or_create_subfolder(
+#         fix_relate_from_project=cwd,
+#         time_relate_from_project="./wsm")
 
-    global_logger.info(f"子进程 PID: {os.getpid()} 要将工作目录更改为: {cwd}")
-    if not cwd:
-        return False
-    try:
-        os.chdir(cwd)
-        global_logger.info(f"子进程 PID: {os.getpid()} 已将工作目录更改为: {os.getcwd()}")
-        return True
-    except OSError as e:
-        global_logger.error(f"子进程 PID: {os.getpid()} 更改工作目录失败: {e}")
-        # 根据需要处理错误，例如发送错误信息到主进程或直接退出
-        return False
-    except Exception as e:
-        global_logger.error(f"子进程 PID: {os.getpid()} 更改工作目录时发生异常: {e}")
-        return False
+#     global_logger.info(f"子进程 PID: {os.getpid()} 要将工作目录更改为: {cwd}")
+#     if not cwd:
+#         return False
+#     try:
+#         os.chdir(cwd)
+#         global_logger.info(f"子进程 PID: {os.getpid()} 已将工作目录更改为: {os.getcwd()}")
+#         return True
+#     except OSError as e:
+#         global_logger.error(f"子进程 PID: {os.getpid()} 更改工作目录失败: {e}")
+#         # 根据需要处理错误，例如发送错误信息到主进程或直接退出
+#         return False
+#     except Exception as e:
+#         global_logger.error(f"子进程 PID: {os.getpid()} 更改工作目录时发生异常: {e}")
+#         return False
     
 
 class ChangeDirectory:
     """目录切换上下文管理器，退出时自动恢复原目录"""
-    def __init__(self, target_dir):
-        self.target_dir = target_dir  # 目标目录
-        self.original_dir = None      # 保存原目录
+    def __init__(self, target_dir_fullpath: str):
+        self.target_dir = target_dir_fullpath  # 目标目录
+        # 1. 记录当前工作目录（原目录）
+        self.original_dir = os.getcwd()      # 保存原目录
     
     def __enter__(self):
-        # 1. 记录当前工作目录（原目录）
-        self.original_dir = os.getcwd()
         # 2. 确保目标目录存在（可选，根据你的需求）
-        cwd = create_folder.get_or_create_subfolder(fix_relate_from_project=self.target_dir)
-        global_logger.info(f"切换目录到: {cwd}")
+        global_logger.info(f"切换目录到: {self.target_dir}")
         # 3. 切换到目标目录
-        os.chdir(cwd)
+        os.chdir(self.target_dir)
         # 返回当前上下文（可选，可用于链式操作）
         return self
     

@@ -4,8 +4,7 @@ from typing import Dict, Type, Any, Optional, Literal, List
 import inspect
 
 from src.agent.tool import base_tool
-from src.runtime import subprocess_python_executor
-from src.runtime import subthread_python_executor
+from src.runtime.sub_thread import subthread_python_executor
 from src.runtime import workspace
 
 from src.utils import global_logger
@@ -46,5 +45,11 @@ class ExecutePythonCodeTool(base_tool.BaseTool):
             _globals=execution_context,
             timeout=self.timeout,  # 使用定义的超时时间
         )
-        workspace.append_out_globals(exec_result.arg_globals)
-        return exec_result.ret_tool2llm
+        if isinstance(exec_result, subthread_python_executor.ExecutionSuccess):
+            workspace.append_out_globals(exec_result.arg_chg_globals)
+        # ret_tool2llm may be a callable that returns a str or already a str; handle both cases.
+        ret = exec_result.ret_tool2llm
+        if callable(ret):
+            global_logger.info(f"未知情况执行结果（callable）：{ret()}")
+            return ret()
+        return ret
