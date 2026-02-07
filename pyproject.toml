@@ -5,10 +5,12 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "arxiv>=2.4.0",
     "decorator>=5.2.1",
     "deepdiff>=8.6.1",
     "folium>=0.20.0",
     "geopy>=2.4.1",
+    "httpx>=0.28.1",
     "inflection>=0.5.1",
     "matplotlib>=3.10.7",
     "mcp>=1.26.0",
