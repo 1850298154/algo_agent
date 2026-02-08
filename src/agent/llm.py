@@ -41,7 +41,7 @@ def _extract_assistant_output_from_chat(messages: list[ChatCompletionMessagePara
     return assistant_output
 
 
-def generate_assistant_output_append(messages: list[ChatCompletionMessageParam], tools_schema_list=None) -> ChatCompletionMessage:
+def _generate_assistant_output_append(messages: list[ChatCompletionMessageParam], tools_schema_list=None) -> ChatCompletionMessage:
     global_logger.info("-" * 60)
     assistant_message: ChatCompletionMessage = _extract_assistant_output_from_chat(messages, tools_schema_list)
     
@@ -50,4 +50,7 @@ def generate_assistant_output_append(messages: list[ChatCompletionMessageParam],
     messages.append(cast(ChatCompletionMessageParam, assistant_message))
     return assistant_message
 
+def run_llm_once(messages: list[ChatCompletionMessageParam], tools_schema_list: list) -> ChatCompletionMessage:
+    """调用 LLM 生成一次 assistant 输出"""
+    return _generate_assistant_output_append(messages, tools_schema_list)
 
