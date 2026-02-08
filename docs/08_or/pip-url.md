@@ -1,0 +1,17 @@
+https://deepwiki.com/casadi/casadi                
+https://deepwiki.com/CMA-ES/pycma                 
+https://deepwiki.com/cvxpy/cvxpy                  
+https://deepwiki.com/nnaisense/evotorch           
+https://deepwiki.com/ERGO-Code/HiGHS              
+https://deepwiki.com/cjlin1/libsvm                
+https://deepwiki.com/gkhayes/mlrose               
+https://deepwiki.com/hiive/mlrose           
+https://deepwiki.com/networkx/networkx            
+https://deepwiki.com/optuna/optuna                
+https://deepwiki.com/claesenm/optunity              
+https://deepwiki.com/google/or-tools              
+https://deepwiki.com/Pyomo/pyomo                  
+https://deepwiki.com/scikit-learn/scikit-learn    
+https://deepwiki.com/guofei9987/scikit-opt        
+https://deepwiki.com/scipy/scipy                  
+https://deepwiki.com/statsmodels/statsmodels      
