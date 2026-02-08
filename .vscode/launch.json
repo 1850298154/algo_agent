@@ -9,7 +9,7 @@
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",  // 关键：指定工作目录为项目根路径
             "subProcess": true, // 启用子进程调试
-            "justMyCode": true,  // 仅调试自己的代码（忽略依赖包）
+            "justMyCode": false,  // 仅调试自己的代码（忽略依赖包）
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"  // 可选：添加根路径到 Python 搜索路径（解决模块导入问题）
             }
@@ -21,7 +21,8 @@
             "program": "${workspaceFolder}/src/main.py",  // 手动指定要调试的脚本（示例路径）
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",  // 同样绑定根路径
-            "justMyCode": true
+            "subProcess": true, // 启用子进程调试
+            "justMyCode": false
         }
     ]
 }

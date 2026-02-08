@@ -1,0 +1,84 @@
+import asyncio
+import os
+import sys
+
+# 确保能导入模块
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from src.retrieval.arXiv.config import MAX_REQUESTS_PER_SECOND, DOWNLOAD_DIR, DOWNLOAD_CONCURRENCY
+from src.retrieval.arXiv.core.rate_limiter import TokenBucketLimiter
+from src.retrieval.arXiv.core.network import RateLimitedClient
+from src.retrieval.arXiv.services.search_service import SearchService
+from src.retrieval.arXiv.services.download_service import DownloadService
+from src.retrieval.arXiv.utils.logger import logger
+
+# 你的查询列表
+QUERIES = [
+    'ti:"agent"',
+    'ti:"large language model"',
+]
+
+async def main():
+    # 1. 初始化基础设施
+    if not os.path.exists(DOWNLOAD_DIR):
+        os.makedirs(DOWNLOAD_DIR)
+        
+    logger.info("🛠️  Initializing system...")
+    
+    # 核心：全局限流器 (1s 2个令牌)
+    global_limiter = TokenBucketLimiter(rate_per_second=MAX_REQUESTS_PER_SECOND)
+    
+    # 网络客户端 (注入限流器)
+    network_client = RateLimitedClient(global_limiter)
+    await network_client.start()
+    
+    # 业务服务
+    search_service = SearchService(global_limiter) # 搜索也共享同一个限流器
+    download_service = DownloadService(network_client, DOWNLOAD_DIR)
+
+    try:
+        # 2. 执行搜索阶段
+        all_papers = []
+        search_tasks = [search_service.search(q, max_results=10) for q in QUERIES]
+        
+        logger.info("🔍 Starting search phase...")
+        results_list = await asyncio.gather(*search_tasks)
+        
+        # 去重
+        seen_ids = set()
+        for res in results_list:
+            for paper in res:
+                if paper.get_short_id() not in seen_ids:
+                    all_papers.append(paper)
+                    seen_ids.add(paper.get_short_id())
+        
+        logger.info(f"📊 Total unique papers to process: {len(all_papers)}")
+
+        # 3. 执行下载阶段
+        # 使用Semaphore控制最大并发任务数（虽然有令牌桶兜底，但Semaphore可以防止创建过多Task对象占用内存）
+        sem = asyncio.Semaphore(DOWNLOAD_CONCURRENCY)
+        
+        async def bounded_process(paper):
+            async with sem:
+                await download_service.process_paper(paper)
+
+        download_tasks = [bounded_process(p) for p in all_papers]
+        
+        if download_tasks:
+            logger.info("🔥 Starting download phase...")
+            await asyncio.gather(*download_tasks)
+        else:
+            logger.warning("⚠️  No papers found.")
+
+    finally:
+        await network_client.close()
+        logger.info("✨ Mission Complete.")
+
+if __name__ == "__main__":
+    if os.name == 'nt':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+        
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logger.info("🛑 Stopped by user.")
