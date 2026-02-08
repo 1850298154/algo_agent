@@ -3,13 +3,13 @@ from pydantic import BaseModel, Field, ValidationError
 from typing import Dict, Type, Any, Optional, Literal, List
 import inspect
 
-from src.agent.tool import base_tool
+from src.agent.tool import tool_base
 from src.runtime.sub_thread import subthread_python_executor
-from src.runtime import workspace
+from src.runtime.status_mgr import var_ws
 
 from src.utils import global_logger
 
-class ExecutePythonCodeTool(base_tool.BaseTool):
+class ExecutePythonCodeTool(tool_base.ToolBase):
     """
 必须调用在每一轮推理中，作为计算工具。
 在有状态的环境中执行Python代码片段，类似于在Jupyter Notebook中运行单元格。
@@ -38,7 +38,7 @@ class ExecutePythonCodeTool(base_tool.BaseTool):
     )
 
     def run(self) -> str:
-        execution_context: Optional[Dict[str, Any]] = workspace.get_arg_globals()
+        execution_context: Optional[Dict[str, Any]] = var_ws.get_arg_globals()
         global_logger.info(f"执行Python代码片段：{pprint.pformat(self.python_code_snippet)}")
         exec_result: subthread_python_executor.ExecutionResult =  subthread_python_executor.run_structured_in_thread(
             command=self.python_code_snippet, 
@@ -46,7 +46,7 @@ class ExecutePythonCodeTool(base_tool.BaseTool):
             timeout=self.timeout,  # 使用定义的超时时间
         )
         if isinstance(exec_result, subthread_python_executor.ExecutionSuccess):
-            workspace.append_out_globals(exec_result.arg_chg_globals)
+            var_ws.append_out_globals(exec_result.arg_chg_globals)
         # ret_tool2llm may be a callable that returns a str or already a str; handle both cases.
         ret = exec_result.ret_tool2llm
         if callable(ret):

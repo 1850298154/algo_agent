@@ -3,8 +3,8 @@ from enum import Enum, unique
 from token import OP
 from typing import Any, Dict, Optional, Literal, Union, Annotated
 from pydantic import BaseModel, ConfigDict, Field, field_validator, computed_field
-from src.runtime import source_code
-from src.runtime import workspace
+from src.runtime.status_mgr import source_code
+from src.runtime.status_mgr import var_ws
 
 @unique
 class ExecutionStatus(str, Enum):
@@ -55,7 +55,7 @@ class ExecutionSuccess(BaseExecutionResult):
         if value is None:
             return {}
         # 这里保留你的深拷贝逻辑
-        return workspace.filter_and_deepcopy_globals(value)
+        return var_ws.filter_and_deepcopy_globals(value)
 
     def _generate_llm_response(self) -> str:
         return (

@@ -29,11 +29,11 @@ from src.agent.action import action_processer
 from src.agent import memory 
 from src.agent import tool 
 
-async def user_query(sys_prompt: str, user_prompt: str, tool_class_list: list[tool.base_tool.BaseTool]) -> None:
+async def user_query(sys_prompt: str, user_prompt: str, tool_class_list: list[tool.tool_base.ToolBase]) -> None:
     global_logger.info(f"用户输入： {user_prompt}\n\n")
 
     messages: list[ChatCompletionMessageParam] = memory.init_messages_with_system_prompt(sys_prompt, user_prompt)
-    tools_schema_list = tool.gen_des_schema.get_tools_schema(tool_class_list)
+    tools_schema_list = tool.tool_gen_descrip.get_tools_schema(tool_class_list)
 
     # 模型的第一轮调用
     assist_msg: ChatCompletionMessage = llm.run_llm_once(messages, tools_schema_list)

@@ -16,4 +16,4 @@ if __name__ == "__main__":
             user_input, 
             [tool.python_tool.ExecutePythonCodeTool]
         ))
-    global_logger.info(f"最终结果：\n\n {pprint.pformat(m)}\n\n")
+    global_logger.info(f"一共{len(m)}条对话：\n\n {pprint.pformat(m)}\n\n")

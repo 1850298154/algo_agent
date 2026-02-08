@@ -4,7 +4,7 @@ import inspect
 import inflection
 
 # ---------------------- 工具基类（统一接口） ----------------------
-class BaseTool(BaseModel):
+class ToolBase(BaseModel):
     """所有工具的基类，定义统一接口"""
     tool_call_purpose: str = Field(
         ..., 

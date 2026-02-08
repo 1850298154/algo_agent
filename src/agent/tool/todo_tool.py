@@ -1,13 +1,13 @@
 import pprint
 from pydantic import BaseModel, Field, ValidationError
 from typing import List, Dict, Optional
-from src.agent.tool.base_tool import BaseTool
+from src.agent.tool.tool_base import ToolBase
 from src.memory.tree_todo.schemas import RecursivePlanTreeNode, RecursivePlanTree, TaskStatus
 from src.memory.tree_todo import todo_track
 
 
 # 4. 计划树管理工具（存储+变更对比+Markdown渲染）
-class RecursivePlanTreeTodoTool(BaseTool):
+class RecursivePlanTreeTodoTool(ToolBase):
     """
 必须调用作为计划推理过程的思考与记录，然后再调用其他工具。
 递归计划树管理工具：
