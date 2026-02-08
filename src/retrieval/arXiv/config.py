@@ -10,7 +10,8 @@ MAX_RETRIES = 3
 BASE_DELAY = 0.5             # 重试基础延迟
 
 # ================= 路径配置 =================
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.abspath(r"D:\zyt\git_ln\agent-plan-paper\v1")
 DOWNLOAD_DIR = os.path.join(BASE_DIR, "Paper_Library_Async_Optimized")
 LOG_FILE = os.path.join(BASE_DIR, "download_mission.log")
 PAPERS_RESULT_PATH = os.path.join(DOWNLOAD_DIR, f"papers_{TIME_STR}.json")

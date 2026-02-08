@@ -56,16 +56,16 @@ class DownloadService:
         src_path = os.path.join(paper_dir, f"{clean_title}.tar.gz")
         bib_path = os.path.join(paper_dir, f"{clean_title}.bib")
         pdf_path = os.path.join(paper_dir, f"{clean_title}.pdf")
-        logger.info(f"📼 [Store] {paper_id} - {src_url}")
-        logger.info(f"📼 [Store] {paper_id} - {bib_url}")
-        logger.info(f"📼 [Store] {paper_id} - {pdf_url}")
+        logger.info(f"📼 [Store] {paper_id} - {src_path}")
+        logger.info(f"📼 [Store] {paper_id} - {bib_path}")
+        logger.info(f"📼 [Store] {paper_id} - {pdf_path}")
 
         task_src = self._download_file(src_url, src_path, f"SRC [{paper_id}]")
         task_bib = self._download_file(bib_url, bib_path, f"BIB [{paper_id}]")
         task_pdf = self._download_file(pdf_url, pdf_path, f"PDF [{paper_id}]")
 
         await asyncio.gather(
-            task_pdf, 
             task_src, 
-            task_bib,
+            # task_bib,
+            # task_pdf, 
             )

@@ -73,3 +73,20 @@ user / tool action
 asistant
 user / tool action
 ```
+
+
+激活虚拟环境
+```bash
+source .venv/Scripts/activate
+
+.venv\Scripts\activate.bat
+deactivate
+python.exe src/retrieval/arXiv/start_main.py
+python.exe src\retrieval\arXiv\start_main.py
+
+python.exe src/retrieval/arXiv/start_main.py | tee -a output.log
+```
+安装依赖
+```bash
+uv sync
+```

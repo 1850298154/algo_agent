@@ -15,7 +15,7 @@ class RateLimitedClient:
         session: Optional[aiohttp.ClientSession] - aiohttp 会话对象，在 start() 后创建。
     """
     def __init__(self, rate_limiter: TokenBucketLimiter) -> None:
-        self.limiter: Any = rate_limiter
+        self.limiter = rate_limiter
         self.session: Optional[aiohttp.ClientSession] = None
 
     async def start(self) -> None:
