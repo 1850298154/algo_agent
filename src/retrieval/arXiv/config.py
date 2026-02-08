@@ -1,4 +1,7 @@
 import os
+import datetime
+now = datetime.datetime.now ()
+TIME_STR = now.strftime ("%Y%m%d-%H%M%S")
 
 # ================= 核心限制 =================
 MAX_REQUESTS_PER_SECOND = 2  # 严格限制：每秒2次
@@ -7,9 +10,15 @@ MAX_RETRIES = 3
 BASE_DELAY = 0.5             # 重试基础延迟
 
 # ================= 路径配置 =================
-base_dir = os.path.dirname(os.path.abspath(__file__))
-DOWNLOAD_DIR = os.path.join(base_dir, "Paper_Library_Async_Optimized")
-LOG_FILE = os.path.join(base_dir, "download_mission.log")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DOWNLOAD_DIR = os.path.join(BASE_DIR, "Paper_Library_Async_Optimized")
+LOG_FILE = os.path.join(BASE_DIR, "download_mission.log")
+PAPERS_RESULT_PATH = os.path.join(DOWNLOAD_DIR, f"papers_{TIME_STR}.json")
+
+
+if not os.path.exists(DOWNLOAD_DIR):
+    os.makedirs(DOWNLOAD_DIR)
+
 
 # ================= HTTP头 =================
 DEFAULT_HEADERS = {
