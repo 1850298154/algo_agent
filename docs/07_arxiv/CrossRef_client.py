@@ -29,7 +29,7 @@ def get_bibtex_by_title_crossref(title, limit=1):
             # 通过DOI获取BibTeX
             bibtex_url = f"https://api.crossref.org/works/{doi}/transform/application/x-bibtex"
             bibtex_response = requests.get(bibtex_url)
-            """
+            r"""
             https://api.crossref.org/works/10.65215/nxvz2v36/transform/application/x-bibtex
             
              @article{Vaswani_2025, title={Attention Is All You Need}, url={http://dx.doi.org/10.65215/nxvz2v36}, DOI={10.65215/nxvz2v36}, publisher={Shenzhen Medical Academy of Research and Translation}, author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and N.Gomez, Aidan and Kaiser, Lukasz and Polosukhin, Illia}, year={2025}, month=aug }

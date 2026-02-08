@@ -27,12 +27,12 @@ from src.agent import action
 from src.agent import memory 
 from src.agent import tool 
 
-def user_query(user_input: str) -> None:
+def user_query(sys_prompt: str, user_prompt: str, tool_class_list: list[tool.base_tool.BaseTool]) -> None:
     user_hint = "用户输入："
-    global_logger.info(f"{user_hint} ： {user_input}\n\n")
+    global_logger.info(f"{user_hint} ： {user_prompt}\n\n")
 
-    messages: list[ChatCompletionMessageParam] = memory.init_messages_with_system_prompt(user_input)
-    tools_schema_list = tool.schema.get_tools_schema([
+    messages: list[ChatCompletionMessageParam] = memory.init_messages_with_system_prompt(user_prompt, sys_prompt)
+    tools_schema_list = tool.gen_des_schema.get_tools_schema([
         tool.python_tool.ExecutePythonCodeTool,
         # tool.todo_tool.RecursivePlanTreeTodoTool,
         ])

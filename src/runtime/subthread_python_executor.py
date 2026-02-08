@@ -10,7 +10,8 @@ from src.runtime.before_thread import plt_back_chinese
 from src.utils import global_logger, traceable
 
 # work_dir = './wsm/5glm/1'
-work_dir = './wsm/7/1'
+# work_dir = './wsm/7/1'
+work_dir = None
 
 def _worker_with_buffer(
     command: str,
