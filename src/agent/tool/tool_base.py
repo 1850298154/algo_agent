@@ -5,7 +5,7 @@ import inflection
 
 # ---------------------- 工具基类（统一接口） ----------------------
 class ToolBase(BaseModel):
-    """所有工具的基类，定义统一接口"""
+    """给大模型的工具的描述，可以调用该工具完成任务"""
     tool_call_purpose: str = Field(
         ..., 
         description="工具调用的目的，即调用该工具的具体场景或问题。"

@@ -1,5 +1,6 @@
 import asyncio
 import pprint
+import json
 from src.agent.deep_research_api import user_query
 from src.agent.system_prompt import react_system_prompt
 from src.agent import tool 
@@ -16,4 +17,6 @@ if __name__ == "__main__":
             user_input, 
             [tool.python_tool.ExecutePythonCodeTool]
         ))
+    json_str = json.dumps(m, default=lambda o: o.model_dump())
+    pure_python_data = json.loads(json_str)
     global_logger.info(f"一共{len(m)}条对话：\n\n {pprint.pformat(m)}\n\n")

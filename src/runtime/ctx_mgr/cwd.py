@@ -5,6 +5,9 @@ from datetime import datetime
 from src.utils import global_logger
 from src.utils import create_folder
 
+from src.runtime.before_thread import plt_back_chinese
+
+
 class ChangeDirectory:
     """目录切换上下文管理器，退出时自动恢复原目录"""
     def __init__(self, target_dir_fullpath: str):

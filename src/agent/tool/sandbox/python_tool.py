@@ -24,7 +24,7 @@ class ExecutePythonCodeTool(tool_base.ToolBase):
 2. **导入模块**：虽然变量会持续存在，但由于序列化限制，导入的模块（如 `math`、`json`）可能不会在每次调用中持续存在。**在每个代码片段中始终重新导入必要的模块**。
 3. **安全性**：无限循环或运行时间极长的代码将被超时机制终止。
 4. **依赖管理**：如果代码缺失了依赖于特定的外部库，可以代码片段 `subprocess.check_call(["uv", "add", package_name])` 代码安装。
-    """.strip()
+    """
     python_code_snippet: str = Field(
         ..., 
         description=(
@@ -53,3 +53,14 @@ class ExecutePythonCodeTool(tool_base.ToolBase):
             global_logger.info(f"未知情况执行结果（callable）：{ret()}")
             return ret()
         return ret
+
+if __name__ == "__main__":
+    # --- 测试工具 ---
+    test_code = """import math
+print("math.pi =", math.pi)
+print("math.sqrt(16) =", math.sqrt(16))
+"""
+    tool = ExecutePythonCodeTool(tool_call_purpose='',python_code_snippet=test_code)
+    x = tool.get_tool_schema()
+    result = tool.run()
+    print(f"工具执行结果:\n{result}")

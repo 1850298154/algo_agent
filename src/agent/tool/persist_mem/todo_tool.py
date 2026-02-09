@@ -14,7 +14,7 @@ class RecursivePlanTreeTodoTool(ToolBase):
 1. 自动存储当前计划树，维护历史版本
 2. 对比当前与上一版本，识别任务变更（新增/状态变更/层级调整）
 3. 渲染Markdown格式的树状Todo清单，包含状态可视化
-    """.strip()
+    """
     
     recursive_plan_tree: RecursivePlanTree = Field(
         ..., 

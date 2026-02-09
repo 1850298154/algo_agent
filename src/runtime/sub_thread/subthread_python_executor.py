@@ -20,6 +20,7 @@ from src.runtime.ctx_mgr import timer_recorder
 from src.runtime.before_thread import plt_back_chinese
 from src.utils import global_logger, traceable
 from src.utils import path_manager
+from src.utils import create_folder
 
 FIXED_WORK_DIR = None 
 
@@ -131,7 +132,7 @@ def run_structured_in_thread(
     target_dir_fullpath = (
         os.path.abspath(FIXED_WORK_DIR) 
         if FIXED_WORK_DIR 
-        else cwd.create_folder.create_subfolder_with_time_tag(dir_rel_to_proj=path_manager.PathEnum.WST_DIR_NAME.value)
+        else create_folder.create_subfolder_with_time_tag(dir_rel_to_proj=path_manager.PathEnum.WST_DIR_NAME.value)
     )
     
     # 切换目录执行
