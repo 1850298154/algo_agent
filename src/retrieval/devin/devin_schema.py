@@ -1,110 +1,103 @@
-from typing import List, Literal, Optional, Any
 from pydantic import BaseModel, Field
+from typing import Optional, Dict, List, Any, Union
 
-# ==========================================
-# 1. 公共组件模型 (Common Component Models)
-# ==========================================
+# -------------------------- 公共基础模型（抽离复用部分） --------------------------
+class FastMcpMeta(BaseModel):
+    """FastMCP专属元数据（Tool.meta._fastmcp）"""
+    tags: List[str] = Field(
+        default_factory=list,
+        description="工具标签列表，用于分类/筛选，当前返回数据中均为空数组"
+    )
 
-class ContentItem(BaseModel):
-    """
-    内容项模型
-    表示 content 列表中的单个片段
-    """
+class ToolMeta(BaseModel):
+    """工具整体元数据"""
+    _fastmcp: FastMcpMeta = Field(
+        alias="_fastmcp",  # 适配原数据中的下划线字段
+        description="FastMCP框架相关的元数据配置"
+    )
+
+class SchemaProperty(BaseModel):
+    """Schema中单个参数的属性描述（如repoName/question的类型定义）"""
+    type: Optional[str] = Field(
+        None,
+        description="参数基础类型，如'string'/'array'，部分字段会通过anyOf定义多类型"
+    )
+    anyOf: Optional[List[Dict[str, Any]]] = Field(
+        None,
+        description="多类型兼容配置（如repoName支持string或string数组）"
+    )
+    items: Optional[Dict[str, Any]] = Field(
+        None,
+        description="当type为array时，定义数组元素的类型（如{'type': 'string'}）"
+    )
+
+class BaseSchema(BaseModel):
+    """输入/输出Schema的公共基础结构"""
+    properties: Dict[str, SchemaProperty] = Field(
+        default_factory=dict,
+        description="参数字典：key为参数名，value为参数的类型/规则描述"
+    )
+    required: List[str] = Field(
+        default_factory=list,
+        description="必填参数列表（如['repoName', 'question']）"
+    )
     type: str = Field(
-        ..., 
-        description="内容类型，例如 'text'"
-    )
-    text: str = Field(
-        ..., 
-        description="具体的文本内容。对于 TOC 是目录树字符串，对于 QA 是回答内容。"
+        default="object",
+        description="Schema类型，固定为'object'（表示参数是键值对对象）"
     )
 
-class StructuredOutput(BaseModel):
-    """
-    结构化输出模型
-    对应 JSON 中的 structuredContent 字段
-    """
-    result: str = Field(
-        ..., 
-        description="原始的完整结果字符串，通常与 content 中的 text 内容对应。"
-    )
-    is_error: bool = Field(
-        ..., 
-        alias="isError", 
-        description="错误标识位。False 表示执行成功，True 表示发生错误。"
+# -------------------------- 业务专属模型 --------------------------
+class InputSchema(BaseSchema):
+    """工具输入参数Schema（无额外字段，继承公共结构）"""
+    pass
+
+class OutputSchema(BaseSchema):
+    """工具输出结果Schema（扩展FastMCP专属字段）"""
+    x_fastmcp_wrap_result: bool = Field(
+        alias="x-fastmcp-wrap-result",  # 适配原数据中的短横线字段
+        default=True,
+        description="FastMCP扩展字段：是否用'result'字段包裹输出结果（当前均为True）"
     )
 
-# ==========================================
-# 2. 结果载体模型 (Result Payload Model)
-# ==========================================
-
-class AgentResult(BaseModel):
-    """
-    Agent 执行结果模型
-    对应 JSON-RPC 中的 result 字段
-    """
-    content: List[ContentItem] = Field(
-        ..., 
-        description="由多个内容片段组成的列表，通常用于流式传输或分段展示。"
+class Tool(BaseModel):
+    """MCP返回的GitHub仓库工具核心模型"""
+    name: str = Field(
+        description="工具唯一标识名（如'read_wiki_structure'/'ask_question'）"
     )
-    structured_content: StructuredOutput = Field(
-        ..., 
-        alias="structuredContent", 
-        description="结构化的完整输出对象，包含结果文本和状态码。"
+    title: Optional[str] = Field(
+        None,
+        description="工具展示标题（当前返回数据中均为None）"
     )
-
-# ==========================================
-# 3. 顶层响应模型 (Top-Level Response Models)
-# ==========================================
-
-class BaseRpcResponse(BaseModel):
-    """
-    JSON-RPC 基础响应模型
-    抽取了外层的通用协议字段
-    """
-    jsonrpc: Literal["2.0"] = Field(
-        "2.0", 
-        description="JSON-RPC 协议版本，固定为 '2.0'"
+    description: str = Field(
+        description="工具功能描述，包含作用和参数说明"
     )
-    id: int = Field(
-        ..., 
-        description="请求/响应的唯一标识符 ID"
+    inputSchema: InputSchema = Field(
+        alias="inputSchema",
+        description="工具输入参数的Schema规范"
     )
-
-# 虽然两者结构目前相同，但为了业务逻辑区分，
-# 定义两个具体的类继承自同一结构。
-
-class DevinTOCResponse(BaseRpcResponse):
-    """
-    Devin 目录结构(TOC) 响应模型
-    """
-    result: AgentResult = Field(
-        ..., 
-        description="包含项目代码和知识库融合后的目录结构(Table of Contents)的解析结果"
+    outputSchema: OutputSchema = Field(
+        alias="outputSchema",
+        description="工具输出结果的Schema规范"
+    )
+    icons: Optional[Any] = Field(
+        None,
+        description="工具图标信息（当前返回数据中均为None）"
+    )
+    annotations: Optional[Any] = Field(
+        None,
+        description="工具注解信息（当前返回数据中均为None）"
+    )
+    meta: ToolMeta = Field(
+        description="工具元数据（包含FastMCP标签配置）"
+    )
+    execution: Optional[Any] = Field(
+        None,
+        description="工具执行配置（当前返回数据中均为None）"
     )
 
-class DevinQAResponse(BaseRpcResponse):
-    """
-    Devin 问答(QA) 响应模型
-    """
-    result: AgentResult = Field(
-        ..., 
-        description="包含 Agent 对用户提问的思考、工具调用结果及最终回答"
+# -------------------------- 工具列表模型（可选） --------------------------
+class ToolList(BaseModel):
+    """GitHub仓库工具列表容器"""
+    __root__: List[Tool] = Field(
+        description="MCP返回的所有工具列表"
     )
-
-# ==========================================
-# 测试与验证
-# ==========================================
-
-if __name__ == "__main__":
-    # 模拟数据输入
-    toc_data = {'jsonrpc': '2.0', 'id': 1, 'result': {'content': [{'type': 'text', 'text': 'Available pages...\n- 1 Overview'}], 'structuredContent': {'result': 'Available pages...\n- 1 Overview', 'isError': False}}}
-    qa_data = {'jsonrpc': '2.0', 'id': 1, 'result': {'content': [{'type': 'text', 'text': 'The agent coordinates...'}], 'structuredContent': {'result': 'The agent coordinates...', 'isError': False}}}
-
-    # 验证 TOC 模型 (使用 parse_obj 来接受任意映射并由 pydantic 校验)
-    toc_model = DevinTOCResponse.model_validate(toc_data)
-    print(f"TOC 解析成功: ID={toc_model.id}, 文本长度={len(toc_model.result.structured_content.result)}")
-
-    # 验证 QA 模型 (使用 parse_obj 来接受任意映射并由 pydantic 校验)
-    qa_model = DevinQAResponse.model_validate(qa_data)
-    print(f"QA  解析成功: ID={qa_model.id}, 文本长度={len(qa_model.result.structured_content.result)}")
