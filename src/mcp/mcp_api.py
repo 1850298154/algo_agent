@@ -11,6 +11,8 @@ from enum import Enum, unique
 # 导入Pydantic核心类
 from pydantic import BaseModel, ConfigDict
 from src.mcp import mcp_enum
+from src.utils.log_decorator import global_logger
+
 
 # --------------------------
 # 示例：多协程调用同一个 MCP Server
@@ -30,11 +32,11 @@ async def call_mcp_tool(
                         raise_on_error=False
                     )
                     if result.is_error:
-                        # print(f"协程 {asyncio.current_task().get_name()} 调用失败: {result.content[0].text}")
-                        return result.content[0].text
+                        global_logger.log(f"{asyncio.current_task().get_name()} 协程调用失败: \n{result.content[0].text}")
+                        return f"{tool_name}工具执行失败，错误信息:\n\n" + result.content[0].text
                     else:
-                        # print(f"协程 {asyncio.current_task().get_name()} 调用成功: {result.data}")
-                        return result.data
+                        global_logger.log(f"{asyncio.current_task().get_name()} 协程调用成功: \n{result.data}")
+                        return f"{tool_name}工具执行成功，结果:\n\n" + result.data
         except Exception as e:
             print(f"协程 {asyncio.current_task().get_name()} 异常: {str(e)}")
             raise
