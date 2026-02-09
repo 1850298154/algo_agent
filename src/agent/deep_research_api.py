@@ -26,13 +26,13 @@ from src.utils import global_logger, traceable
 
 from src.agent import llm
 from src.agent.action import action_processer 
-from src.agent import msg_mgr 
+from src.agent import msg_mem 
 from src.agent import tool 
 
 async def user_query(sys_prompt: str, user_prompt: str, tool_class_list: list[tool.tool_base.ToolBase]) -> None:
     global_logger.info(f"用户输入： {user_prompt}\n\n")
 
-    messages: list[ChatCompletionMessageParam] = msg_mgr.init_messages_with_system_prompt(sys_prompt, user_prompt)
+    messages: list[ChatCompletionMessageParam] = msg_mem.init_messages_with_system_prompt(sys_prompt, user_prompt)
     tools_schema_list = tool.tool_gen_descrip.get_tools_schema(tool_class_list)
 
     # 模型的第一轮调用
