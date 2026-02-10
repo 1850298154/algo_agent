@@ -7,7 +7,7 @@ from src.agent.tool import tool_base
 from src.runtime.sub_thread import subthread_python_executor
 from src.runtime.status_mgr import var_ws
 
-from src.utils import global_logger
+from src.utils.log_decorator import global_logger
 
 class ExecutePythonCodeTool(tool_base.ToolBase):
     """
@@ -28,7 +28,7 @@ class ExecutePythonCodeTool(tool_base.ToolBase):
     python_code_snippet: str = Field(
         ..., 
         description=(
-        "要执行的有效 Python 代码片段。不得包含恶意代码（例如，修改系统文件、访问敏感数据或执行无限循环的代码）。"
+        "要执行的有效 Python 代码片段。不得包含恶意代码（例如，修改工作路径、执行无限循环的代码）。"
         ),
         examples=["print('Hello, World!')"]
     )
@@ -37,7 +37,7 @@ class ExecutePythonCodeTool(tool_base.ToolBase):
         description="执行代码的最大时间（秒）。如果代码运行时间超过此值，将被终止并返回错误消息。"
     )
 
-    def run(self) -> str:
+    async def run(self) -> str:
         execution_context: Optional[Dict[str, Any]] = var_ws.get_arg_globals()
         global_logger.info(f"执行Python代码片段：{pprint.pformat(self.python_code_snippet)}")
         exec_result: subthread_python_executor.ExecutionResult =  subthread_python_executor.run_structured_in_thread(

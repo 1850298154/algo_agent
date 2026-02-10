@@ -25,7 +25,7 @@ class RecursivePlanTreeTodoTool(ToolBase):
     )
 
 
-    def run(
+    async def run(
         self,
     ) -> str:
         result = todo_track.run(self.recursive_plan_tree)

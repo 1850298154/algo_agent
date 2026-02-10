@@ -22,8 +22,9 @@ from openai.types.chat.chat_completion_message_param import (
 from dataclasses import dataclass
 from typing import List, Tuple, Optional, Any
 from src.agent.action import action_parse_exec_gather 
+from src.agent.msg import msg_mem
 
-async def process_tool_calls(messages: List[ChatCompletionMessageParam], assist_msg: ChatCompletionMessage):
+async def process_tool_calls(messages: msg_mem.MessageMemory, assist_msg: ChatCompletionMessage):
     """
     封装：1) collect_call_descriptors 2) execute_calls_concurrently_async 3) append_results_to_messages
     返回 (call_descriptors, results)

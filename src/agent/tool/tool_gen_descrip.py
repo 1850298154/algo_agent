@@ -1,5 +1,5 @@
 from src.agent.tool import tool_base
-from src.utils import global_logger, traceable
+from src.utils.log_decorator import global_logger, traceable
 
 @traceable
 def get_tools_schema(class_type_list: list[tool_base.ToolBase]):

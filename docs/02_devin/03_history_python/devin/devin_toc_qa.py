@@ -7,10 +7,14 @@ load_dotenv()
 
 DEVIN_API_KEY = os.getenv("DEVIN_API_KEY")
 
-
+"""
+Authorization: Bearer your _ token _ here
+Content-Type: application/json
+"""
 # BASE_URL = "https://mcp.deepwiki.com/mcp" # deepwiki 只支持公开，不支持私有库，不能配置秘钥
 # BASE_URL = "https://mcp.devin.ai/sse" # 废弃
 BASE_URL = "https://mcp.devin.ai/mcp" # devin 私有仓库，既可以访问公开，又可以访问私有
+# BASE_URL = "https://api.devin.ai/wiki" # devin 私有仓库，既可以访问公开，又可以访问私有
 HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json, text/event-stream",
@@ -69,16 +73,45 @@ def _devin_all_in_the_book(repoName: str):
         arguments={"repoName": repoName}, 
     )
 
+def _devin_list_available_repos():
+    return _devin_request(
+        tool_name="list_available_repos", 
+        arguments={}, 
+    )
+
+def _devin_list_wiki_repos_by_org():
+    return _devin_request(
+        tool_name="list_wiki_repos_by_org", 
+        arguments={}, 
+    )
+
 if __name__ == "__main__":
-    print("devin_toc",devin_toc("1850298154/HULK"))
-    print("--------------------------")
-    print("devin_toc",devin_toc("1850298154/algo_agent"))
-    print("===========================")
-    print("devin_toc",devin_toc("volcengine/OpenViking"))
-    print("===========================")
-    print("devin_toc",devin_toc("1850298154/aella-data-explorer"))
-    print("**************************")
-    print("devin_qa",devin_qa("1850298154/algo_agent", "How does the agent coordinate actions? short answer only in 5 sentences"))
+    print("_devin_list_available_repos",_devin_list_available_repos()) 
+    #　_devin_list_available_repos {'jsonrpc': '2.0', 'id': 1, 'result': {'content': [{'type': 'text', 'text': "Error fetching available repositories: Client error '401 Unauthorized' for url 'https://api.devin.ai/wiki/list_wiki_repos_by_org'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401"}], 'structuredContent': {'result': "Error fetching available repositories: Client error '401 Unauthorized' for url 'https://api.devin.ai/wiki/list_wiki_repos_by_org'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401"}, 'isError': False}}
+    # BASE_URL = "https://mcp.devin.ai/mcp" 
+
+    # BASE_URL = "https://api.devin.ai/wiki" 
+    # _devin_list_available_repos {'detail': 'Not Found'}
+    
+
+    # print("_devin_list_wiki_repos_by_org",_devin_list_wiki_repos_by_org()) 
+    
+    #　_devin_list_wiki_repos_by_org {'detail': 'Not Found'}
+    # BASE_URL = "https://api.devin.ai/wiki" 
+    
+    # BASE_URL = "https://mcp.devin.ai/mcp" 
+    #  _devin_list_wiki_repos_by_org {'jsonrpc': '2.0', 'id': 1, 'result': {'content': [{'type': 'text', 'text': 'Unknown tool: list_wiki_repos_by_org'}], 'isError': True}}
+
+
+    # print("devin_toc",devin_toc("1850298154/HULK"))
+    # print("--------------------------")
+    # print("devin_toc",devin_toc("1850298154/algo_agent"))
+    # print("===========================")
+    # print("devin_toc",devin_toc("volcengine/OpenViking"))
+    # print("===========================")
+    # print("devin_toc",devin_toc("1850298154/aella-data-explorer"))
+    # print("**************************")
+    # print("devin_qa",devin_qa("1850298154/algo_agent", "How does the agent coordinate actions? short answer only in 5 sentences"))
     
     # devin_qa("1850298154/algo_agent", "How does tool call work?")
     # _devin_all_in_the_book("1850298154/algo_agent")

@@ -1,0 +1,90 @@
+ChatCompletion(
+    id="20260210115328c3dbdbf974eb4a10",
+    choices=[
+        Choice(
+            finish_reason="tool_calls",
+            index=0,
+            logprobs=None,
+            message=ChatCompletionMessage(
+                content="好的，我来一次调用所有可用的工具进行测试：",
+                refusal=None,
+                role="assistant",
+                annotations=None,
+                audio=None,
+                function_call=None,
+                tool_calls=[
+                    ChatCompletionMessageFunctionToolCall(
+                        id="call_-7899238051904223413",
+                        function=Function(
+                            arguments='{"repoName":"facebook/react"}',
+                            name="read_wiki_structure",
+                        ),
+                        type="function",
+                        index=0,
+                    ),
+                    ChatCompletionMessageFunctionToolCall(
+                        id="call_-7899238051904223412",
+                        function=Function(
+                            arguments='{"repoName":"facebook/react"}',
+                            name="read_wiki_contents",
+                        ),
+                        type="function",
+                        index=1,
+                    ),
+                    ChatCompletionMessageFunctionToolCall(
+                        id="call_-7899238051904223411",
+                        function=Function(
+                            arguments='{"repoName":"facebook/react","question":"What is React and what are its main features?"}',
+                            name="ask_question",
+                        ),
+                        type="function",
+                        index=2,
+                    ),
+                    ChatCompletionMessageFunctionToolCall(
+                        id="call_-7899238051904223410",
+                        function=Function(
+                            arguments='{"query":"useState language:javascript"}',
+                            name="search_code",
+                        ),
+                        type="function",
+                        index=3,
+                    ),
+                    ChatCompletionMessageFunctionToolCall(
+                        id="call_-7899238051904223409",
+                        function=Function(
+                            arguments='{"query":"machine learning stars:>1000 language:python"}',
+                            name="search_repositories",
+                        ),
+                        type="function",
+                        index=4,
+                    ),
+                    ChatCompletionMessageFunctionToolCall(
+                        id="call_-7899238051904223408",
+                        function=Function(arguments="{}", name="list_available_repos"),
+                        type="function",
+                        index=5,
+                    ),
+                ],
+                reasoning_content='用户要求一次调用所有工具来测试。我需要看看有哪些工具可用，然后一次性调用所有这些工具。\n\n从函数列表中，我看到有以下工具：\n1. read_wiki_structure - 获取GitHub仓库的文档主题列表\n2. read_wiki_contents - 查看GitHub仓库的文档\n3. ask_question - 询问关于GitHub仓库的问题\n4. list_available_repos - 列出所有可用的仓库（仅在私有模式下可用）\n5. search_code - 在所有GitHub仓库中搜索代码\n6. search_repositories - 通过名称、描述等查找GitHub仓库\n\n我需要为每个工具提供必要的参数。让我选择一些合理的参数：\n\n1. read_wiki_structure - 需要repoName参数，我可以用一个流行的仓库如"facebook/react"\n2. read_wiki_contents - 需要repoName参数，同样用"facebook/react"\n3. ask_question - 需要repoName和question参数，可以用"facebook/react"和一个相关问题\n4. list_available_repos - 不需要参数\n5. search_code - 需要query参数，我可以搜索一些常见的代码模式\n6. search_repositories - 需要query参数，我可以搜索一些流行的仓库主题\n\n让我一次性调用所有这些工具。',
+            ),
+        )
+    ],
+    created=1770695619,
+    model="glm-4.7",
+    object="chat.completion",
+    service_tier=None,
+    system_fingerprint=None,
+    usage=CompletionUsage(
+        completion_tokens=371,
+        prompt_tokens=1030,
+        total_tokens=1401,
+        completion_tokens_details=CompletionTokensDetails(
+            accepted_prediction_tokens=None,
+            audio_tokens=None,
+            reasoning_tokens=259,
+            rejected_prediction_tokens=None,
+        ),
+        prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=42),
+    ),
+    request_id="20260210115328c3dbdbf974eb4a10",
+)

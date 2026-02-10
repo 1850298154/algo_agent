@@ -9,6 +9,14 @@ from pydantic import BaseModel, ConfigDict, Field
 load_dotenv()
 
 # --------------------------
+# 定义枚举类标识不同的MCP服务器（可扩展）
+# --------------------------
+@unique
+class MCPEnum(Enum):
+    DEVIN = "devin"
+    GITHUB = "github"
+
+# --------------------------
 # 定义Pydantic模型封装客户端相关对象
 # --------------------------
 class ClientCacheItem(BaseModel):
@@ -20,21 +28,14 @@ class ClientCacheItem(BaseModel):
     client: Client          # MCP客户端实例
     limiter: AsyncLimiter   # 速率限流器
     semaphore: asyncio.Semaphore  # 协程信号量（控制并发数）
+    # name: MCPEnum
 
-# --------------------------
-# 定义枚举类标识不同的MCP服务器（可扩展）
-# --------------------------
-@unique
-class MCPServerEnum(Enum):
-    DEVIN = "devin"
-    GITHUB = "github"
-
-# ---------------------------
+# ---------`------------------
 # MCP客户端缓存（单例享元模式）
 # ---------------------------
 devin_cache_item = ClientCacheItem(
-    client=Client(MCPConfig(mcpServers={
-                MCPServerEnum.DEVIN: 
+    client=Client(transport=MCPConfig(mcpServers={
+                MCPEnum.DEVIN: 
                     RemoteMCPServer(
                     url="https://mcp.devin.ai/mcp",
                     transport="http",
@@ -45,8 +46,8 @@ devin_cache_item = ClientCacheItem(
 )
 
 github_cache_item = ClientCacheItem(
-    client=Client(MCPConfig(mcpServers={
-                MCPServerEnum.GITHUB: 
+    client=Client(transport=MCPConfig(mcpServers={
+                MCPEnum.GITHUB: 
                     RemoteMCPServer(
                     url="https://api.githubcopilot.com/mcp/",
                     transport="http",
@@ -55,4 +56,21 @@ github_cache_item = ClientCacheItem(
     limiter=AsyncLimiter(1, 1),
     semaphore=asyncio.Semaphore(5),  # 并发连接：不超过5 个同时请求（与第三方实现默认值一致）
 )
+
+client_item_list: list[ClientCacheItem] = [devin_cache_item, github_cache_item]
+
+enum_2_client_item_dict: dict[MCPEnum, ClientCacheItem] = {
+    MCPEnum.DEVIN: devin_cache_item,
+    MCPEnum.GITHUB: github_cache_item,
+}
+
+mcp_list_tool_json_dir = 'mcp_list_tool_json'
+mcp_list_tool_name_list = [
+# "list_available_repos", #这个没有权限，暂时无法测试
+"read_wiki_contents",  # 1M+字符内容太多，不建议使用
+"read_wiki_structure",  # ok
+"ask_question",  # ok
+"search_code",
+"search_repositories",
+]
 

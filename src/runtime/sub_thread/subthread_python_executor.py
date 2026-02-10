@@ -18,7 +18,7 @@ from src.runtime.sub_thread.subthread_schemas import (
 from src.runtime.ctx_mgr import cwd
 from src.runtime.ctx_mgr import timer_recorder
 from src.runtime.before_thread import plt_back_chinese
-from src.utils import global_logger, traceable
+from src.utils.log_decorator import global_logger, traceable
 from src.utils import path_manager
 from src.utils import create_folder
 

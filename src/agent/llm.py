@@ -1,5 +1,9 @@
-from openai.types.chat.chat_completion import ChatCompletionMessage
-from openai.types.chat.chat_completion import ChatCompletion
+from openai.types.chat.chat_completion import (
+    ChatCompletionMessage,
+    ChatCompletion,
+    Choice,
+    CompletionUsage
+)
 from openai.types.chat.chat_completion_message_param import (
     ChatCompletionDeveloperMessageParam,
     ChatCompletionSystemMessageParam,
@@ -20,37 +24,37 @@ from openai.types.chat.chat_completion_message_function_tool_call_param import (
 
 from typing import cast
 
-from src.utils import global_logger, traceable
-from src.agent.llm_client import glm
+from src.agent.msg import msg_mem
+from src.utils.log_decorator import global_logger, traceable
+from src.agent.llm_client import glm as chat_llm
 
 @traceable
-def _generate_chat_completion(messages: list[ChatCompletionMessageParam], tools_schema_list=None) -> ChatCompletion:
-    completion: ChatCompletion = glm.client.chat.completions.create(
-        messages=messages,
-        model=glm.glm_4_7_model,
+def _generate_chat_completion(message_mem: msg_mem.MessageMemory, tools_schema_list=None) -> ChatCompletion:
+    completion: ChatCompletion = chat_llm.client.chat.completions.create(
+        messages=message_mem.messages,
+        model=chat_llm.default_glm_model,
         tools=tools_schema_list,
         parallel_tool_calls=True,
     )
     return completion
 
 
-def _extract_assistant_output_from_chat(messages: list[ChatCompletionMessageParam], tools_schema_list=None) -> ChatCompletionMessage:
-    completion: ChatCompletion = _generate_chat_completion(messages, tools_schema_list)
-    assistant_output: ChatCompletionMessage = completion.choices[0].message
-    # assistant_output.finish_reason == "stop" or "length"
-    return assistant_output
-
-
-def _generate_assistant_output_append(messages: list[ChatCompletionMessageParam], tools_schema_list=None) -> ChatCompletionMessage:
-    global_logger.info("-" * 60)
-    assistant_message: ChatCompletionMessage = _extract_assistant_output_from_chat(messages, tools_schema_list)
+def _extract_assistant_output_from_chat(message_mem: msg_mem.MessageMemory, tools_schema_list=None) -> ChatCompletionMessage:
+    completion: ChatCompletion = _generate_chat_completion(message_mem, tools_schema_list)
+    choice: Choice = completion.choices[0]
+    assistant_message: ChatCompletionMessage = choice.message
     
-    if assistant_message.content is None:
-        assistant_message.content = ""
-    messages.append(cast(ChatCompletionMessageParam, assistant_message))
+    message_mem.add_message(assistant_message, choice.finish_reason)
     return assistant_message
 
-def run_llm_once(messages: list[ChatCompletionMessageParam], tools_schema_list: list) -> ChatCompletionMessage:
+
+def _generate_assistant_output_append(message_mem: msg_mem.MessageMemory, tools_schema_list=None) -> ChatCompletionMessage:
+    assistant_message: ChatCompletionMessage = _extract_assistant_output_from_chat(message_mem, tools_schema_list)
+
+    return assistant_message
+
+
+def run_llm_once(message_mem: msg_mem.MessageMemory, tools_schema_list: list) -> ChatCompletionMessage:
     """调用 LLM 生成一次 assistant 输出"""
-    return _generate_assistant_output_append(messages, tools_schema_list)
+    return _generate_assistant_output_append(message_mem, tools_schema_list)
 

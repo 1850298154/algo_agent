@@ -2,7 +2,7 @@
 import sys
 import os
 from datetime import datetime
-from src.utils import global_logger
+from src.utils.log_decorator import global_logger
 from src.utils import create_folder
 
 from src.runtime.before_thread import plt_back_chinese

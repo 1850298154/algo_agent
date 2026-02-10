@@ -1,4 +1,4 @@
-from src.utils import global_logger
+from src.utils.log_decorator import global_logger
 
 global_logger.info("---------- 0.1 在子线程执行任何 Matplotlib 相关代码前，先导入并执行 plt_back_chinese 模块，完成必要的初始化设置")
 import matplotlib

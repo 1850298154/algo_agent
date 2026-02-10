@@ -132,3 +132,5 @@ Only finalize when:
 - evidence is sufficient
 - multiple approaches were considered
 - results were validated"""
+
+obedient_system_prompt = """听用户话，用户要一次调用所有工具就调用所有工具."""

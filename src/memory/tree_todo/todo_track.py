@@ -1,6 +1,6 @@
 from typing import List, Dict, Optional, Any
 from src.memory.tree_todo.schemas import RecursivePlanTreeNode, RecursivePlanTree, TaskStatus
-from src.utils import global_logger, traceable
+from src.utils.log_decorator import global_logger, traceable
 
 
 arg_todo_list: List[RecursivePlanTree] = [

@@ -22,38 +22,34 @@ import pprint
 import asyncio
 from typing import List, Tuple, Optional, Any
 
-from src.utils import global_logger, traceable
+from src.utils.log_decorator import global_logger, traceable
 
 from src.agent import llm
 from src.agent.action import action_processer 
-from src.agent import msg_mem 
+from src.agent.msg import msg_mem 
+from src.agent.msg import msg_ctr 
 from src.agent import tool 
+from src.mcp import mcp_2_tool 
 
-async def user_query(sys_prompt: str, user_prompt: str, tool_class_list: list[tool.tool_base.ToolBase]) -> None:
-    global_logger.info(f"用户输入： {user_prompt}\n\n")
 
-    messages: list[ChatCompletionMessageParam] = msg_mem.init_messages_with_system_prompt(sys_prompt, user_prompt)
+async def user_query(
+    message_mem: msg_mem.MessageMemory,
+    tool_class_list: list[tool.tool_base.ToolBase] = [],
+    mcp_tool_name_list: list[str] = [],
+    msg_ctr_config: msg_ctr.MessageControlConfig = msg_ctr.MessageControlConfig()
+    ) -> None:
+
     tools_schema_list = tool.tool_gen_descrip.get_tools_schema(tool_class_list)
+    mcp_schema_list = mcp_2_tool.filter_schema_for_register(mcp_tool_name_list)
 
     # 模型的第一轮调用
-    assist_msg: ChatCompletionMessage = llm.run_llm_once(messages, tools_schema_list)
-    assist_msg.content = assist_msg.content or "" # 避免 content 是 None 导致后续处理出错
-
-    if (assist_msg.tool_calls and assist_msg.function_call):
-        global_logger.info(f"无需调用工具，我可以直接回复：\n\n{assist_msg.content}")
-        return
+    assist_msg: ChatCompletionMessage = llm.run_llm_once(message_mem, tools_schema_list+mcp_schema_list)
 
     # 如果需要调用工具，则进行模型的多轮调用，直到模型判断无需调用工具
-    while (assist_msg.tool_calls or assist_msg.function_call):
-        global_logger.info(f"""第{len(messages)}轮大模型输出信息： 
-        \n\nassistant_output.content::   \n\n{pprint.pformat(assist_msg.content)}
-        \n\nassistant_output.tool_calls::\n\n{pprint.pformat([toolcall.model_dump() for toolcall in assist_msg.tool_calls]   if assist_msg.tool_calls else [])}\n""")
-
-        await action_processer.process_tool_calls(messages, assist_msg)
-        # 让模型基于工具输出继续生成下一轮输出
-        assist_msg = llm.run_llm_once(messages, tools_schema_list)
-        assist_msg.content = assist_msg.content or "" # 避免 content 是 None 导致后续处理出错
+    while (assist_msg.tool_calls or assist_msg.function_call) and msg_ctr.need_msg_stop_control(message_mem, msg_ctr_config) == False:
+        await action_processer.process_tool_calls(message_mem, assist_msg)
         
-    global_logger.info(f"大模型的最终答案：\n\n{assist_msg.content}")
-    
-    return messages
+        # 让模型基于工具输出继续生成下一轮输出
+        assist_msg = llm.run_llm_once(message_mem, tools_schema_list+mcp_schema_list)
+        
+    return message_mem
