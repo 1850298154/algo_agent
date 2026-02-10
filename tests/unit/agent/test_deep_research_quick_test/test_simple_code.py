@@ -25,8 +25,8 @@ from src.mcp import mcp_enum
 # subthread_python_executor.work_dir = None
 if __name__ == "__main__":
 
-    p_user = "给我执行一下斐波那契 f(6)，必须调用python工具执行，不能口算"
     p_user = "一次调用所有工具就调用所有工具，测试一下"
+    p_user = "给我执行一下斐波那契 f(6)，必须调用python工具执行，不能口算"
     
     user_prompt = p_user
     message_mem: msg_mem.MessageMemory = msg_mem.init_messages_with_system_prompt(
@@ -36,9 +36,10 @@ if __name__ == "__main__":
     asyncio.run(
         user_query(
             message_mem            = message_mem,
-            # tool_class_list     = [tool.python_tool.ExecutePythonCodeTool],
-            tool_class_list     = [],
-            mcp_tool_name_list  = mcp_enum.mcp_list_tool_name_list,
+            tool_class_list     = [tool.python_tool.ExecutePythonCodeTool],
+            # tool_class_list     = [],
+            # mcp_tool_name_list  = mcp_enum.mcp_list_tool_name_list,
+            mcp_tool_name_list  = [],
             msg_ctr_config      = msg_ctr.MessageControlConfig()
         ))
     json_str = json.dumps(message_mem, default=lambda o: o.model_dump())

@@ -25,7 +25,7 @@
             "justMyCode": false
         },
         {
-            "name": "Streamlit: Run arxiv batch",
+            "name": "Streamlit",
             "type": "python",
             "request": "launch",
             "module": "streamlit",  // 指定运行streamlit模块（等价于python -m streamlit）
@@ -35,7 +35,8 @@
                 "--server.port", "8501",  // 指定端口（可选）
                 "--server.runOnSave", "true"  // 保存自动刷新（可选）
             ],
-            "justMyCode": true,
+            "subProcess": true, // 启用子进程调试
+            "justMyCode": false,
             "env": {
                 "PYTHONUNBUFFERED": "1"  // 实时输出日志（可选）
             },
