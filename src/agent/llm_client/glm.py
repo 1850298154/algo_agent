@@ -10,6 +10,7 @@ client = OpenAI(
     api_key=ZHIPU_API_KEY,
     base_url="https://open.bigmodel.cn/api/paas/v4/"
 )
+glm_4_6_v_model = "glm-4.6v"
 glm_4_6_model = "glm-4.6"
 glm_4_7_flashx_model = "glm-4.7-flashx"
 glm_4_7_model = "glm-4.7"
