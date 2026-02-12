@@ -1,9 +1,10 @@
 
 import os
+import sys
 from datetime import datetime
 from src.utils import path_manager
 
-def _get_num_start_datetime() -> str:
+def __get_num_start_datetime() -> str:
     """
     1. logs文件夹下的文件数量基准序列
     2. 生成一个新的 序号+年月日+时分秒+微秒 的字符串
@@ -27,4 +28,19 @@ def _get_num_start_datetime() -> str:
     num_datetime_name = f"{seq_str}_{time_str}"
     return num_datetime_name
 
+
+_package_name = 'streamlit'  # 替换成你要判断的包名
+if _package_name in sys.modules:
+    import streamlit  # 导入过，再进行导入操作
+    print(f"{_package_name} 已经导入，版本：{streamlit.__version__}")
+    @streamlit.cache_data()
+    def _get_num_start_datetime() -> str:
+        return __get_num_start_datetime()
+else:
+    print(f"{_package_name} 尚未导入，保持原始逻辑")
+    def _get_num_start_datetime() -> str:
+        return __get_num_start_datetime()
+
 GLOBAL_TIME_TAG_INSTANCE = _get_num_start_datetime()
+print('全局时间标签实例:', GLOBAL_TIME_TAG_INSTANCE)
+pass

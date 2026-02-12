@@ -36,7 +36,6 @@ async def run_agent_generator(
     message_mem: msg_mem.MessageMemory,
     tool_class_list: list[tool.tool_base.ToolBase] = [],
     mcp_tool_name_list: list[str] = [],
-    msg_ctr_config: msg_ctr.MessageControlConfig = msg_ctr.MessageControlConfig()
     ) -> AsyncGenerator[msg_mem.MessageMemory, None]:
 
     tools_schema_list = tool.tool_gen_descrip.get_tools_schema(tool_class_list)

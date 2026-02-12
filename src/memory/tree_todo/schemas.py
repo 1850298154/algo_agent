@@ -1,5 +1,5 @@
 from typing import List, Dict, Optional, Any, Union
-from pydantic import BaseModel, Field, field_validator  # 关键修改：导入 field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 import uuid
 from enum import Enum, unique
 
@@ -56,9 +56,10 @@ class RecursivePlanTreeNode(BaseModel):
     def empty_children_to_none(cls, v: Optional[List["RecursivePlanTreeNode"]]) -> Optional[List["RecursivePlanTreeNode"]]:
         return v if v and len(v) > 0 else None
 
-    class Config:
-        # use_enum_values = True  # 序列化时使用枚举值（如"pending"）而非枚举对象
-        arbitrary_types_allowed = True  # 允许任意类型（适配嵌套模型）
+    # class Config:
+    #     # use_enum_values = True  # 序列化时使用枚举值（如"pending"）而非枚举对象
+    #     arbitrary_types_allowed = True  # 允许任意类型（适配嵌套模型）
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
 # 解决自引用问题（V2 仍需手动调用 model_rebuild）
 RecursivePlanTreeNode.model_rebuild()
@@ -74,7 +75,8 @@ class RecursivePlanTree(BaseModel):
     next_action: Dict[str, Any] = Field(default_factory=dict, description="下一步建议动作（可选）")
     references: Optional[List[str]] = Field(default=None, description="参考资源列表（可选，如文档链接、数据来源）")
 
-    class Config:
-        # use_enum_values = True  # 序列化时使用枚举值
-        arbitrary_types_allowed = True
+    # class Config:
+    #     # use_enum_values = True  # 序列化时使用枚举值
+    #     arbitrary_types_allowed = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 

@@ -16,12 +16,17 @@ from openai.types.chat.chat_completion import (
 from src.agent.action import action_type
 from src.agent.msg import msg_ctr
 from src.agent.msg.msg_mem_id import msg_mem_id_factory
-from src.utils.log_decorator import global_logger, traceable, sub_folder_for_logs
+from src.utils.log_decorator import global_logger, traceable, time_folder_for_logs
 
 from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional, Literal
 import pprint
 import json
+import os
+
+msg_mem_dir = os.path.join(time_folder_for_logs, "msg_mem")
+if not os.path.exists(msg_mem_dir):
+    os.makedirs(msg_mem_dir)
 
 class MessageMemory(BaseModel):
     agent_name_id: str = Field(
@@ -61,22 +66,22 @@ class MessageMemory(BaseModel):
     )
     
     def add_message(self, 
-                    message: ChatCompletionMessageParam|ChatCompletionMessage, 
+                    msg: ChatCompletionMessageParam|ChatCompletionMessage, 
                     finish_reason: Optional[Literal["stop", "length", "tool_calls", "content_filter", "function_call"]] = None
                     ) -> None:
-        self.messages.append(message)
+        self.messages.append(msg)
         self.finish_reason = finish_reason
-        if isinstance(message, ChatCompletionMessage):
-            self._print_assistant_messages(message)
-        elif message['role'] == action_type.CallKind.FUNCTION.value:
-            self._print_function_messages(message)
-        elif message['role'] == action_type.CallKind.TOOL.value:
-            self._print_tool_messages(message)
+        if isinstance(msg, ChatCompletionMessage):
+            self._print_assistant_messages(msg)
+        elif msg['role'] == action_type.CallKind.FUNCTION.value:
+            self._print_function_messages(msg)
+        elif msg['role'] == action_type.CallKind.TOOL.value:
+            self._print_tool_messages(msg)
         else:
-            global_logger.info(f"新类型消息 type =  {type(message)} \n = {message}\n")
-            global_logger.info(f"新类型消息： {pprint.pformat(message)}\n")
+            global_logger.info(f"新类型消息 type =  {type(msg)} \n = {msg}\n")
+            global_logger.info(f"新类型消息： {pprint.pformat(msg)}\n")
             global_logger.info("-" * 60)
-        path = sub_folder_for_logs + f"/message_memory_{self.agent_name_id}.json"
+        path = os.path.join(msg_mem_dir, f"{self.agent_name_id}--{len(self.messages):03d}.json")
         with open(path, "w", encoding="utf-8") as f:
             json.dump (self, 
                        f, 

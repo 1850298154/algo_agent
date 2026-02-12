@@ -3,16 +3,16 @@ import os
 import pickle
 from re import A
 from typing import Any, Dict, Optional, Union
-from src.utils.log_decorator import global_logger, traceable, sub_folder_for_logs
+from src.utils.log_decorator import global_logger, traceable, time_folder_for_logs
 
 
-globals_var_success_dir = sub_folder_for_logs + f"/globals_var_success"
+globals_var_success_dir = os.path.join(time_folder_for_logs, "globals_var_success")
 if not os.path.exists(globals_var_success_dir):
     os.makedirs(globals_var_success_dir)
 
 
 def dump_globals(filter_out_globals, success_cnt) -> dict[str, Any]:
-    path = globals_var_success_dir + f"/{success_cnt:03d}.pkl"
+    path = os.path.join(globals_var_success_dir, f"{success_cnt:03d}.pkl")
     with open(path, 'wb') as f:
         pickle.dump(filter_out_globals, f, protocol=pickle.HIGHEST_PROTOCOL)
 

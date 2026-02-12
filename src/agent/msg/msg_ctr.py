@@ -51,7 +51,7 @@ class MessageControlConfig(BaseModel):
     stop_words: List[str] = Field(
         default_factory=list,
         description="触发对话终止的停止词列表，只要任意角色发言包含其中词汇，立即结束对话",
-        example=["结束对话", "退出", "终止"],
+        examples=["结束对话", "退出", "终止"],
     )
     
     # 扩展控制：强制终止开关

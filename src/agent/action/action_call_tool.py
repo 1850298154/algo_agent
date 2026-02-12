@@ -30,7 +30,7 @@ from typing import List, Tuple, Optional, Any
 
 from src.utils.log_decorator import global_logger, traceable
 from src.agent.tool.sandbox.python_tool import ExecutePythonCodeTool 
-from src.agent.tool.persist_mem.todo_tool import RecursivePlanTreeTodoTool
+# from src.agent.tool.persist_mem.todo_tool import RecursivePlanTreeTodoTool
 from src.mcp import mcp_api
 
 @traceable
@@ -42,9 +42,9 @@ async def _call_tools_safely(tool_name: str,tool_arguments: str) -> str:
         elif function_name == ExecutePythonCodeTool.tool_name():
             execute_python_code_tool = ExecutePythonCodeTool(**arguments)
             tool_content = await execute_python_code_tool.run()
-        elif function_name == RecursivePlanTreeTodoTool.tool_name():
-            recursive_plan_tree_todo_tool = RecursivePlanTreeTodoTool(**arguments)
-            tool_content = await recursive_plan_tree_todo_tool.run()
+        # elif function_name == RecursivePlanTreeTodoTool.tool_name():
+        #     recursive_plan_tree_todo_tool = RecursivePlanTreeTodoTool(**arguments)
+        #     tool_content = await recursive_plan_tree_todo_tool.run()
         else:
             tool_content = await mcp_api.call_mcp_tool_async(tool_name=function_name, arguments=arguments)
         return  tool_content

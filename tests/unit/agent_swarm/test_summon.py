@@ -40,7 +40,7 @@ if __name__ == "__main__":
     )
     
     ret_message_mem = asyncio.run(
-        summon.summon_agent(
+        summon.summon_agent_generator(
             message_mem            = message_mem,
             tool_class_list     = [tool.python_tool.ExecutePythonCodeTool],
             # tool_class_list     = [],
