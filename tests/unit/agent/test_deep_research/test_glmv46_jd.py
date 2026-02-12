@@ -1,4 +1,4 @@
-from src.agent.deep_research_api import user_query
+from src.agent.deep_research_api import run_agent_generator
 
 if __name__ == "__main__":
     p_playwright = """
@@ -79,4 +79,4 @@ print(response.choices[0].message)  # 输出例子： ChatCompletionMessage(cont
     user_input = p_playwright + p_glmv46 + p_concat + p_user
     from src.runtime import subthread_python_executor
     subthread_python_executor.work_dir = './wsm/5glm/2jd'
-    user_query(user_input)
+    run_agent_generator(user_input)

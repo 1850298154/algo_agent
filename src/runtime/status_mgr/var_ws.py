@@ -3,9 +3,10 @@ This module handles the workspace functionality for the runtime environment.
 
 """
 import copy
+from re import A
 from typing import Any, Dict, Optional, Union
 
-
+from src.runtime.status_mgr import var_store
 
 arg_globals_list: list[dict] = []
 out_globals_list: list[dict] = []
@@ -94,13 +95,20 @@ def get_arg_globals() -> dict[str, Any]:
 def append_out_globals(out_globals: dict[str, Any]):
     global out_globals_list
     filter_out_globals = filter_and_deepcopy_globals(out_globals)
+    var_store.dump_globals(filter_out_globals, len(out_globals_list)+1)
     out_globals_list.append(filter_out_globals)
 
 
 if __name__ == '__main__':
     # workspace = initialize_workspace()
-    workspace = __create_workspace()
+    workspace = initialize_workspace()
+    import pandas as pd
+    df = pd.DataFrame({'a': [1, 2, 3]})
+    workspace ['my_df'] = df
     print('# create workspace:\n',workspace)
+    append_out_globals(workspace)
+    load_globals = var_store.load_globals()
+    print('# load_globals:\n',load_globals)
     print('# get_workspace_globals_dict(include_special_vars=False):\n',get_workspace_globals_dict(workspace, include_special_vars=False))
     print('# get_workspace_globals_keys(include_special_vars=False):\n',get_workspace_globals_keys(workspace, include_special_vars=False))
     print('# get_workspace_globals_keys(include_special_vars=True):\n',get_workspace_globals_keys(workspace, include_special_vars=True))

@@ -24,7 +24,7 @@ from typing import List, Tuple, Optional, Any
 from src.agent.action import action_parse_exec_gather 
 from src.agent.msg import msg_mem
 
-async def process_tool_calls(messages: msg_mem.MessageMemory, assist_msg: ChatCompletionMessage):
+async def process_tool_calls(message_mem: msg_mem.MessageMemory, assist_msg: ChatCompletionMessage) -> msg_mem.MessageMemory:
     """
     封装：1) collect_call_descriptors 2) execute_calls_concurrently_async 3) append_results_to_messages
     返回 (call_descriptors, results)
@@ -34,5 +34,6 @@ async def process_tool_calls(messages: msg_mem.MessageMemory, assist_msg: ChatCo
     # 2. 并发执行所有调用（协程）
     results = await action_parse_exec_gather.execute_calls_concurrently_async(call_descriptors)
     # 3. 将每个调用的输出按顺序追加到 messages
-    action_parse_exec_gather.append_results_to_messages(messages, call_descriptors, results)
-    return call_descriptors, results
+    action_parse_exec_gather.append_results_to_messages(message_mem, call_descriptors, results)
+    return message_mem
+    
