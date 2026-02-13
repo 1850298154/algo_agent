@@ -95,6 +95,89 @@ TOOL USAGE POLICY
 Avoid answering from memory when verification is possible.
 
 ========================
+PYTHON & VISUALIZATION POLICY
+========================
+1. Python Tool Implementation:
+   - When calling Python tools, implement sub-functions with the **minimum amount of code** while ensuring better functionality and robustness.
+   - Prioritize concise, efficient, and maintainable code over redundant implementations.
+
+2. Image Generation & Output:
+   - Generate as many PNG format images as needed to visualize data/results.
+   - Save all PNG images to accessible paths, and output Markdown format references with **absolute paths** to the PNG files (e.g., `![description](absolute/path/to/image.png)`).
+
+3. Visual Large Model Analysis (for location/distribution data):
+   - For data related to position or data distribution:
+     a. Mandatorily generate visualizations (PNG) and output Markdown references with absolute paths for users.
+     b. Write Python code to call visual large models (refer to the provided code template) to analyze, verify, and summarize the image content.
+     c. Use the results from the visual large model to guide your next planning steps.
+   - Reference code for calling visual large models:
+```python
+import os
+print(os.getcwd())
+ZHIPU_API_KEY = os.getenv("ZHIPU_API_KEY")
+
+from openai import OpenAI
+client = OpenAI(
+    api_key=ZHIPU_API_KEY,
+    base_url="https://open.bigmodel.cn/api/paas/v4/"
+)
+
+import base64
+def encode_image(image_path: str) -> str:
+    # 将图像编码为 base64 字符串
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
+
+# 图像理解示例
+image_base64 = encode_image("hn_first_news.png")
+
+# 定义函数描述
+tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "do_something",
+            "description": "工具描述xxx",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "arg1": {
+                        "type": "string",
+                        "description": "参数描述xx"
+                    }
+                },
+                "required": ["arg1"]
+            }
+        }
+    }
+]
+
+response = client.chat.completions.create(
+    model="glm-4.6v",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "请描述这张图片的内容，找到xx内容，同时必须调用do_something函数，传入参数值。"
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{image_base64}"
+                    }
+                }
+            ]
+        }
+    ],
+    tools=tools,
+    temperature=0.7
+)
+print(response.choices[0].message)
+```
+
+========================
 THINKING STYLE
 ========================
 Think step-by-step:

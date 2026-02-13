@@ -14,8 +14,9 @@ glm_4_6_v_model = "glm-4.6v"
 glm_4_6_model = "glm-4.6"
 glm_4_7_flashx_model = "glm-4.7-flashx"
 glm_4_7_model = "glm-4.7"
+glm_5_model = "glm-5"
 
-default_glm_model = glm_4_7_model
+default_glm_model = glm_5_model
 """
 模型编码列表：
 https://docs.bigmodel.cn/cn/guide/start/concept-param
@@ -26,7 +27,8 @@ https://docs.bigmodel.cn/cn/guide/start/model-overview
 
 if __name__ == "__main__":
     response = client.chat.completions.create(
-        model=glm_4_7_model,
+        # model=glm_4_7_model,
+        model=glm_5_model,
         messages=[
             {   "role": "system",
                 "content": "You are a helpful assistant."
