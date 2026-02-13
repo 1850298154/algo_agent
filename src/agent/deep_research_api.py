@@ -28,17 +28,20 @@ from src.agent import llm
 from src.agent.action import action_processer 
 from src.agent.msg import msg_mem 
 from src.agent.msg import msg_ctr 
-from src.agent import tool 
+from src.agent.tool import (
+    tool_gen_descrip,
+    tool_base
+)
 from src.mcp import mcp_2_tool 
 
 
 async def run_agent_generator(
     message_mem: msg_mem.MessageMemory,
-    tool_class_list: list[tool.tool_base.ToolBase] = [],
+    tool_class_list: list[tool_base.ToolBase] = [],
     mcp_tool_name_list: list[str] = [],
     ) -> AsyncGenerator[msg_mem.MessageMemory, None]:
 
-    tools_schema_list = tool.tool_gen_descrip.get_tools_schema(tool_class_list)
+    tools_schema_list = tool_gen_descrip.get_tools_schema(tool_class_list)
     mcp_schema_list = mcp_2_tool.filter_schema_for_register(mcp_tool_name_list)
 
     # 模型的第一轮调用

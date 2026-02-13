@@ -1,15 +1,12 @@
 import streamlit as st
 from pathlib import Path
-from src.utils import create_folder
-from src.utils import path_manager
+from src.utils.path_util import static_path
+from src.utils.path_util import path_enum
 
-# @st.cache_data  
-def get_save_dir() -> Path:
-    from src.utils import log_decorator
+@st.cache_data  
+def get_cached_save_dir() -> Path:
     # 2. 定义保存目录（确保目录存在）
-    save_dir = Path(create_folder.create_subfolder_with_time_tag(dir_rel_to_proj=path_manager.PathEnum.WST_DIR_NAME.value)) / "uploaded_files"  # 将上传文件保存在日志目录下的子目录中，方便关联日志和文件
-
-    save_dir.mkdir(exist_ok=True)  # 不存在则创建，存在则不报错
+    save_dir = static_path.Dir.UPLOAD_DIR
     save_list = list(save_dir.iterdir())
     print('save_list', save_list)
     return save_dir

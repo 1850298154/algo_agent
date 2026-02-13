@@ -28,7 +28,7 @@ class ExecutePythonCodeTool(tool_base.ToolBase):
     python_code_snippet: str = Field(
         ..., 
         description=(
-        "要执行的有效 Python 代码片段。不得包含恶意代码（例如，修改工作路径、执行无限循环的代码）。"
+        "要执行的有效 Python 代码片段。不得包含恶意代码（例如，修改工作路径、执行无限循环的代码）。输出只能输出当前工作目录CWD下面（可以创建新的文件夹等等）"
         ),
         examples=["print('Hello, World!')"]
     )

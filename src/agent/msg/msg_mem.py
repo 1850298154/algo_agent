@@ -16,7 +16,8 @@ from openai.types.chat.chat_completion import (
 from src.agent.action import action_type
 from src.agent.msg import msg_ctr
 from src.agent.msg.msg_mem_id import msg_mem_id_factory
-from src.utils.log_decorator import global_logger, traceable, time_folder_for_logs
+from src.utils.log_decorator import global_logger, traceable
+from src.utils.path_util import dynamic_path
 
 from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional, Literal
@@ -24,9 +25,6 @@ import pprint
 import json
 import os
 
-msg_mem_dir = os.path.join(time_folder_for_logs, "msg_mem")
-if not os.path.exists(msg_mem_dir):
-    os.makedirs(msg_mem_dir)
 
 class MessageMemory(BaseModel):
     agent_name_id: str = Field(
@@ -69,10 +67,10 @@ class MessageMemory(BaseModel):
                     msg: ChatCompletionMessageParam|ChatCompletionMessage, 
                     finish_reason: Optional[Literal["stop", "length", "tool_calls", "content_filter", "function_call"]] = None
                     ) -> None:
-        self.messages.append(msg)
-        self.finish_reason = finish_reason
         if isinstance(msg, ChatCompletionMessage):
+            self.finish_reason = finish_reason
             self._print_assistant_messages(msg)
+            msg = msg.model_dump()
         elif msg['role'] == action_type.CallKind.FUNCTION.value:
             self._print_function_messages(msg)
         elif msg['role'] == action_type.CallKind.TOOL.value:
@@ -81,13 +79,11 @@ class MessageMemory(BaseModel):
             global_logger.info(f"新类型消息 type =  {type(msg)} \n = {msg}\n")
             global_logger.info(f"新类型消息： {pprint.pformat(msg)}\n")
             global_logger.info("-" * 60)
-        path = os.path.join(msg_mem_dir, f"{self.agent_name_id}--{len(self.messages):03d}.json")
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump (self, 
-                       f, 
-                       ensure_ascii=False, 
-                       indent=4, 
-                       default=lambda o: o.model_dump())
+        
+        self.messages.append(msg)
+        path = dynamic_path.MsgMemPath(agent_name_id=self.agent_name_id).path()
+        with open(path, "w", encoding="utf-8") as fileio:
+            json.dump (self, fileio, ensure_ascii=False, indent=4, default=lambda o: o.model_dump())                       
 
     def need_msg_stop_control(self, config: msg_ctr.MessageControlConfig) -> bool:
         """
@@ -146,7 +142,7 @@ class MessageMemory(BaseModel):
         # 如果没有任何停止条件被触发，继续对话
         return False
             
-    def _print_assistant_messages(self, assist_msg) -> None:
+    def _print_assistant_messages(self, assist_msg: ChatCompletionMessage) -> None:
         global_logger.info(f"""第{len(self.messages)}轮大模型输出信息： 
                            \n\nassistant_output.content::   \n\n{pprint.pformat(assist_msg.content)}
                            \n\nassistant_output.tool_calls::\n\n{pprint.pformat( [toolcall.model_dump() for toolcall in assist_msg.tool_calls]    if assist_msg.tool_calls else [] )}

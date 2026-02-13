@@ -1,4 +1,6 @@
+from requests import session
 import streamlit as st
+from src.agent.msg import msg_mem
 
 from src.ui.file_upload import files_model
 from src.ui.cache_unchange import (
@@ -12,39 +14,34 @@ from src.ui.cache_unchange import (
     cache_path,
     cache_msg,
 )
+from src.ui.message.msg_role import (
+    role_view,
+)
+
 async def msg_view():
     # === 5. 聊天界面（支持流式模拟） ===  
     st.subheader("5. 聊天界面（支持流式模拟）")  
       
     st.chat_message("ai").write("这是系统消息：欢迎使用模拟聊天界面！")  
-    if "messages" in st.session_state:      
-        for msg in st.session_state.messages[1:]:
-            if msg["role"] == "user":
-                st.chat_message("user").write(msg["content"])
-            elif msg["role"] == "assistant":
-                st.chat_message("assistant").markdown(msg["content"])
-                st.chat_message("action").json(msg["tool_calls"])
-            elif msg["role"] == "tool":
-                st.chat_message("tool").markdown(msg["content"])
-            else:
-                st.error(f"未知角色：{msg}")
+    if "msg_mem_obj" in st.session_state:      
+        # 确认是否是同一个 id
+        print(f"session msg_mem_obj id: {id(st.session_state.msg_mem_obj)}")
+        msg_mem_obj: msg_mem.MessageMemory = st.session_state.msg_mem_obj
+        for msg in msg_mem_obj.messages[1:]:  
+            await role_view.msg_role_view(msg)
     
     if user_prompt := st.chat_input("请输入消息"):  
-        if "messages" not in st.session_state:  
-            st.session_state.messages = cache_msg.get_msg(user_prompt)
+        if "msg_mem_obj" not in st.session_state:  
+            st.session_state.msg_mem_obj = cache_msg.get_cached_msg(user_prompt)
 
         st.chat_message("user").write(user_prompt)  
-        # 模拟助手回复  
-        with st.chat_message("assistant"):  
-            my_list = ["Loading... "+str(i) + " " for i in range(10)]
-            # message_placeholder = st.empty()  
-            for ret_msg in msg_gen.gen_msg(st.session_state.messages):  
-                # message_placeholder.markdown(full_response + "▌")  
-                if ret_msg["role"] == "tool":
-                    st.json(ret_msg["content"])
-                elif ret_msg["role"] == "user":
-                    st.chat_message("user").write(ret_msg["content"])
-                elif ret_msg["role"] == "assistant":
-                    st.chat_message("assistant").markdown(ret_msg["content"])
-                else:
-                    st.error(f"未知角色：{msg}")
+        # with st.chat_message("assistant"):  
+        async for ret_msg_mem_obj in msg_gen.gen_msg(st.session_state.msg_mem_obj):  
+            ret_msg_list = ret_msg_mem_obj.messages
+            ret_msg = ret_msg_list[-1]
+            await role_view.msg_role_view(ret_msg)
+        if st.session_state.msg_mem_obj.finish_reason == "stop":
+            st.chat_message("system").write("对话已结束，检测到 finish_reason=stop")
+        if st.session_state.msg_mem_obj.need_msg_stop_control(st.session_state.msg_mem_obj.msg_ctr_cfg):
+            st.chat_message("system").write(st.session_state.msg_mem_obj.msg_ctr_cfg.model_dump())
+            

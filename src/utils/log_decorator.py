@@ -1,29 +1,29 @@
 import logging
 import os
-from src.utils import create_folder, path_manager
+from src.utils.path_util import static_path
 from src.utils.lg_decorator_util.setup_logger import  setup_logger
-from src.utils.lg_decorator_util.log_call_start_end import log_function
+from src.utils.lg_decorator_util.log_decorator_factory import log_decorator_factory
+from src.utils.path_util import path_enum
 
 # ------------------------------
 # 预定义模块logger（不变）
 # ------------------------------
 # 子进程会出问题， 重新生成时间和文件夹
-time_folder_for_logs = create_folder.create_subfolder_with_time_tag(dir_rel_to_proj=path_manager.PathEnum.LOG_DIR_NAME.value)
 
 all_logger = setup_logger(
     logger_name="root.all", 
-    log_file=os.path.join(time_folder_for_logs, "all.log"), 
+    log_file= static_path.File.ALL_LOG_PATH.resolve().as_posix(), 
     level=logging.DEBUG, 
     is_open_console=False)
 
 global_logger = setup_logger(
     logger_name="root.all.print", 
-    log_file=os.path.join(time_folder_for_logs, "print.log"), 
+    log_file= static_path.File.PRINT_LOG_PATH.resolve().as_posix(), 
     level=logging.DEBUG)
 
-traceable = lambda func: log_function(
+traceable = lambda func: log_decorator_factory(
     logger_name="root.all.trace",
-    log_file=os.path.join(time_folder_for_logs, "trace.log"),
+    log_file= static_path.File.TRACE_LOG_PATH.resolve().as_posix(),
     exclude_args=["password", "token", "secret"],
     level=logging.DEBUG
 )(func)

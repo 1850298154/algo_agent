@@ -72,5 +72,6 @@ mcp_list_tool_name_list = [
 "ask_question",  # ok
 "search_code",
 "search_repositories",
+"get_file_contents",
 ]
 

@@ -118,7 +118,7 @@ def _log_call_failure(logger: logging.Logger, level: int, context: Dict[str, Any
 # ------------------------------
 # 增强版日志装饰器（支持协程 + 异常兜底）
 # ------------------------------
-def log_function(
+def log_decorator_factory(
     logger_name: str,
     log_file: str,
     level: int = logging.DEBUG,

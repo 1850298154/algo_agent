@@ -34,7 +34,7 @@ class MessageControlConfig(BaseModel):
     max_rounds: Optional[int] = Field(
         default=None,  # 默认值设置为一个非常大的数，表示无限量
         description="对话的最大轮数上限，每一个角色说一次话算作一轮（例如用户说1句+AI回复1句=2轮）",
-        ge=3,  # 最小值为3，避免无效配置
+        # ge=3,  # 最小值为3，避免无效配置
     )
     
     # 核心控制：Token 长度相关
@@ -51,7 +51,7 @@ class MessageControlConfig(BaseModel):
     stop_words: List[str] = Field(
         default_factory=list,
         description="触发对话终止的停止词列表，只要任意角色发言包含其中词汇，立即结束对话",
-        examples=["结束对话", "退出", "终止"],
+        # examples=["结束对话", "退出", "终止"],
     )
     
     # 扩展控制：强制终止开关

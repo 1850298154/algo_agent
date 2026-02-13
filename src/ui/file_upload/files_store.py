@@ -17,15 +17,10 @@ def save_uploaded_files():
         
         for file in files_model.uploaded_files:
             try:
-                # 避免文件名重复：在文件名后加序号（可选但推荐）
-                file_path = cache_path.get_save_dir() / file.name
-                counter = 1
-                while file_path.exists():
-                    # 处理重复文件名：如 "test.txt" → "test_1.txt"
-                    stem = file_path.stem
-                    suffix = file_path.suffix
-                    file_path = cache_path.get_save_dir() / f"{stem}_{counter}{suffix}"
-                    counter += 1
+                # 直接覆盖同名文件（不做重命名）
+                save_dir = cache_path.get_cached_save_dir()
+                save_dir.mkdir(parents=True, exist_ok=True)
+                file_path = save_dir / file.name
                 
                 # 最快保存方式：shutil.copyfileobj（C实现，分块拷贝）
                 with open(file_path, "wb") as f:
@@ -41,6 +36,7 @@ def save_uploaded_files():
             finally:
                 # 关闭文件流（释放资源，避免句柄泄露）
                 file.close()
-    file_list = list(cache_path.get_save_dir().iterdir())
+    file_list = list(cache_path.get_cached_save_dir().iterdir())
     print('file_list', file_list, len(file_list))
     pass
+

@@ -19,10 +19,9 @@ from src.runtime.ctx_mgr import cwd
 from src.runtime.ctx_mgr import timer_recorder
 from src.runtime.before_thread import plt_back_chinese
 from src.utils.log_decorator import global_logger, traceable
-from src.utils import path_manager
-from src.utils import create_folder
+from src.utils.path_util import path_enum
+from src.utils.path_util import static_path
 
-FIXED_WORK_DIR = None 
 
 def _worker_with_buffer(
     command: str,
@@ -129,11 +128,7 @@ def run_structured_in_thread(
         args=(command, _globals, _locals, timeout, exec_time_container, stdout_buffer, result_container),
     )
     
-    target_dir_fullpath = (
-        os.path.abspath(FIXED_WORK_DIR) 
-        if FIXED_WORK_DIR 
-        else create_folder.create_subfolder_with_time_tag(dir_rel_to_proj=path_manager.PathEnum.WST_DIR_NAME.value)
-    )
+    target_dir_fullpath = static_path.Dir.PY_OUTPUT_DIR.resolve().as_posix()
     
     # 切换目录执行
     with cwd.ChangeDirectory(target_dir_fullpath):
