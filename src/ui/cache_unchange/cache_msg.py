@@ -29,6 +29,6 @@ def get_cached_msg(user_prompt ):
         agent_name_id="test_simple_code_agent",
         system_prompt=system_prompt.obedient_system_prompt,
         user_prompt=user_prompt,
-        msg_ctr_config=msg_ctr.MessageControlConfig(max_rounds=5)
+        msg_ctr_config=msg_ctr.MessageControlConfig()
     )
     return message_mem
