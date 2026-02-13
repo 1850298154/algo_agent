@@ -1,0 +1,66 @@
+
+{  
+  "全局参数": {  
+    "timestep": 0.1,  
+    "random_seed": 20,  
+    "alpha": 0  
+  },  
+    
+  "UAV配置": {  
+    "类型数量": {  
+      "base1": {"uavA": 22, "uavB": 34, "uavC": 32},  
+      "base2": {"uavA": 20, "uavB": 26, "uavC": 26}  
+    },  
+    "初始位置": {  
+      "base1": {"pos_init": [30, 30], "pos_range": [320, 320]},  
+      "base2": {"pos_init": [1130, 30], "pos_range": [320, 320]}  
+    },  
+    "技能映射": {  
+      "uavA": [1, 2],  
+      "uavB": [1, 3],  
+      "uavC": [2, 3]  
+    },  
+    "成本": {  
+      "uavA": 300,  
+      "uavB": 200,  
+      "uavC": 250  
+    }  
+  },  
+    
+  "任务配置": {  
+    "技能需求": {  
+      "surveillance": {"targetA": [2], "targetB": [3]},  
+      "attack": {"targetA": [1], "targetB": [1]},  
+      "capture": {"targetA": [2], "targetB": [3]}  
+    },  
+    "价值": {  
+      "search": {"targetA": 600, "targetB": 800},  
+      "surveillance": {"targetA": 1000, "targetB": 1500},  
+      "attack": {"targetA": 2400, "targetB": 2000},  
+      "capture": {"targetA": 3000, "targetB": 2500}  
+    },  
+    "执行时间估算系数": {  
+      "k_surveillance": 1.3,  
+      "k_attack": 1.3,  
+      "k_capture": 1.6,  
+      "r_scout": 0.27  
+    }  
+  },  
+    
+  "事件参数示例": {  
+    "0": {  
+      "task_num": 16,  
+      "center_option": "lattice",  
+      "x": [400, 1800, 3000, 4000],  
+      "y": [600, 1200, 1800, 2200],  
+      "task_type": "random",  
+      "precedence": [[0, 2], [0, 3], [1, 5]],  
+      "simultaneous": [[0, 1]],  
+      "center_x": [402.42, 1801.55],  
+      "center_y": [603.69, 603.37],  
+      "radius": [3.07, 3.98],  
+      "targetA_num": [11, 7],  
+      "targetB_num": [10, 9]  
+    }  
+  }  
+}
