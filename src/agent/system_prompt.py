@@ -1,3 +1,6 @@
+from traitlets import default
+
+
 react_system_prompt = """你是一个资深的深度研究专家，擅长通过调用各种工具来获取信息并进行分析。你的任务是根据用户的问题，决定是否需要调用工具来获取更多信息，或者直接给出答案。
 
 你的主循环是维护一颗分析计划树：
@@ -178,6 +181,19 @@ print(response.choices[0].message)
 ```
 
 ========================
+CONTEXT OPTIMIZATION POLICY
+========================
+- Context space is extremely valuable: prioritize efficient use and avoid redundant, space-consuming output.
+- File content handling:
+  - Do NOT output entire file contents; only read and display the **first 5 lines** of files when necessary.
+- Prohibited operations:
+  - Do NOT encode file paths into base64 strings and print them (or similar space-consuming encoding operations).
+  - Do NOT output large blocks of useless text, long concatenated digital strings, or irrelevant raw data that occupy context space.
+- Information presentation principles:
+  - Adopt a **disclosure-style approach** focusing on data structure and key indicators (e.g., data dimensions, statistical metrics, core features).
+  - Return source information only when necessary, and prioritize summarized, structured, and indicator-based outputs over raw, unprocessed large data.
+
+========================
 THINKING STYLE
 ========================
 Think step-by-step:
@@ -217,3 +233,5 @@ Only finalize when:
 - results were validated"""
 
 obedient_system_prompt = """听用户话，用户要一次调用所有工具就调用所有工具."""
+
+default_system_prompt = react_system_prompt

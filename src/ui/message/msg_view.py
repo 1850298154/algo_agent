@@ -17,12 +17,21 @@ from src.ui.cache_unchange import (
 from src.ui.message.msg_role import (
     role_view,
 )
+from src.ui.file_upload import (
+    files_model,
+    files_store,
+)
+from src.ui.cache_unchange import (
+    cache_path,
+)
+from src.utils.path_util import static_path
+
 
 async def msg_view():
     # === 5. 聊天界面（支持流式模拟） ===  
     st.subheader("5. 聊天界面（支持流式模拟）")  
       
-    st.chat_message("ai").write("这是系统消息：欢迎使用模拟聊天界面！")  
+    st.chat_message("ai").write("这是系统消息：欢迎使用聊天界面！上传数据，给你最佳的分析和策略！")  
     if "msg_mem_obj" in st.session_state:      
         # 确认是否是同一个 id
         print(f"session msg_mem_obj id: {id(st.session_state.msg_mem_obj)}")
@@ -32,6 +41,12 @@ async def msg_view():
     
     if user_prompt := st.chat_input("请输入消息"):  
         if "msg_mem_obj" not in st.session_state:  
+            user_prompt += ("\n\n上传的数据是："+
+            "；".join(["文件名："+file.name + 
+                 "，文件大小：" + str(file.size) + " 字节，" + 
+                 "文件类型：" + file.type 
+                 for file in files_model.uploaded_files]) + 
+            "。\n上传数据的目录、执行python代码的启动路径和程序运行输出的工作路径都是："+static_path.Dir.UPLOAD_DIR.resolve().as_posix())
             st.session_state.msg_mem_obj = cache_msg.get_cached_msg(user_prompt)
 
         st.chat_message("user").write(user_prompt)  
