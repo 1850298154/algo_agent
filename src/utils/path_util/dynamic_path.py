@@ -17,7 +17,7 @@ class RunVarPath(BaseModel):
     success_cnt: Optional[int] = None
     def path(self) -> str:
         if self.success_cnt is None:
-            path = static_path.Dir.MSG_DIR / f"all.pkl"
+            path = static_path.Dir.PY_RUNTIME_VAR_DIR / f"all.pkl"
         else:
-            path = static_path.Dir.MSG_DIR / f"success_cnt_{self.success_cnt:04d}.pkl"
+            path = static_path.Dir.PY_RUNTIME_VAR_DIR / f"success_cnt_{self.success_cnt:04d}.pkl"
         return path.absolute().as_posix()

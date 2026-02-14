@@ -8,7 +8,6 @@ from src.ui.cache_unchange import (
 )
 from src.ui.message import (
     msg_gen,
-    msg_view,
 )
 from src.ui.cache_unchange import (
     cache_path,
@@ -25,6 +24,7 @@ from src.ui.cache_unchange import (
     cache_path,
 )
 from src.utils.path_util import static_path
+from src.ui.message.msg_role import role_model
 
 
 async def msg_view():
@@ -48,15 +48,26 @@ async def msg_view():
                  for file in files_model.uploaded_files]) + 
             "。\n上传数据的目录、执行python代码的启动路径和程序运行输出的工作路径都是："+static_path.Dir.UPLOAD_DIR.resolve().as_posix())
             st.session_state.msg_mem_obj = cache_msg.get_cached_msg(user_prompt)
+        elif "msg_mem_obj" in st.session_state:
+            msg_mem_obj: msg_mem.MessageMemory = st.session_state.msg_mem_obj
+            msg_mem_obj.add_message(
+                {"role":"user", "content": user_prompt}, 
+                finish_reason=None)
 
-        st.chat_message("user").write(user_prompt)  
+        role_view.msg_role_view(msg_mem_obj.messages[-1])
         # with st.chat_message("assistant"):  
         async for ret_msg_mem_obj in msg_gen.gen_msg(st.session_state.msg_mem_obj):  
             ret_msg_list = ret_msg_mem_obj.messages
             ret_msg = ret_msg_list[-1]
             await role_view.msg_role_view(ret_msg)
         if st.session_state.msg_mem_obj.finish_reason == "stop":
-            st.chat_message("system").write("对话已结束，检测到 finish_reason=stop")
+            st.chat_message(
+                name=role_model.RoleNameEnum.FINISH_REASON,
+                avatar=role_model.AVATARS[role_model.RoleNameEnum.FINISH_REASON]
+                ).write("对话已结束，检测到 finish_reason=stop")
         if st.session_state.msg_mem_obj.need_msg_stop_control(st.session_state.msg_mem_obj.msg_ctr_cfg):
-            st.chat_message("system").write(st.session_state.msg_mem_obj.msg_ctr_cfg.model_dump())
+            st.chat_message(
+                name=role_model.RoleNameEnum.FINISH_REASON,
+                avatar=role_model.AVATARS[role_model.RoleNameEnum.FINISH_REASON]
+            ).write(st.session_state.msg_mem_obj.msg_ctr_cfg.model_dump())
             

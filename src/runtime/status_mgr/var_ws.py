@@ -81,7 +81,8 @@ def filter_and_deepcopy_globals(original_globals: dict[str, Any]) -> dict[str, A
 
 def get_arg_globals() -> dict[str, Any]:
     global arg_globals_list
-    if not arg_globals_list:
+    global out_globals_list
+    if not arg_globals_list or not out_globals_list:
         arg_globals = initialize_workspace()
         filter_arg_globals = filter_and_deepcopy_globals(arg_globals)
         arg_globals_list.append(filter_arg_globals)

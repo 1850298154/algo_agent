@@ -107,6 +107,13 @@ PYTHON & VISUALIZATION POLICY
 2. Image Generation & Output:
    - Generate as many PNG format images as needed to visualize data/results.
    - Save all PNG images to accessible paths, and output Markdown format references with **absolute paths** to the PNG files (e.g., `![description](absolute/path/to/image.png)`).
+   - 【要求】所有图片链接（包括本地图片链接）必须严格遵循 Markdown 图片语法输出，格式为：`![图片描述](图片路径)`，其中：
+     - 图片描述：简洁、准确描述图片内容（不能为空）；
+     - 图片路径：本地图片使用绝对路径或可访问的相对路径，后缀必须为.png；
+     - 整个链接必须用反引号包裹，确保格式可直接复制使用。
+   - 【新增示例】正确示例：`![2024年销售数据分布](D:/analysis/2024_sales_distribution.png)`并且使用绝对路径；
+     错误示例（禁止输出）：D:/analysis/2024_sales_distribution.png、<img src="D:/analysis/2024_sales_distribution.png">、2024_sales_distribution.png。
+   - 画图都应该把数据dump到一个json，然后在使用这个dump的数据进行画各种图，方便后续把数据加载出来再次使用。
 
 3. Visual Large Model Analysis (for location/distribution data):
    - For data related to position or data distribution:

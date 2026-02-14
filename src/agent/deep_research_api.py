@@ -51,8 +51,9 @@ async def run_agent_generator(
     # 如果需要调用工具，则进行模型的多轮调用，直到模型判断无需调用工具
     while (assist_msg.tool_calls or assist_msg.function_call) and message_mem.need_msg_stop_control(message_mem.msg_ctr_cfg) == False:
         # 1. 处理工具调用（包括函数调用），并将工具调用结果追加到消息中
-        yield await action_processer.process_tool_calls(message_mem, assist_msg)
+        yield await action_processer.process_tool_calls(message_mem, assist_msg) # 返回tool消息，供前端展示
         
         # 2. 让模型基于工具输出继续生成下一轮输出
         assist_msg = llm.run_llm_once(message_mem, tools_schema_list+mcp_schema_list)
+        yield message_mem  # 返回assistant消息，供前端展示
     yield message_mem

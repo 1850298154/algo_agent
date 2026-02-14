@@ -75,6 +75,8 @@ class MessageMemory(BaseModel):
             self._print_function_messages(msg)
         elif msg['role'] == action_type.CallKind.TOOL.value:
             self._print_tool_messages(msg)
+        elif msg['role'] == "user":
+            self._print_user_messages(msg)
         else:
             global_logger.info(f"新类型消息 type =  {type(msg)} \n = {msg}\n")
             global_logger.info(f"新类型消息： {pprint.pformat(msg)}\n")
@@ -152,6 +154,9 @@ class MessageMemory(BaseModel):
         global_logger.info("-" * 60)
     def _print_tool_messages(self, message:ChatCompletionToolMessageParam) -> None:
         global_logger.info(f"工具 tool call 输出信息： {pprint.pformat(message)}\n")
+        global_logger.info("-" * 60)
+    def _print_user_messages(self, message:ChatCompletionUserMessageParam) -> None:
+        global_logger.info(f"用户 user message 输出信息： {pprint.pformat(message)}\n")
         global_logger.info("-" * 60)
 
 @traceable

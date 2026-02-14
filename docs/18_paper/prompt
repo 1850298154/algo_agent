@@ -1,0 +1,8 @@
+zCOEchap5.tex 是我前面写的一些，我是用z开头作为新的文件。其他文件COEchapx.tex是别人的参考模板。
+
+按照他的结构，第COEchap2.tex是问题描述，COEchap3-5.tex是解决方案。
+
+而我的zCOEchap5.tex是我的1850298154/algo_agent仓库的实现细节对应的章节，是我的第三部分。我的 第一个详细内容zCOEchap3.tex 大规模死锁破解的路径规划方法MPC、第二部zCOEchap4.tex层次模块化无人机集群任务分配，分别对应  1850298154/deadlock_cracking_distributed_multi-agent_planning 、 1850298154/hierarchical_multitasking_multi-agent_planning ，可以调用 deepwiki 去询问这三个仓库不同的细节内容。
+
+参考已有的章节结构，实现我的文章。你可以先进行反问提问，以便更好地理解我的需求和目标，一旦开始就不要问我任何问题，你就自己不断的去编译执行完成 大于4.5万字 90页 以上的内容，并且编译成pdf。记得写一部分，就可以commit一下。如果觉得内容不够丰富，或者希望参考对比，可以调用github和deepwiki工具去看看别人的，参考对比一下。
+
