@@ -25,6 +25,7 @@ from src.ui.cache_unchange import (
 )
 from src.utils.path_util import static_path
 from src.ui.message.msg_role import role_model
+from src.ui.message.msg_prompt import file_prompt
 
 
 async def msg_view():
@@ -41,13 +42,9 @@ async def msg_view():
     
     if user_prompt := st.chat_input("请输入消息"):  
         if "msg_mem_obj" not in st.session_state:  
-            user_prompt += ("\n\n上传的数据是："+
-            "；".join(["文件名："+file.name + 
-                 "，文件大小：" + str(file.size) + " 字节，" + 
-                 "文件类型：" + file.type 
-                 for file in files_model.uploaded_files]) + 
-            "。\n上传数据的目录、执行python代码的启动路径和程序运行输出的工作路径都是："+static_path.Dir.UPLOAD_DIR.resolve().as_posix())
-            st.session_state.msg_mem_obj = cache_msg.get_cached_msg(user_prompt)
+            user_prompt += file_prompt.get_input_file_prompt()
+            msg_mem_obj: msg_mem.MessageMemory = cache_msg.get_cached_msg(user_prompt)
+            st.session_state.msg_mem_obj = msg_mem_obj
         elif "msg_mem_obj" in st.session_state:
             msg_mem_obj: msg_mem.MessageMemory = st.session_state.msg_mem_obj
             msg_mem_obj.add_message(

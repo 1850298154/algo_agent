@@ -86,7 +86,7 @@ def _devin_list_wiki_repos_by_org():
     )
 
 if __name__ == "__main__":
-    print("_devin_list_available_repos",_devin_list_available_repos()) 
+    # print("_devin_list_available_repos",_devin_list_available_repos()) 
     #　_devin_list_available_repos {'jsonrpc': '2.0', 'id': 1, 'result': {'content': [{'type': 'text', 'text': "Error fetching available repositories: Client error '401 Unauthorized' for url 'https://api.devin.ai/wiki/list_wiki_repos_by_org'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401"}], 'structuredContent': {'result': "Error fetching available repositories: Client error '401 Unauthorized' for url 'https://api.devin.ai/wiki/list_wiki_repos_by_org'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401"}, 'isError': False}}
     # BASE_URL = "https://mcp.devin.ai/mcp" 
 
@@ -103,9 +103,9 @@ if __name__ == "__main__":
     #  _devin_list_wiki_repos_by_org {'jsonrpc': '2.0', 'id': 1, 'result': {'content': [{'type': 'text', 'text': 'Unknown tool: list_wiki_repos_by_org'}], 'isError': True}}
 
 
-    # print("devin_toc",devin_toc("1850298154/HULK"))
-    # print("--------------------------")
-    # print("devin_toc",devin_toc("1850298154/algo_agent"))
+    print("devin_toc",devin_toc("1850298154/HULK"))
+    print("--------------------------")
+    print("devin_toc",devin_toc("1850298154/algo_agent"))
     # print("===========================")
     # print("devin_toc",devin_toc("volcengine/OpenViking"))
     # print("===========================")

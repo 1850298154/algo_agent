@@ -33,7 +33,7 @@ class ExecutePythonCodeTool(tool_base.ToolBase):
         examples=["print('Hello, World!')"]
     )
     timeout: int = Field(
-        60*2, 
+        60*10, 
         description="执行代码的最大时间（秒）。如果代码运行时间超过此值，将被终止并返回错误消息。"
     )
 

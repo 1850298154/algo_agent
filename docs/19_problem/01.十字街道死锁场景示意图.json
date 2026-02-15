@@ -1,0 +1,70 @@
+{
+    "obstacles_vertices_location": [
+      {
+        "name": "左上障碍",
+        "vertices": [
+          [0, 12],
+          [0, 22],
+          [10, 22],
+          [10, 12]
+        ]
+      },
+      {
+        "name": "右上障碍",
+        "vertices": [
+          [12, 12],
+          [22, 12],
+          [22, 22],
+          [12, 22]
+        ]
+      },
+      {
+        "name": "左下障碍",
+        "vertices": [
+          [0, 0],
+          [10, 0],
+          [10, 10],
+          [0, 10]
+        ]
+      },
+      {
+        "name": "右下障碍",
+        "vertices": [
+          [12, 0],
+          [22, 0],
+          [22, 10],
+          [12, 10]
+        ]
+      }
+    ],
+    "agents_center_point_location": [
+      {
+        "id": "左边去右边的agent",
+        "start_center": [5, 11],
+        "go_to_target": [17, 11],
+        "radius": 1,
+        "diameter": 2
+      },
+      {
+        "id": "上边去下边的agent",
+        "start_center": [11, 17],
+        "go_to_target": [11, 5],
+        "radius": 1,
+        "diameter": 2
+    },
+      {
+          "id": "右边去左边的agent",
+          "start_center": [17, 11],
+          "go_to_target": [5, 11],
+          "radius": 1,
+        "diameter": 2
+      },
+      {
+          "id": "下边去上边的agent",
+          "start_center": [11, 5],
+          "go_to_target": [11, 17],
+        "radius": 1,
+        "diameter": 2
+      }
+    ]
+  }
