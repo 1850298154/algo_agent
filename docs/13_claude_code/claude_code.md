@@ -46,9 +46,8 @@ esc esc
 
 claude mcp add --transport http figma https://mcp.figma.com/mcp
 
-
+恢复回话
 /resume
-
 claude -c 
 
 /mcp

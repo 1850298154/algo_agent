@@ -18,8 +18,7 @@ def get_input_file_prompt():
 }
 {
     "上传数据的目录、" if files_model.uploaded_files else ""
-}
-{
+}{
     "执行python代码的启动路径和程序运行输出的工作路径都是："
     +static_path.Dir.UPLOAD_DIR.resolve().as_posix()
 }

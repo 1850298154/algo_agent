@@ -39,7 +39,7 @@ async def msg_role_view(msg:dict):
                         arg_dict = json.loads(func_content["arguments"])
                         if "tool_call_purpose" in arg_dict:
                             st.write("执行目标："+arg_dict["tool_call_purpose"])
-                        if func_content["name"] == "execute_python_code":
+                        if func_content["name"] == "execute_python_code" and "python_code_snippet" in arg_dict:
                             st.code(arg_dict['python_code_snippet'])
                         else:
                             st.write(arg_dict)
