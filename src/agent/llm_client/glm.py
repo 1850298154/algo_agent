@@ -16,7 +16,7 @@ glm_4_7_flashx_model = "glm-4.7-flashx"
 glm_4_7_model = "glm-4.7"
 glm_5_model = "glm-5"
 
-default_glm_model = glm_4_7_model
+default_glm_model = glm_5_model
 """
 模型编码列表：
 https://docs.bigmodel.cn/cn/guide/start/concept-param
