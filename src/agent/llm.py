@@ -35,6 +35,7 @@ def _generate_chat_completion(message_mem: msg_mem.MessageMemory, tools_schema_l
         model=chat_llm.default_glm_model,
         tools=tools_schema_list,
         parallel_tool_calls=True,
+        temperature=0.2,
     )
     return completion
 
