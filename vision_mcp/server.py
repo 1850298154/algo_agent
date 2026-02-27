@@ -19,7 +19,7 @@ from pydantic import BaseModel, Field
 load_dotenv()
 
 # Create MCP Server
-mcp = FastMCP("GLM-4.6V Vision Server")
+mcp_server = FastMCP("GLM-4.6V Vision Server")
 
 # Initialize Zhipu AI Client
 ZHIPU_API_KEY = os.getenv("ZHIPU_API_KEY")
@@ -56,7 +56,7 @@ class ImageAnalysisResult(BaseModel):
     model_used: str
 
 
-@mcp.tool()
+@mcp_server.tool()
 async def analyze_image(
     image_path: str,
     prompt: str,
@@ -143,7 +143,7 @@ async def analyze_image(
         return f"Error analyzing image: {str(e)}"
 
 
-@mcp.tool()
+@mcp_server.tool()
 async def extract_text_from_image(image_path: str) -> str:
     """
     Extract all text content from an image using GLM-4.6V.
@@ -202,7 +202,7 @@ async def extract_text_from_image(image_path: str) -> str:
         return f"Error extracting text: {str(e)}"
 
 
-@mcp.tool()
+@mcp_server.tool()
 async def detect_objects_in_image(image_path: str) -> str:
     """
     Detect and list objects visible in an image.
@@ -260,7 +260,7 @@ async def detect_objects_in_image(image_path: str) -> str:
         return f"Error detecting objects: {str(e)}"
 
 
-@mcp.resource("vision://info")
+@mcp_server.resource("vision://info")
 def get_model_info() -> str:
     """
     Get information about the GLM-4.6V vision model.
@@ -294,7 +294,7 @@ Tools Available:
 """
 
 
-@mcp.prompt()
+@mcp_server.prompt()
 def analyze_screenshot(image_path: str, task_description: str) -> str:
     """
     Generate a prompt template for analyzing screenshots.
@@ -316,8 +316,7 @@ Use the analyze_image tool to perform this analysis.
 
 def main():
     """Main entry point for running the MCP server."""
-    import mcp.server.stdio
-    mcp.run(transport="stdio")
+    mcp_server.run(transport="stdio")
 
 
 if __name__ == "__main__":

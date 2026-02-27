@@ -160,15 +160,15 @@ async def test_mcp_protocol():
 
     try:
         # Import mcp server module
-        from vision_mcp.server import mcp
+        from vision_mcp.server import mcp_server
 
         # FastMCP server object is created successfully
         print("FastMCP server object created successfully")
-        print(f"Server name: {mcp.name if hasattr(mcp, 'name') else 'GLM-4.6V Vision Server'}")
+        print(f"Server name: {mcp_server.name if hasattr(mcp_server, 'name') else 'GLM-4.6V Vision Server'}")
 
         # List available attributes
         print("\nFastMCP server attributes:")
-        for attr in dir(mcp):
+        for attr in dir(mcp_server):
             if not attr.startswith('_'):
                 print(f"  - {attr}")
 
