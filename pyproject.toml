@@ -39,6 +39,7 @@ dependencies = [
     "pandas>=2.3.3",
     "playwright>=1.57.0",
     "plotly>=6.5.2",
+    "pulp>=3.3.0",
     "pymc>=5.27.1",
     "pyomo>=6.9.5",
     "python-dotenv>=1.2.1",
