@@ -216,3 +216,5 @@ secret.py
 log*/
 
 *profile*/*
+
+*ignore/
