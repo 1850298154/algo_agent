@@ -1,0 +1,101 @@
+{
+    "$defs": {
+        "DrawLine": {
+            "description": "绘图用线路模型（核心字段）",
+            "properties": {
+                "line_name": {
+                    "description": "线路名称（如S1线）",
+                    "title": "Line Name",
+                    "type": "string"
+                },
+                "color": {
+                    "description": "线路分配的16进制颜色码",
+                    "title": "Color",
+                    "type": "string"
+                },
+                "stations": {
+                    "description": "线路下的站点列表",
+                    "items": {
+                        "$ref": "#/$defs/DrawStation"
+                    },
+                    "title": "Stations",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "line_name",
+                "color",
+                "stations"
+            ],
+            "title": "DrawLine",
+            "type": "object"
+        },
+        "DrawStation": {
+            "description": "绘图用站点模型（核心字段）",
+            "properties": {
+                "name": {
+                    "description": "站点名称",
+                    "title": "Name",
+                    "type": "string"
+                },
+                "longitude": {
+                    "description": "站点经度",
+                    "title": "Longitude",
+                    "type": "number"
+                },
+                "latitude": {
+                    "description": "站点纬度",
+                    "title": "Latitude",
+                    "type": "number"
+                },
+                "is_transfer": {
+                    "description": "是否为换乘站",
+                    "title": "Is Transfer",
+                    "type": "boolean"
+                },
+                "belong_lines": {
+                    "description": "所属线路列表",
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "Belong Lines",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "name",
+                "longitude",
+                "latitude",
+                "is_transfer",
+                "belong_lines"
+            ],
+            "title": "DrawStation",
+            "type": "object"
+        }
+    },
+    "description": "绘图用地铁数据根模型（最终要导出Schema的模型）",
+    "properties": {
+        "lines": {
+            "description": "所有地铁线路（含颜色和站点）",
+            "items": {
+                "$ref": "#/$defs/DrawLine"
+            },
+            "title": "Lines",
+            "type": "array"
+        },
+        "all_stations": {
+            "description": "所有站点（去重，含换乘信息）",
+            "items": {
+                "$ref": "#/$defs/DrawStation"
+            },
+            "title": "All Stations",
+            "type": "array"
+        }
+    },
+    "required": [
+        "lines",
+        "all_stations"
+    ],
+    "title": "MetroDrawSchema",
+    "type": "object"
+}

@@ -1,0 +1,116 @@
+{
+    "total": 10,
+    "area_info": {
+        "longitude_range": [
+            116.269956,
+            116.511821
+        ],
+        "latitude_range": [
+            39.83491,
+            40.02043
+        ],
+        "area_km2": 423.96
+    },
+    "routes": [
+        {
+            "start_point": {
+                "longitude": 116.474247,
+                "latitude": 39.966904
+            },
+            "end_point": {
+                "longitude": 116.446825,
+                "latitude": 39.843019
+            }
+        },
+        {
+            "start_point": {
+                "longitude": 116.493128,
+                "latitude": 39.89559
+            },
+            "end_point": {
+                "longitude": 116.460027,
+                "latitude": 39.845048
+            }
+        },
+        {
+            "start_point": {
+                "longitude": 116.317951,
+                "latitude": 39.851963
+            },
+            "end_point": {
+                "longitude": 116.342869,
+                "latitude": 39.933084
+            }
+        },
+        {
+            "start_point": {
+                "longitude": 116.321651,
+                "latitude": 39.861162
+            },
+            "end_point": {
+                "longitude": 116.501183,
+                "latitude": 39.983286
+            }
+        },
+        {
+            "start_point": {
+                "longitude": 116.316884,
+                "latitude": 40.006223
+            },
+            "end_point": {
+                "longitude": 116.338641,
+                "latitude": 39.992564
+            }
+        },
+        {
+            "start_point": {
+                "longitude": 116.330614,
+                "latitude": 39.959523
+            },
+            "end_point": {
+                "longitude": 116.400677,
+                "latitude": 39.913656
+            }
+        },
+        {
+            "start_point": {
+                "longitude": 116.333233,
+                "latitude": 39.897313
+            },
+            "end_point": {
+                "longitude": 116.450285,
+                "latitude": 39.985696
+            }
+        },
+        {
+            "start_point": {
+                "longitude": 116.46744,
+                "latitude": 39.961147
+            },
+            "end_point": {
+                "longitude": 116.416405,
+                "latitude": 39.912105
+            }
+        },
+        {
+            "start_point": {
+                "longitude": 116.348781,
+                "latitude": 39.888174
+            },
+            "end_point": {
+                "longitude": 116.501001,
+                "latitude": 40.009294
+            }
+        },
+        {
+            "start_point": {
+                "longitude": 116.28774,
+                "latitude": 39.838114
+            },
+            "end_point": {
+                "longitude": 116.373259,
+                "latitude": 39.951579
+            }
+        }
+    ]
+}
